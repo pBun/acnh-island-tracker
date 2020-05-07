@@ -33,7 +33,7 @@ const Layout = ({ children }) => {
                 <footer className="footer">
                     © {new Date().getFullYear()},
                     {` `}
-                    <a href={`https://twitter.com/${data.site.siteMetadata.author}`} target="_blank" rel="noreferrer noopener">Dustin Boersma</a>
+                    <a href="http://dustinboersma.com" target="_blank" rel="noreferrer noopener">Dustin Boersma</a>
                 </footer>
             </Container>
         </>
