@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
-import { Button, TextField, MenuItem, FormControl, Snackbar } from '@material-ui/core';
+import { Button, TextField, MenuItem, FormControl, Snackbar, CircularProgress } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
 import RecentSightings from './RecentSightings';
 
@@ -16,11 +17,24 @@ const VILLAGERS = villagerData && villagerData.feed && villagerData.feed.entry &
     };
 });
 
+const useStyles = makeStyles((theme) => ({
+    buttonProgress: {
+        color: 'green',
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        marginTop: -12,
+        marginLeft: -12,
+    },
+}));
+
 export default function TrackVillager() {
+    const classes = useStyles();
     const { trackVillager } = useContext(SessionContext);
     const [selectedVillager, setSelectedVillager] = useState('');
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const [loading, setLoading] = useState(false);
     return (
         <>
             <form
@@ -29,14 +43,17 @@ export default function TrackVillager() {
                     if (!selectedVillager) {
                         return setError('You must select a villager to track.');
                     }
-                    trackVillager(selectedVillager)
+                    setLoading(true);
+                    trackVillager({ villager: selectedVillager })
                         .catch((err) => {
                             setError('Ajax error =(');
+                            setLoading(false);
                         })
                         .then(() => {
                             setSelectedVillager('');
                             setError('');
                             setSuccess('Villager tracked successfully!');
+                            setLoading(false);
                         });
                 }}
             >
@@ -71,9 +88,11 @@ export default function TrackVillager() {
                         type="submit"
                         variant="contained"
                         color="primary"
+                        disabled={loading}
                         disableElevation
                     >
                         Submit
+                        {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
                     </Button>
                 </div>
             </form>

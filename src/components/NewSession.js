@@ -1,55 +1,88 @@
-import React, { useContext, useState } from 'react';
-import { FormControl, Button, TextField } from '@material-ui/core';
+import React, { useContext, useState, useEffect } from 'react';
+import { Typography, FormControl, FormControlLabel, Checkbox, ButtonGroup, Button, TextField } from '@material-ui/core';
 import DateFnsUtils from '@date-io/date-fns';
-import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 
 import SessionContext from '../context/session';
 
 export default function NewSession() {
     const { initialize } = useContext(SessionContext);
     const [sessionId, setSessionId] = useState('');
-    const [islandDateTime, setIslandDateTime] = useState(new Date());
+    const [overrideClock, setOverrideClock] = useState(false);
+    const [islandTimestamp, setIslandTimestamp] = useState(new Date());
+    const [pickerSynced, setPickerSynced] = useState(true);
+    useEffect(() => {
+        if (!window || !pickerSynced) return;
+        let updateTimeout;
+        const updateIslandTimestamp = () => {
+            setIslandTimestamp(Date.now());
+            updateTimeout = window.setTimeout(updateIslandTimestamp, 10000);
+        };
+        updateIslandTimestamp();
+        return () => {
+            window.clearTimeout(updateTimeout);
+        };
+    }, [pickerSynced]);
     return (
         <form
             onSubmit={(e) => {
                 e.preventDefault();
-                initialize(sessionId, islandDateTime);
+                initialize({ islandTimestamp: !overrideClock ? Date.now() : islandTimestamp });
             }}
         >
+            <Typography variant="h4" component="h2">
+                New Session
+            </Typography>
             <FormControl
-                fullWidth={true}
-                margin={'normal'}
+                margin="normal"
+                style={{
+                    display: 'block',
+                }}
             >
-                <TextField
-                    label="Session ID"
-                    value={sessionId}
-                    onChange={(e) => {
-                        setSessionId(e.target.value);
-                    }}
+                <FormControlLabel
+                    control={(
+                        <Checkbox
+                            checked={overrideClock}
+                            onChange={(e) => setOverrideClock(e.target.checked)}
+                            name="overrideClock"
+                            size="small"
+                        />
+                    )}
+                    label={(
+                        <span style={{fontSize: '0.75rem'}}>
+                            Override current time
+                        </span>
+                    )}
                 />
-            </FormControl>
-            <FormControl
-                fullWidth={true}
-                margin={'normal'}
-            >
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <DateTimePicker
-                        label="Current Island Time"
-                        value={islandDateTime}
-                        onChange={setIslandDateTime}
+                    <KeyboardDateTimePicker
+                        helperText="Nintendo Switch clock"
+                        value={islandTimestamp}
+                        onChange={(newTimestamp) => {
+                            setIslandTimestamp(newTimestamp);
+                            setPickerSynced(false);
+                        }}
+                        disabled={!overrideClock}
+                        format="MM/dd/yyyy HH:mm"
+                        showTodayButton
                     />
                 </MuiPickersUtilsProvider>
             </FormControl>
-            <div>
+            <ButtonGroup
+                style={{
+                    display: 'block',
+                    marginTop: '1rem',
+                }}
+            >
                 <Button
                     type="submit"
                     variant="contained"
                     color="primary"
                     disableElevation
                 >
-                    Submit
+                    Start
                 </Button>
-            </div>
+            </ButtonGroup>
         </form>
     );
 }

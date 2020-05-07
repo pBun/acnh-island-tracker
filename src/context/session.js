@@ -1,19 +1,21 @@
 import React, {
     createContext,
     useReducer,
+    useEffect,
 } from 'react';
 import queryString from 'query-string';
 import { format } from 'date-fns';
 import PropTypes from 'prop-types';
 
+const LOCAL_STORAGE_KEY = 'islandTrackerSession';
 const SHEET_URL = 'https://script.google.com/macros/s/AKfycbw_4jsHZE4PkIePUPbzPAlzzcXEeWibBltRUzeLu0zpztsVAEg/exec';
 
-const initialSession = {
+const getInitialSession = () => ({
     id: null,
     timestamp: null,
     islandOffset: 0,
     sightings: [],
-};
+});
 
 function reducer(state, action) {
     switch (action.type) {
@@ -22,7 +24,7 @@ function reducer(state, action) {
             const { islandTimestamp, id } = action.payload;
             const islandOffset = islandTimestamp ? islandTimestamp - timestamp : 0;
             return {
-                id,
+                id: id || Math.random().toString(36).substr(2, 12),
                 timestamp,
                 islandOffset,
                 sightings: [],
@@ -38,23 +40,30 @@ function reducer(state, action) {
                     },
                 ],
             };
+        case 'reset':
+            return getInitialSession();
         default:
             throw new Error();
     }
 }
 const initialState = {
-    session: initialSession,
-    initialize: (id, islandTimestamp) => {},
-    trackVillager: (villager) => {},
+    session: getInitialSession(),
+    initialize: (opts) => {},
+    trackVillager: (opts) => {},
+    resetSession: () => {},
 };
 const SessionContext = createContext(initialState);
 export const SessionProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(reducer, initialSession);
+    const localState = JSON.parse(window && window.localStorage.getItem(LOCAL_STORAGE_KEY));
+    const [state, dispatch] = useReducer(reducer, localState || getInitialSession());
+    useEffect(() => {
+        window && window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(state));
+    }, [state]);
     return (
         <SessionContext.Provider
             value={{
                 session: state,
-                initialize: (id, islandTimestamp) => {
+                initialize: ({ id, islandTimestamp }) => {
                     dispatch({
                         type: 'initialize',
                         payload: {
@@ -63,7 +72,10 @@ export const SessionProvider = ({ children }) => {
                         },
                     });
                 },
-                trackVillager: (villager) => {
+                resetSession: () => {
+                    dispatch({ type: 'reset' });
+                },
+                trackVillager: ({ villager }) => {
                     return new Promise((resolve, reject) => {
                         const timestamp = Date.now();
                         const qs = queryString.stringify({

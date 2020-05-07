@@ -30,9 +30,6 @@ export default function RecentSightings(numSightings=10) {
                         <span className="RecentSightings-item-inner">
                             {`${format(s.timestamp, 'MM/dd/yyyy hh:mm a')} (RL)`}
                         </span>
-                        <span className="RecentSightings-item-inner">
-                            {`${format(s.timestamp + session.islandOffset, 'MM/dd/yyyy hh:mm a')} (Island)`}
-                        </span>
                     </li>
                 ))}
             </ul>

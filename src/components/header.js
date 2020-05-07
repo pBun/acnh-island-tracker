@@ -5,6 +5,7 @@ import { Container, Typography } from '@material-ui/core';
 
 import IslandTime from './IslandTime';
 import SessionId from './SessionId';
+import ResetSession from './ResetSession';
 
 const Header = ({ siteTitle }) => (
     <header
@@ -37,8 +38,8 @@ const Header = ({ siteTitle }) => (
             </Container>
         </div>
         <Container className="SiteHeader-extra" maxWidth="md">
-            <SessionId />
             <IslandTime />
+            <ResetSession />
         </Container>
     </header>
 );
