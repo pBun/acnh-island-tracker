@@ -620,3 +620,7 @@ pre tt:after {
     font-size: 100%;
   }
 }
+.footer {
+    padding-top: 100px;
+    font-size: 14px;
+}
