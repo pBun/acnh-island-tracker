@@ -10,10 +10,10 @@ import PropTypes from 'prop-types';
 import { useStaticQuery, graphql } from 'gatsby';
 import { Container } from '@material-ui/core';
 
-import Header from './header';
-import './layout.css';
+import SiteHeader from './SiteHeader';
+import './SiteLayout.css';
 
-const Layout = ({ children }) => {
+const SiteLayout = ({ children }) => {
     const data = useStaticQuery(graphql`
         query SiteTitleQuery {
           site {
@@ -27,7 +27,7 @@ const Layout = ({ children }) => {
 
     return (
         <>
-            <Header siteTitle={data.site.siteMetadata.title} />
+            <SiteHeader siteTitle={data.site.siteMetadata.title} />
             <Container maxWidth="md">
                 <main>{children}</main>
                 <footer className="footer">
@@ -40,8 +40,8 @@ const Layout = ({ children }) => {
     );
 };
 
-Layout.propTypes = {
+SiteLayout.propTypes = {
     children: PropTypes.node.isRequired,
 };
 
-export default Layout;
+export default SiteLayout;

@@ -1,22 +1,24 @@
 import React, { useContext } from 'react';
+import { Link } from 'gatsby';
 
-import SessionContext from '../context/session';
-import Layout from '../components/layout';
+import SessionContext from '../context/currentSession';
+import SiteLayout from '../components/SiteLayout';
 import SEO from '../components/seo';
-import TrackVillager from '../components/TrackVillager';
-import NewSession from '../components/NewSession';
 
 const SightingsPage = () => {
     const { session } = useContext(SessionContext);
     return (
-        <Layout>
+        <SiteLayout>
             <SEO />
-            {session.id ? (
-                <TrackVillager />
+            {!session.id ? (
+                <Link to="/start/">Let's start a session!</Link>
             ) : (
-                <NewSession />
+                <>
+                    <Link to="/track/">Track villagers</Link>
+                    <Link to="/session/">View current session</Link>
+                </>
             )}
-        </Layout>
+        </SiteLayout>
     );
 };
 

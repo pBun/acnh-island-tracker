@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Typography } from '@material-ui/core';
 
-import SessionContext from '../context/session';
+import SessionContext from '../context/currentSession';
 
 
 export default function SessionId() {

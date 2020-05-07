@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react';
-import { Button, TextField, MenuItem, FormControl, Snackbar, CircularProgress } from '@material-ui/core';
+import { Fade, ButtonGroup, Button, TextField, MenuItem, FormControl, Snackbar, CircularProgress } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import RecentSightings from './RecentSightings';
 
-import SessionContext from '../context/session';
+import SessionContext from '../context/currentSession';
 
 import villagerData from '../data/villagers.json';
 
@@ -19,7 +19,7 @@ const VILLAGERS = villagerData && villagerData.feed && villagerData.feed.entry &
 
 const useStyles = makeStyles((theme) => ({
     buttonProgress: {
-        color: 'green',
+        color: 'rgba(0, 0, 0, 0.54)',
         position: 'absolute',
         top: '50%',
         left: '50%',
@@ -83,7 +83,7 @@ export default function TrackVillager() {
                         ))}
                     </TextField>
                 </FormControl>
-                <div>
+                <ButtonGroup fullWidth={true}>
                     <Button
                         type="submit"
                         variant="contained"
@@ -91,10 +91,10 @@ export default function TrackVillager() {
                         disabled={loading}
                         disableElevation
                     >
-                        Submit
+                        <Fade in={!loading}><span>Track</span></Fade>
                         {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
                     </Button>
-                </div>
+                </ButtonGroup>
             </form>
             <RecentSightings />
             <Snackbar

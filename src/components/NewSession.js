@@ -3,7 +3,7 @@ import { Typography, FormControl, FormControlLabel, Checkbox, ButtonGroup, Butto
 import DateFnsUtils from '@date-io/date-fns';
 import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 
-import SessionContext from '../context/session';
+import SessionContext from '../context/currentSession';
 
 export default function NewSession() {
     const { initialize } = useContext(SessionContext);

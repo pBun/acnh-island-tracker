@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Typography } from '@material-ui/core';
 import { format } from 'date-fns';
 
-import SessionContext from '../context/session';
+import SessionContext from '../context/currentSession';
 
 import './RecentSightings.css';
 
@@ -28,7 +28,7 @@ export default function RecentSightings(numSightings=10) {
                             </a>
                         </span>
                         <span className="RecentSightings-item-inner">
-                            {`${format(s.timestamp, 'MM/dd/yyyy hh:mm a')} (RL)`}
+                            {format(s.timestamp + session.islandOffset, 'MM/dd/yyyy hh:mm a')}
                         </span>
                     </li>
                 ))}

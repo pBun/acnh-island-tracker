@@ -7,7 +7,7 @@
 // You can delete this file if you're not using it
 
 import React from 'react';
-import { SessionProvider } from './src/context/session';
+import { SessionProvider } from './src/context/currentSession';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 

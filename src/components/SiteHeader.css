@@ -1,0 +1,12 @@
+.SiteHeader-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.IslandTimeWrapper-icon,
+.IslandTimeWrapper {
+    vertical-align: middle;
+}
+.IslandTimeWrapper-icon {
+    margin-right: 0.25em;
+}

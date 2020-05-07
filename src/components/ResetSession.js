@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import { IconButton, Typography } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
 
-import SessionContext from '../context/session';
+import SessionContext from '../context/currentSession';
 
 
 export default function ResetSession() {
@@ -10,16 +10,18 @@ export default function ResetSession() {
     if (!session.id) return '';
     return (
         <div className="ResetSession">
-            <IconButton
-                aria-label="New Session"
+            <Button
+                variant="contained"
+                color="secondary"
+                startIcon={<Delete />}
                 onClick={() => {
                     if (window && window.confirm('Are you sure you want to reset your session and start over?')) {
                         resetSession();
                     }
                 }}
             >
-                <Delete />
-            </IconButton>
+                Reset Session
+            </Button>
         </div>
     );
 }
