@@ -1,4 +1,5 @@
 module.exports = {
+    pathPrefix: `/acnh-island-tracker`,
     siteMetadata: {
         title: `Mystery Island Tracker`,
         description: `Track villager sightings on Animal Crossing New Horizon Mystery Islands.`,
