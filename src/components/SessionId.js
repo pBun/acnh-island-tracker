@@ -1,7 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { format } from 'date-fns';
+import React, { useContext } from 'react';
 import { Typography } from '@material-ui/core';
-import { AccessAlarm } from '@material-ui/icons';
 
 import SessionContext from '../context/session';
 
