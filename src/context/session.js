@@ -42,8 +42,12 @@ function reducer(state, action) {
             throw new Error();
     }
 }
-
-const SessionContext = createContext();
+const initialState = {
+    session: initialSession,
+    initialize: (id, islandTimestamp) => {},
+    trackVillager: (villager) => {},
+};
+const SessionContext = createContext(initialState);
 export const SessionProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialSession);
     return (
