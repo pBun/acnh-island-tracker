@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[9],{uQeY:function(e,a,t){"use strict";t.r(a);var n=t("q1tI"),l=t.n(n),r=t("vrFN"),c=t("RMc2"),i=t("1lFR"),u=t("S7Tf");a.default=function(){return l.a.createElement(c.a,null,l.a.createElement(r.a,{title:"Villager Stats | ACNH Island Tracker"}),l.a.createElement(u.a,null,"Villager Sightings by Name"),l.a.createElement(i.a,{villagerPropName:"name"}))}}}]);
+//# sourceMappingURL=component---src-pages-stats-villagers-js-9993f918c00f1df96ac2.js.map
