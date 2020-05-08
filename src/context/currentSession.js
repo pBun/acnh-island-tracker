@@ -54,7 +54,7 @@ const initialState = {
 };
 const SessionContext = createContext(initialState);
 export const SessionProvider = ({ children }) => {
-    const localState = JSON.parse(window && window.localStorage.getItem(LOCAL_STORAGE_KEY));
+    const localState = JSON.parse(window ? window.localStorage.getItem(LOCAL_STORAGE_KEY) : '');
     const [state, dispatch] = useReducer(reducer, localState || getInitialSession());
     useEffect(() => {
         window && window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(state));

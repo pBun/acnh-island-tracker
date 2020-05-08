@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { navigate } from 'gatsby';
 import { Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -18,9 +17,6 @@ const useStyles = makeStyles(theme => ({
 const SessionPage = () => {
     const classes = useStyles();
     const { session } = useContext(SessionContext);
-    if (!session.id) {
-        navigate(`/`)
-    }
     return (
         <SiteLayout>
             <SEO />
