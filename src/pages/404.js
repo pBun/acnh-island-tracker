@@ -15,7 +15,7 @@ const NotFoundPage = () => {
     const classes = useStyles();
     return (
         <SiteMenu>
-            <SEO title="404: Not found" />
+            <SEO title="404: Not found | ACNH Island Tracker" />
             <Typography variant="h4" className={classes.title}>
                 404 NOT FOUND
             </Typography>

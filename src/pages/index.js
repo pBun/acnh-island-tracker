@@ -35,6 +35,7 @@ export default function BottomAppBar() {
 
     return (
         <SiteMenu>
+            <SEO title="ACNH Island Tracker" />
             <Typography className={classes.text} variant="h5" gutterBottom>
                 Recent Activity
             </Typography>

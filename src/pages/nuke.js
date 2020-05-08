@@ -20,7 +20,7 @@ const NukePage = () => {
         resetSession();
     }, [resetSession]);
     return (
-        <SiteMenu>
+        <SiteMenu title="Nuke Session Data | ACNH Island Tracker">
             <SEO />
             <Typography variant="h6" className={classes.title}>
                 All session data has been cleared.

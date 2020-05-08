@@ -15,6 +15,7 @@ const StatsPage = () => {
     const classes = useStyles();
     return (
         <SiteMenu>
+            <SEO title="Species Stats | ACNH Island Tracker" />
             <Typography variant="h6" className={classes.title}>
                 Villager Sightings by Species
             </Typography>
