@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
-import { Fade, ButtonGroup, Button, TextField, MenuItem, FormControl, Snackbar, CircularProgress } from '@material-ui/core';
+import { Typography, InputLabel, Select, FormHelperText, Fade, ButtonGroup, Button, TextField, MenuItem, FormControl, Snackbar, CircularProgress } from '@material-ui/core';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import PublishIcon from '@material-ui/icons/Publish';
 import { makeStyles } from '@material-ui/core/styles';
-
-import RecentSightings from './RecentSightings';
 
 import SessionContext from '../context/currentSession';
 
@@ -26,12 +26,29 @@ const useStyles = makeStyles((theme) => ({
         marginTop: -12,
         marginLeft: -12,
     },
+    formControl: {
+        margin: theme.spacing(1),
+        display: 'flex',
+    },
+    label: {
+        backgroundColor: 'white',
+    },
+    formInner: {
+        display: 'flex',
+        width: '100%',
+    },
+    comboBox: {
+        borderRadius: '4px 0 0 4px',
+    },
+    btn: {
+        borderRadius: '0 4px 4px 0',
+    }
 }));
 
 export default function TrackVillager() {
     const classes = useStyles();
     const { trackVillager } = useContext(SessionContext);
-    const [selectedVillager, setSelectedVillager] = useState('');
+    const [selectedVillager, setSelectedVillager] = useState(null);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [loading, setLoading] = useState(false);
@@ -44,59 +61,50 @@ export default function TrackVillager() {
                         return setError('You must select a villager to track.');
                     }
                     setLoading(true);
-                    trackVillager({ villager: selectedVillager })
+                    trackVillager({ villager: selectedVillager.name })
                         .catch((err) => {
                             setError('Ajax error =(');
                             setLoading(false);
                         })
                         .then(() => {
-                            setSelectedVillager('');
+                            setSelectedVillager(null);
                             setError('');
                             setSuccess('Villager tracked successfully!');
                             setLoading(false);
                         });
                 }}
             >
-                <FormControl
-                    fullWidth={true}
-                    margin={'normal'}
-                >
-                    <TextField
-                        id="select"
-                        label="Villager"
-                        required={true}
-                        select
+                <div className={classes.formInner}>
+                    <Autocomplete
+                        id="villager-combobox"
+                        className={classes.comboBox}
+                        error={error}
+                        disabled={loading}
+                        disableClearable
+                        options={VILLAGERS.sort((a, b) => -b.species.localeCompare(a.species))}
+                        getOptionLabel={(option) => option.name}
+                        groupBy={(option) => option.species}
+                        style={{ width: 300 }}
+                        renderInput={(params) => <TextField {...params} label="Villager" variant="outlined" />}
                         value={selectedVillager}
-                        onChange={(e, child) => {
+                        onChange={(e, newVal) => {
                             setError('');
-                            setSelectedVillager(child.key);
+                            setSelectedVillager(newVal);
                         }}
-                        error={!!error}
-                    >
-                        {VILLAGERS.map(villager => (
-                            <MenuItem
-                                key={villager.name}
-                                value={villager.name}
-                            >
-                                {villager.name}
-                            </MenuItem>
-                        ))}
-                    </TextField>
-                </FormControl>
-                <ButtonGroup fullWidth={true}>
+                    />
                     <Button
                         type="submit"
+                        className={classes.btn}
                         variant="contained"
                         color="primary"
                         disabled={loading}
                         disableElevation
                     >
-                        <Fade in={!loading}><span>Track</span></Fade>
+                        <Fade in={!loading}><PublishIcon /></Fade>
                         {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
                     </Button>
-                </ButtonGroup>
+                </div>
             </form>
-            <RecentSightings />
             <Snackbar
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
                 open={!!success || !!error}

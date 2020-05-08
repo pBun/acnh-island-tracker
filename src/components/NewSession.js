@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
+import { navigate } from 'gatsby';
 import { Typography, FormControl, FormControlLabel, Checkbox, ButtonGroup, Button, TextField } from '@material-ui/core';
 import DateFnsUtils from '@date-io/date-fns';
 import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -28,11 +29,9 @@ export default function NewSession() {
             onSubmit={(e) => {
                 e.preventDefault();
                 initialize({ islandTimestamp: !overrideClock ? Date.now() : islandTimestamp });
+                navigate('/session/track/');
             }}
         >
-            <Typography variant="h4" component="h2">
-                New Session
-            </Typography>
             <FormControl
                 margin="normal"
                 style={{
