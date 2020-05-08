@@ -31,6 +31,7 @@ const VILLAGERS = villagerData && villagerData.feed && villagerData.feed.entry &
 
 const useRowStyles = makeStyles({
     root: {
+        marginBottom: 0,
         "& > *": {
             borderBottom: "unset",
         },
@@ -61,6 +62,7 @@ function Row(props) {
                 <TableCell component="th" scope="row">
                     {row.name}
                 </TableCell>
+                <TableCell>{row.history.length}</TableCell>
                 <TableCell>{row.percent}</TableCell>
             </TableRow>
             <TableRow>
@@ -145,12 +147,13 @@ function PercentBreakdown({ villagerPropName }) {
     });
     return (
         <TableContainer component={Paper}>
-            <Table aria-label="collapsible table">
+            <Table size="small" aria-label={`breakdown of villagers by ${villagerPropName}`}>
                 <TableHead>
                     <TableRow>
                         <TableCell />
                         <TableCell>{ villagerPropName.charAt(0).toUpperCase() + villagerPropName.slice(1) }</TableCell>
-                        <TableCell>Percentage</TableCell>
+                        <TableCell>Seen</TableCell>
+                        <TableCell>Seen/Total</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>

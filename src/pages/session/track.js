@@ -7,7 +7,7 @@ import SessionContext from '../../context/currentSession';
 import SiteLayout from '../../components/SiteLayout';
 import SEO from '../../components/seo';
 import TrackVillager from '../../components/TrackVillager';
-import RecentTrips from '../../components/RecentTrips';
+import RecentSightings from '../../components/RecentSightings';
 
 const useStyles = makeStyles(theme => ({
     title: {
@@ -36,7 +36,7 @@ const TrackPage = () => {
                         Recent Sightings
                     </Typography>
                     <Paper>
-                        <RecentTrips />
+                        <RecentSightings />
                     </Paper>
                 </Grid>
             </Grid>

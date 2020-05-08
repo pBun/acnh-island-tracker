@@ -1,38 +1,46 @@
 import React, { useContext } from 'react';
-import { Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemText from '@material-ui/core/ListItemText';
+import Avatar from '@material-ui/core/Avatar';
+import FaceIcon from '@material-ui/icons/Face';
 import { format } from 'date-fns';
 
 import SessionContext from '../context/currentSession';
 
-import './RecentSightings.css';
-
-export default function RecentSightings(numSightings=10) {
+export default function RecentSightings({ numTrips = 5 }) {
     const { session } = useContext(SessionContext);
     const recentSightings = session.sightings
-        .slice(Math.max(session.sightings.length - numSightings, 0))
+        .slice(Math.max(session.sightings.length - numTrips, 0))
         .reverse();
-    if (!recentSightings.length) return '';
     return (
-        <Typography className="RecentSightings" variant="body2" component="div">
-            <span>Recent Sightings</span>
-            <ul className="RecentSightings-list">
-                {recentSightings.map(s => (
-                    <li className="RecentSightings-item" key={`${s.villager}_${s.timestamp}`}>
-                        <span className="RecentSightings-item-inner">
-                            <a
-                                href="https://nookipedia.com/wiki/Admiral"
-                                target="_blank"
-                                rel="noreferrer noopener"
-                            >
-                                {s.villager}
-                            </a>
-                        </span>
-                        <span className="RecentSightings-item-inner">
-                            {format(s.timestamp + session.islandOffset, 'MM/dd/yyyy hh:mm a')}
-                        </span>
-                    </li>
-                ))}
-            </ul>
-        </Typography>
+        <List dense={true}>
+            {recentSightings.map((sighting) => (
+                <ListItem key={sighting.timestamp}>
+                    <Button
+                        component="a"
+                        fullWidth={true}
+                        href={`https://nookipedia.com/wiki/${sighting.villager}`}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        style={{
+                            textTransform: 'none',
+                        }}
+                    >
+                        <ListItemAvatar>
+                            <Avatar>
+                                <FaceIcon />
+                            </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText
+                            primary={sighting.villager}
+                            secondary={format(sighting.timestamp + session.islandOffset, 'hh:mm a')}
+                        />
+                    </Button>
+                </ListItem>
+            ))}
+        </List>
     );
 }
