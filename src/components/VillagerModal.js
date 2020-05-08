@@ -29,9 +29,13 @@ export default function FormModal({ children, open, handleClockSettings, handleC
                         current clock settings
                     </Link>
                     {' '}
-                    (
-                    <IslandTime />
-                    ) match the clock on your Nintendo Switch.
+                    <span style={{display: 'inline-block'}}>
+                        (
+                        <IslandTime />
+                        )
+                    </span>
+                    {' '}
+                    match the clock on your Nintendo Switch.
                 </DialogContentText>
                 <VilagerCombobox
                     value={selectedVillager}
