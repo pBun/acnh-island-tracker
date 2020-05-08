@@ -46,7 +46,13 @@ export default function IndexPage() {
                             <ListSubheader className={classes.subheader}>
                                 {format(islandTimestamp, 'MMM d')}
                             </ListSubheader>
-                            <ListItem button>
+                            <ListItem
+                                button
+                                component="a"
+                                href={`https://nookipedia.com/wiki/${villager.name}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
                                 <ListItemAvatar>
                                     <Avatar
                                         alt={villager.name}

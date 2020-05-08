@@ -289,6 +289,16 @@ function PercentBreakdownTable({ villagerPropName }) {
     }));
     const emptyRows =
         rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+    const rowsPerPageOptions = [25];
+    if (availableProps.length >= 50) {
+        rowsPerPageOptions.push(50);
+    }
+    if (availableProps.length >= 100) {
+        rowsPerPageOptions.push(100);
+    }
+    if (availableProps.length > 100) {
+        rowsPerPageOptions.push(availableProps.length);
+    }
     return (
         <TableContainer className={classes.root}>
             <Table
@@ -319,9 +329,9 @@ function PercentBreakdownTable({ villagerPropName }) {
                 </TableBody>
             </Table>
             <TablePagination
-                rowsPerPageOptions={[25, 50, VILLAGERS.length]}
+                rowsPerPageOptions={rowsPerPageOptions}
                 component="div"
-                count={rows.length}
+                count={Math.ceil(rows.length / rowsPerPage)}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onChangePage={handleChangePage}
