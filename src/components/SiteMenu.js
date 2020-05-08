@@ -81,6 +81,13 @@ export default function BottomAppBar({ children }) {
                             <ListItemText
                                 primary={<IslandTime template="hh:mm a" />}
                                 secondary={<IslandTime template="MMM d" />}
+                                primaryTypographyProps={{
+                                    color: 'inherit',
+                                }}
+                                secondaryTypographyProps={{
+                                    color: 'inherit',
+                                    style: { opacity: 0.6 },
+                                }}
                             />
                         </ListItem>
                     </List>
