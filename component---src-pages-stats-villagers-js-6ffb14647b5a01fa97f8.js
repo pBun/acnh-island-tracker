@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[9],{uQeY:function(e,a,n){"use strict";n.r(a);var t=n("q1tI"),r=n.n(t),i=n("ofer"),l=n("R/WZ"),c=n("RMc2"),u=n("1lFR"),o=Object(l.a)((function(e){return{title:{padding:e.spacing(4,0,2)}}}));a.default=function(){var e=o();return r.a.createElement(c.a,null,r.a.createElement(i.a,{variant:"h6",className:e.title},"Villager Sightings by Name"),r.a.createElement(u.a,{villagerPropName:"name"}))}}}]);
+//# sourceMappingURL=component---src-pages-stats-villagers-js-6ffb14647b5a01fa97f8.js.map
