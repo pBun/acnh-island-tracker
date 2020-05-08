@@ -8,8 +8,6 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import Avatar from "@material-ui/core/Avatar";
 
-import { getVillager } from '../util/villager';
-
 import SessionContext from '../context/currentSession';
 
 import SEO from "../components/seo";
@@ -30,6 +28,19 @@ export default function IndexPage() {
     const { session } = React.useContext(SessionContext);
 
     const recentSightings = session.sightings.sort((a, b) => b.timestamp - a.timestamp);
+    const recentSightingsFormatted = recentSightings.map((sighting) => {
+        const islandTimestamp = sighting.timestamp + session.islandOffset;
+        return {
+            timestamp: sighting.timestamp,
+            villager: sighting.villager,
+            date:  format(islandTimestamp, 'MMM d, yyyy'),
+            time: format(islandTimestamp, 'h:mm a'),
+        };
+    });
+    const recentSightingsGroupedByDate = recentSightingsFormatted.reduce((acc, data) => {
+        (acc[data['date']] = acc[data['date']] || []).push(data);
+        return acc;
+    }, {});
 
     return (
         <SiteMenu>
@@ -38,35 +49,34 @@ export default function IndexPage() {
                 Recent Activity
             </PageTitle>
             <List className={classes.list}>
-                {recentSightings.length ? recentSightings.map((sighting) => {
-                    const villager = getVillager(sighting.villager);
-                    const islandTimestamp = sighting.timestamp + session.islandOffset;
-                    return (
-                        <React.Fragment key={sighting.timestamp}>
-                            <ListSubheader className={classes.subheader}>
-                                {format(islandTimestamp, 'MMM d')}
-                            </ListSubheader>
+                {recentSightings.length ? Object.keys(recentSightingsGroupedByDate).map((date) => (
+                    <React.Fragment key={date}>
+                        <ListSubheader className={classes.subheader}>
+                            {date}
+                        </ListSubheader>
+                        {recentSightingsGroupedByDate[date].map((data) => (
                             <ListItem
+                                key={data.timestamp}
                                 button
                                 component="a"
-                                href={`https://nookipedia.com/wiki/${villager.name}`}
+                                href={`https://nookipedia.com/wiki/${data.villager}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
                                 <ListItemAvatar>
                                     <Avatar
-                                        alt={villager.name}
-                                        src={villager.name}
+                                        alt={data.villager}
+                                        src={data.villager}
                                     />
                                 </ListItemAvatar>
                                 <ListItemText
-                                    primary={villager.name}
-                                    secondary={format(islandTimestamp, 'h:mm a')}
+                                    primary={data.villager}
+                                    secondary={data.time}
                                 />
                             </ListItem>
-                        </React.Fragment>
-                    );
-                }) : (
+                        ))}
+                    </React.Fragment>
+                )) : (
                     <ListSubheader className={classes.subheader}>
                         You haven't tracked any villagers yet!
                     </ListSubheader>
