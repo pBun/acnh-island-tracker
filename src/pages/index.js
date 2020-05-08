@@ -13,6 +13,7 @@ import { getVillager } from '../util/villager';
 
 import SessionContext from '../context/currentSession';
 
+import SEO from "../components/seo";
 import SiteMenu from "../components/SiteMenu";
 
 const useStyles = makeStyles(theme => ({
