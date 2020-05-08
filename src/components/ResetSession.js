@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { IconButton, Typography } from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
 
 import SessionContext from '../context/currentSession';

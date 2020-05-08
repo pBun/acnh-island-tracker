@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { navigate } from 'gatsby';
-import { fade, makeStyles } from '@material-ui/core/styles';
-import { Menu, MenuItem, Button, Badge, Typography, Icon, ListItemIcon, ListItemText, IconButton, Toolbar, AppBar } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { Menu, MenuItem, Button, Badge, Typography, ListItemIcon, ListItemText, IconButton, Toolbar, AppBar } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import FlightIcon from '@material-ui/icons/Flight';
 import AlarmIcon from '@material-ui/icons/Alarm';
@@ -30,10 +30,6 @@ export default function PrimarySearchAppBar() {
 
     const handleSessionMenuOpen = event => {
         setAnchorEl(event.currentTarget);
-    };
-
-    const handleMenuClose = () => {
-        setAnchorEl(null);
     };
 
     const menuId = "primary-search-account-menu";

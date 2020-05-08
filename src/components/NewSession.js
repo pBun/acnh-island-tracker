@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { navigate } from 'gatsby';
-import { Typography, FormControl, FormControlLabel, Checkbox, ButtonGroup, Button, TextField } from '@material-ui/core';
+import { FormControl, FormControlLabel, Checkbox, ButtonGroup, Button } from '@material-ui/core';
 import DateFnsUtils from '@date-io/date-fns';
 import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 
@@ -8,7 +8,6 @@ import SessionContext from '../context/currentSession';
 
 export default function NewSession() {
     const { initialize } = useContext(SessionContext);
-    const [sessionId, setSessionId] = useState('');
     const [overrideClock, setOverrideClock] = useState(false);
     const [islandTimestamp, setIslandTimestamp] = useState(new Date());
     const [pickerSynced, setPickerSynced] = useState(true);

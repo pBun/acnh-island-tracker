@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { navigate } from 'gatsby';
-import { ButtonGroup, Grid, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import SessionContext from '../../context/currentSession';
@@ -23,6 +23,7 @@ const SessionPage = () => {
     }
     return (
         <SiteLayout>
+            <SEO />
             <Typography variant="h4" className={classes.title}>
                 Current Session
                 {' '}
