@@ -114,6 +114,9 @@ export default function BottomAppBar({ children }) {
                     </Fab>
                     <VillagerModal
                         open={modalOpen === 'track'}
+                        handleClockSettings={() => {
+                            setModalOpen('clock')
+                        }}
                         handleConfirm={(villager) => {
                             if (!villager) return;
                             setModalOpen('');
@@ -159,6 +162,7 @@ export default function BottomAppBar({ children }) {
                 id={menuId}
                 open={drawerOpen}
                 handleClose={() => setDrawerOpen(false)}
+                handleItemClick={(item) => item === 'settings-clock' && setModalOpen('clock')}
             />
         </>
     );

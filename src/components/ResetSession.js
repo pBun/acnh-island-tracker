@@ -1,27 +1,25 @@
 import React, { useContext } from 'react';
-import { IconButton } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
 
 import SessionContext from '../context/currentSession';
 
-
 export default function ResetSession(props) {
     const { resetSession } = useContext(SessionContext);
     return (
-        <IconButton
+        <Button
             className="ResetSession"
-            variant="extended"
-            size="medium"
+            variant="contained"
             color="secondary"
-            aria-label="reset everything"
+            startIcon={<Delete />}
             onClick={() => {
-                if (window && window.confirm('Are you sure you want to reset your session and start over?')) {
+                if (window && window.confirm('Are you sure you want to reset your session and start over? This cannot be undone.')) {
                     resetSession();
                 }
             }}
             {...props}
         >
-            <Delete />
-        </IconButton>
+            Reset Session
+        </Button>
     );
 }

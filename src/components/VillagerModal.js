@@ -1,14 +1,16 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
+import Link from "@material-ui/core/Link";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import IslandTime from "../components/IslandTime";
 
 import VilagerCombobox from "./VillagerCombobox";
 
-export default function FormModal({ children, open, handleConfirm, handleCancel }) {
+export default function FormModal({ children, open, handleClockSettings, handleConfirm, handleCancel }) {
     const [selectedVillager, setSelectedVillager] = React.useState(null);
     return (
         <Dialog
@@ -16,10 +18,20 @@ export default function FormModal({ children, open, handleConfirm, handleCancel 
             onClose={handleCancel}
             aria-labelledby="form-dialog-title"
         >
-            <DialogTitle id="form-dialog-title">Track a Villager</DialogTitle>
+            <DialogTitle id="form-dialog-title">
+                Track Villager
+            </DialogTitle>
             <DialogContent>
-                <DialogContentText>
-                    Select a villager to track (hopefully it's Raymond).
+                <DialogContentText style={{maxWidth: 400}}>
+                    Please ensure that your
+                    {' '}
+                    <Link variant="body1" color="primary" component="button" onClick={() => handleClockSettings()}>
+                        current clock settings
+                    </Link>
+                    {' '}
+                    (
+                    <IslandTime />
+                    ) match the clock on your Nintendo Switch.
                 </DialogContentText>
                 <VilagerCombobox
                     value={selectedVillager}

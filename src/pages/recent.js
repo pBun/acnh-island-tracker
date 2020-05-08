@@ -25,12 +25,10 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function IndexPage() {
+export default function RecentPage() {
     const classes = useStyles();
     const { session } = React.useContext(SessionContext);
-
     const recentSightings = session.sightings.sort((a, b) => b.timestamp - a.timestamp);
-
     return (
         <SiteMenu>
             <SEO title="ACNH Island Tracker" />

@@ -1,25 +1,17 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 
 import SEO from "../../components/seo";
 import SiteMenu from '../../components/SiteMenu';
 import PercentBreakdown from '../../components/PercentBreakdown';
-
-const useStyles = makeStyles(theme => ({
-    title: {
-        padding: theme.spacing(4, 0, 2),
-    },
-}));
+import PageTitle from "../../components/PageTitle";
 
 const StatsPage = () => {
-    const classes = useStyles();
     return (
         <SiteMenu>
             <SEO title="Species Stats | ACNH Island Tracker" />
-            <Typography variant="h6" className={classes.title}>
+            <PageTitle>
                 Villager Sightings by Species
-            </Typography>
+            </PageTitle>
             <PercentBreakdown villagerPropName="species" />
         </SiteMenu>
     );
