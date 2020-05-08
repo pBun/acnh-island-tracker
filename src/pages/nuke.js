@@ -21,9 +21,9 @@ const NukePage = () => {
     }, [resetSession]);
     return (
         <SiteMenu>
-            <SEO title="404: Not found" />
-            <Typography variant="h4" className={classes.title}>
-                Everything has been nuked :D
+            <SEO />
+            <Typography variant="h6" className={classes.title}>
+                All session data has been cleared.
             </Typography>
         </SiteMenu>
     )
