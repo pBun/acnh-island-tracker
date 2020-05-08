@@ -4,8 +4,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import SessionContext from '../context/currentSession';
 
-import SiteMenu from "../components/SiteMenu";
 import SEO from "../components/seo";
+import SiteMenu from "../components/SiteMenu";
 
 const useStyles = makeStyles(theme => ({
     title: {
