@@ -66,7 +66,7 @@ export default function IndexPage() {
                                 <ListItemAvatar>
                                     <Avatar
                                         alt={data.villager}
-                                        src={data.villager}
+                                        src={data.villagerImage}
                                     />
                                 </ListItemAvatar>
                                 <ListItemText
