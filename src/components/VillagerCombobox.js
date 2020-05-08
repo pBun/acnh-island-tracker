@@ -22,7 +22,7 @@ export default function TrackVillager(props) {
             options={VILLAGERS.sort((a, b) => -b.species.localeCompare(a.species))}
             getOptionLabel={(option) => option.name}
             groupBy={(option) => option.species}
-            style={{ width: 300 }}
+            style={{ width: '100%' }}
             renderInput={(params) => <TextField {...params} label="Villager" variant="outlined" />}
             {...props}
         />
