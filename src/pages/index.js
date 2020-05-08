@@ -1,43 +1,72 @@
-import React, { useContext } from 'react';
-import { Link } from 'gatsby';
-import { Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import React from "react";
+import { format } from 'date-fns';
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import Avatar from "@material-ui/core/Avatar";
+
+import { getVillager } from '../util/villager';
 
 import SessionContext from '../context/currentSession';
-import SiteLayout from '../components/SiteLayout';
-import SEO from '../components/seo';
 
-import NewSession from '../components/NewSession';
+import SiteMenu from "../components/SiteMenu";
 
 const useStyles = makeStyles(theme => ({
-    title: {
-        margin: theme.spacing(4, 0, 2),
+    text: {
+        padding: theme.spacing(2, 2, 0),
+    },
+    list: {
+        marginBottom: theme.spacing(2),
+    },
+    subheader: {
+        backgroundColor: theme.palette.background.paper,
     },
 }));
 
-const SightingsPage = () => {
+export default function BottomAppBar() {
     const classes = useStyles();
-    const { session } = useContext(SessionContext);
-    return (
-        <SiteLayout>
-            <SEO />
-            <Typography variant="h4" className={classes.title}>
-                Welcome to the Island Tracker!
-            </Typography>
-            <Typography variant="body1">
-                Start tracking the villagers you see on Mystery Islands and maybe we'll be able to figure out how they work eventually!
-            </Typography>
-            {!session.id ? (
-                <NewSession />
-            ) : (
-                <Typography variant="body1">
-                    You have tracked {session.sightings.length} villagers.
-                    {' '}
-                    <Link to="/session/track/">Track some more!</Link>
-                </Typography>
-            )}
-        </SiteLayout>
-    );
-};
+    const { session } = React.useContext(SessionContext);
 
-export default SightingsPage;
+    const recentSightings = session.sightings.sort((a, b) => b.timestamp - a.timestamp);
+
+    return (
+        <SiteMenu>
+            <Typography className={classes.text} variant="h5" gutterBottom>
+                Recent Activity
+            </Typography>
+            <List className={classes.list}>
+                {recentSightings.length ? recentSightings.map((sighting) => {
+                    const villager = getVillager(sighting.villager);
+                    const islandTimestamp = sighting.timestamp + session.islandOffset;
+                    return (
+                        <React.Fragment key={sighting.timestamp}>
+                            <ListSubheader className={classes.subheader}>
+                                {format(islandTimestamp, 'MMM d')}
+                            </ListSubheader>
+                            <ListItem button>
+                                <ListItemAvatar>
+                                    <Avatar
+                                        alt={villager.name}
+                                        src={villager.name}
+                                    />
+                                </ListItemAvatar>
+                                <ListItemText
+                                    primary={villager.name}
+                                    secondary={format(islandTimestamp, 'h:mm a')}
+                                />
+                            </ListItem>
+                        </React.Fragment>
+                    );
+                }) : (
+                    <ListSubheader className={classes.subheader}>
+                        You haven't tracked any villagers yet!
+                    </ListSubheader>
+                )}
+            </List>
+        </SiteMenu>
+    );
+}

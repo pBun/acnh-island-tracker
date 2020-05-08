@@ -2,6 +2,8 @@ import React from "react";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 
+import SessionContext from '../context/currentSession';
+
 import SiteMenu from "../components/SiteMenu";
 import SEO from "../components/seo";
 
@@ -11,19 +13,20 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const NotFoundPage = () => {
+const NukePage = () => {
     const classes = useStyles();
+    const { resetSession } = React.useContext(SessionContext);
+    React.useEffect(() => {
+        resetSession();
+    }, [resetSession]);
     return (
         <SiteMenu>
             <SEO title="404: Not found" />
             <Typography variant="h4" className={classes.title}>
-                404 NOT FOUND
-            </Typography>
-            <Typography variant="body1">
-                ...Well there you have it. According to recent feedback, the general sentiment is that this page was not found. Well I think there's only one way to respond to this information... Try one of the other pages in the menu. And there you have it!
+                Everything has been nuked :D
             </Typography>
         </SiteMenu>
     )
 };
 
-export default NotFoundPage;
+export default NukePage;

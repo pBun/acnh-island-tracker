@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { format } from 'date-fns';
 
 import SessionContext from '../context/currentSession';
 
-export default function IslandTime() {
+export default function IslandTime({ template='MMM d, yyyy hh:mm a' }) {
     const { session } = useContext(SessionContext);
     const [islandTime, setIslandTime] = useState(Date.now() + session.islandOffset);
     useEffect(() => {
@@ -19,9 +19,5 @@ export default function IslandTime() {
         };
     }, [session.islandOffset]);
     if (!session.id) return '';
-    return (
-        <span className="IslandTime">
-            {`${format(islandTime, 'MM/dd/yyyy hh:mm a')}`}
-        </span>
-    );
+    return format(islandTime, template);
 }

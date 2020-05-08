@@ -19,14 +19,13 @@ const getInitialSession = () => ({
 
 function reducer(state, action) {
     switch (action.type) {
-        case 'initialize':
+        case 'setIslandOffset':
             const timestamp = Date.now();
             const { islandTimestamp } = action.payload;
             const islandOffset = islandTimestamp ? islandTimestamp - timestamp : 0;
             return {
                 ...state,
                 islandOffset,
-                sightings: [],
             };
         case 'trackVillager':
             return {
@@ -47,7 +46,7 @@ function reducer(state, action) {
 }
 const initialState = {
     session: getInitialSession(),
-    initialize: (opts) => {},
+    setIslandOffset: (opts) => {},
     trackVillager: (opts) => {},
     resetSession: () => {},
 };
@@ -63,11 +62,10 @@ export const SessionProvider = ({ children }) => {
         <SessionContext.Provider
             value={{
                 session: state,
-                initialize: ({ id, islandTimestamp }) => {
+                setIslandOffset: ({ islandTimestamp }) => {
                     dispatch({
-                        type: 'initialize',
+                        type: 'setIslandOffset',
                         payload: {
-                            id,
                             islandTimestamp,
                         },
                     });

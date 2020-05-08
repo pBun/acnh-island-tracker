@@ -11,7 +11,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { format } from 'date-fns';
@@ -146,7 +145,7 @@ function PercentBreakdown({ villagerPropName }) {
         data[prop].push(sighting);
     });
     return (
-        <TableContainer component={Paper}>
+        <TableContainer>
             <Table size="small" aria-label={`breakdown of villagers by ${villagerPropName}`}>
                 <TableHead>
                     <TableRow>
