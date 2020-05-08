@@ -1,22 +1,40 @@
-import React, { useContext } from 'react';
-import { navigate } from 'gatsby';
-import { makeStyles } from '@material-ui/core/styles';
-import { Menu, MenuItem, Button, Badge, Typography, ListItemIcon, ListItemText, IconButton, Toolbar, AppBar } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import FlightIcon from '@material-ui/icons/Flight';
-import AlarmIcon from '@material-ui/icons/Alarm';
-import AlarmAddIcon from '@material-ui/icons/AlarmAdd';
+import React, { useContext } from "react";
+import { Link } from "gatsby";
+import { makeStyles } from "@material-ui/core/styles";
+import {
+    Drawer,
+    List,
+    ListItem,
+    Divider,
+    Menu,
+    MenuItem,
+    Button,
+    Badge,
+    Typography,
+    ListItemIcon,
+    ListItemText,
+    IconButton,
+    Toolbar,
+    AppBar,
+} from "@material-ui/core";
+import MenuIcon from "@material-ui/icons/Menu";
+import FlightIcon from "@material-ui/icons/Flight";
+import AlarmIcon from "@material-ui/icons/Alarm";
+import AlarmAddIcon from "@material-ui/icons/AlarmAdd";
+import InboxIcon from "@material-ui/icons/Inbox";
+import MailIcon from "@material-ui/icons/Mail";
+import HomeIcon from "@material-ui/icons/Home";
 
-import SessionContext from '../context/currentSession';
+import SessionContext from "../context/currentSession";
 
 const useStyles = makeStyles(theme => ({
     grow: {
         flexGrow: 1,
     },
     title: {
-        display: 'none',
-        [theme.breakpoints.up('sm')]: {
-            display: 'block',
+        display: "none",
+        [theme.breakpoints.up("sm")]: {
+            display: "block",
         },
     },
 }));
@@ -24,98 +42,79 @@ const useStyles = makeStyles(theme => ({
 export default function PrimarySearchAppBar() {
     const { session } = useContext(SessionContext);
     const classes = useStyles();
-    const [anchorEl, setAnchorEl] = React.useState(null);
-
-    const isMenuOpen = Boolean(anchorEl);
-
-    const handleSessionMenuOpen = event => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const menuId = "primary-search-account-menu";
-    const renderMenu = (
-        <Menu
-            anchorEl={anchorEl}
-            anchorOrigin={{ vertical: "top", horizontal: "right" }}
-            id={menuId}
-            keepMounted
-            transformOrigin={{ vertical: "top", horizontal: "right" }}
-            open={isMenuOpen}
-            onClose={()=> setAnchorEl(null)}
-        >
-            <MenuItem
-                onClick={() => {
-                    navigate('/session/');
-                    setAnchorEl(null);
-                }}
-            >
-                <ListItemIcon
-                    aria-label="account of current user"
-                    aria-controls="primary-search-account-menu"
-                    aria-haspopup="true"
-                    color="inherit"
-                >
-                    <AlarmIcon />
-                </ListItemIcon>
-                <ListItemText primary={`View (${session.sightings.length})`} />
-            </MenuItem>
-            <MenuItem
-                onClick={() => {
-                    navigate('/session/track/');
-                    setAnchorEl(null);
-                }}
-            >
-                <ListItemIcon
-                    aria-label="account of current user"
-                    aria-controls="primary-search-account-menu"
-                    aria-haspopup="true"
-                    color="inherit"
-                >
-                    <AlarmAddIcon />
-                </ListItemIcon>
-                <ListItemText primary="Track" />
-            </MenuItem>
-        </Menu>
-    );
-
+    const [open, setOpen] = React.useState(false);
+    const menuId = "site-menu";
     return (
         <div className={classes.grow}>
             <AppBar position="static">
                 <Toolbar>
-                    <Button
-                        onClick={() => {
-                            navigate('/');
-                        }}
-                        startIcon={<FlightIcon />}
-                        color="inherit"
-                        style={{
-                            textTransform: 'none',
-                        }}
-                    >
-                        <Typography className={classes.title} variant="h6" noWrap>
-                            Island Tracker
-                        </Typography>
-                    </Button>
+                    <Typography className={classes.title} variant="h6" noWrap>
+                        Island Tracker
+                    </Typography>
                     <div className={classes.grow} />
-                    {session.id && (
-                        <div>
-                            <IconButton
-                                edge="end"
-                                aria-label="current session"
-                                aria-controls={menuId}
-                                aria-haspopup="true"
-                                onClick={handleSessionMenuOpen}
-                                color="inherit"
-                            >
-                                <Badge badgeContent={session.sightings.length} color="secondary">
-                                    <MenuIcon />
-                                </Badge>
-                            </IconButton>
-                        </div>
-                    )}
+                    <IconButton
+                        edge="end"
+                        aria-label="open site menu"
+                        aria-controls={menuId}
+                        aria-haspopup="true"
+                        onClick={() => setOpen(true)}
+                        color="inherit"
+                    >
+                        <MenuIcon />
+                    </IconButton>
                 </Toolbar>
             </AppBar>
-            {renderMenu}
+            <Drawer id={menuId} anchor="right" open={open} onClose={() => setOpen(false)}>
+                <div
+                    role="presentation"
+                    onClick={() => setOpen(false)}
+                    onKeyDown={() => setOpen(false)}
+                >
+                    <Divider />
+                    <List>
+                        <ListItem
+                            button
+                            component={Link}
+                            to="/"
+                        >
+                            <ListItemIcon>
+                                <HomeIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Home" />
+                        </ListItem>
+                        <ListItem
+                            button
+                            component={Link}
+                            to="/track/"
+                        >
+                            <ListItemIcon>
+                                <FlightIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Track" />
+                        </ListItem>
+                        <ListItem
+                            button
+                            component={Link}
+                            to="/stats/"
+                        >
+                            <ListItemIcon>
+                                <FlightIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Stats" />
+                        </ListItem>
+                        <ListItem
+                            button
+                            component={Link}
+                            to="/clock/"
+                        >
+                            <ListItemIcon>
+                                <AlarmIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Clock" />
+                        </ListItem>
+                    </List>
+                </div>
+            </Drawer>
         </div>
     );
 }

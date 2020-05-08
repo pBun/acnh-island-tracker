@@ -1,12 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import SessionContext from '../../context/currentSession';
-import SiteLayout from '../../components/SiteLayout';
-import SEO from '../../components/seo';
-import ResetSession from '../../components/ResetSession';
-import PercentBreakdown from '../../components/PercentBreakdown';
+import SiteLayout from '../components/SiteLayout';
+import SEO from '../components/seo';
+import ResetSession from '../components/ResetSession';
+import PercentBreakdown from '../components/PercentBreakdown';
 
 const useStyles = makeStyles(theme => ({
     title: {
@@ -16,7 +15,6 @@ const useStyles = makeStyles(theme => ({
 
 const SessionPage = () => {
     const classes = useStyles();
-    const { session } = useContext(SessionContext);
     return (
         <SiteLayout>
             <SEO />

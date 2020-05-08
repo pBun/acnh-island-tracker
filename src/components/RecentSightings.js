@@ -17,7 +17,7 @@ export default function RecentSightings({ numTrips = 5 }) {
         .reverse();
     return (
         <List dense={true}>
-            {recentSightings.map((sighting) => (
+            {recentSightings ? recentSightings.map((sighting) => (
                 <ListItem key={sighting.timestamp}>
                     <Button
                         component="a"
@@ -40,7 +40,13 @@ export default function RecentSightings({ numTrips = 5 }) {
                         />
                     </Button>
                 </ListItem>
-            ))}
+            )) : (
+                <ListItem>
+                    <ListItemText
+                        primary="You haven't sighted any villagers yet."
+                    />
+                </ListItem>
+            )}
         </List>
     );
 }

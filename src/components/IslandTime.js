@@ -18,7 +18,7 @@ export default function IslandTime() {
             window.clearTimeout(updateIslandTimeTimeout);
         };
     }, [session.islandOffset]);
-    if (!session.timestamp) return '';
+    if (!session.id) return '';
     return (
         <span className="IslandTime">
             {`${format(islandTime, 'MM/dd/yyyy hh:mm a')}`}

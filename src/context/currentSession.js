@@ -11,7 +11,7 @@ const LOCAL_STORAGE_KEY = 'islandTrackerSession';
 const SHEET_URL = 'https://script.google.com/macros/s/AKfycbw_4jsHZE4PkIePUPbzPAlzzcXEeWibBltRUzeLu0zpztsVAEg/exec';
 
 const getInitialSession = () => ({
-    id: null,
+    id: Math.random().toString(36).substr(2, 12),
     timestamp: null,
     islandOffset: 0,
     sightings: [],
@@ -21,11 +21,10 @@ function reducer(state, action) {
     switch (action.type) {
         case 'initialize':
             const timestamp = Date.now();
-            const { islandTimestamp, id } = action.payload;
+            const { islandTimestamp } = action.payload;
             const islandOffset = islandTimestamp ? islandTimestamp - timestamp : 0;
             return {
-                id: id || Math.random().toString(36).substr(2, 12),
-                timestamp,
+                ...state,
                 islandOffset,
                 sightings: [],
             };
@@ -54,7 +53,8 @@ const initialState = {
 };
 const SessionContext = createContext(initialState);
 export const SessionProvider = ({ children }) => {
-    const localState = JSON.parse(window ? window.localStorage.getItem(LOCAL_STORAGE_KEY) : '');
+    const localStateString = window && window.localStorage.getItem(LOCAL_STORAGE_KEY);
+    const localState = localStateString && JSON.parse(localStateString);
     const [state, dispatch] = useReducer(reducer, localState || getInitialSession());
     useEffect(() => {
         window && window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(state));

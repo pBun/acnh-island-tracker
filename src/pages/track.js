@@ -1,12 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Paper, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import SessionContext from '../../context/currentSession';
-import SiteLayout from '../../components/SiteLayout';
-import SEO from '../../components/seo';
-import TrackVillager from '../../components/TrackVillager';
-import RecentSightings from '../../components/RecentSightings';
+import SiteLayout from '../components/SiteLayout';
+import SEO from '../components/seo';
+import TrackVillager from '../components/TrackVillager';
+import RecentSightings from '../components/RecentSightings';
 
 const useStyles = makeStyles(theme => ({
     title: {
@@ -16,7 +15,6 @@ const useStyles = makeStyles(theme => ({
 
 const TrackPage = () => {
     const classes = useStyles();
-    const { session } = useContext(SessionContext);
     return (
         <SiteLayout>
             <SEO />
