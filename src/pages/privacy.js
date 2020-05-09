@@ -8,10 +8,10 @@ import PageTitle from "../components/PageTitle";
 
 const SessionPage = () => {
     return (
-        <SiteMenu title="Session Data">
+        <SiteMenu title="Data Privacy">
             <SEO />
             <PageTitle>
-                Current Session
+                Data Privacy
             </PageTitle>
             <Typography variant="body1">
                 This control deletes all data from your browser. Please reach out to me on <a href="https://twitter.com/peebun">Twitter (@peebun)</a> if you'd like me to delete your data collected on the <a href="https://docs.google.com/spreadsheets/d/1p542EQ85gdgLJfjZcI3SSmTdsnZKNi6KKjjjSdGkl7Q/edit?usp=sharing">Google Sheet</a>.
