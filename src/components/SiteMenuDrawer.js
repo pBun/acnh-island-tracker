@@ -71,8 +71,8 @@ export default function TemporaryDrawer({ open, handleClose, handleItemClick }) 
                             url: '/',
                             icon: <FlightIcon />,
                             text: (
-                                <Typography variant="h5">
-                                    Island Tracker
+                                <Typography variant="h6">
+                                    Mystery Island Tracker
                                 </Typography>
                             ),
                         })}
