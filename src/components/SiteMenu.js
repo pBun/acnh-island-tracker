@@ -93,11 +93,10 @@ export default function BottomAppBar({ children }) {
                     </List>
                     <ClockOverrideModal
                         open={modalOpen === 'clock'}
-                        handleConfirm={(islandTimestamp) => {
-                            if (!islandTimestamp) return;
+                        handleConfirm={(islandOffset) => {
                             setModalOpen('');
-                            setIslandOffset({ islandTimestamp });
-                            setSnackMessage('Your island time has been successfully set!');
+                            setIslandOffset({ islandOffset });
+                            setSnackMessage('Success! Your clock has been updated');
                         }}
                         handleCancel={() => {
                             setModalOpen('');
@@ -127,7 +126,7 @@ export default function BottomAppBar({ children }) {
                                     setLoading(false);
                                 })
                                 .then(() => {
-                                    setSnackMessage('Villager tracked successfully!');
+                                    setSnackMessage(`${villager} tracked successfully!`);
                                     setLoading(false);
                                 });
                         }}

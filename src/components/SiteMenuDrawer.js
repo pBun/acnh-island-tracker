@@ -68,7 +68,7 @@ export default function TemporaryDrawer({ open, handleClose, handleItemClick }) 
                     <List component="div">
                         {menuItem({
                             id: 'recent',
-                            url: '/recent/',
+                            url: '/',
                             icon: <FlightIcon />,
                             text: (
                                 <Typography variant="h5">

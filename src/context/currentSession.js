@@ -20,9 +20,7 @@ const getInitialSession = () => ({
 function reducer(state, action) {
     switch (action.type) {
         case 'setIslandOffset':
-            const timestamp = Date.now();
-            const { islandTimestamp } = action.payload;
-            const islandOffset = islandTimestamp ? islandTimestamp - timestamp : 0;
+            const { islandOffset } = action.payload;
             return {
                 ...state,
                 islandOffset,
@@ -62,11 +60,11 @@ export const SessionProvider = ({ children }) => {
         <SessionContext.Provider
             value={{
                 session: state,
-                setIslandOffset: ({ islandTimestamp }) => {
+                setIslandOffset: ({ islandOffset }) => {
                     dispatch({
                         type: 'setIslandOffset',
                         payload: {
-                            islandTimestamp,
+                            islandOffset,
                         },
                     });
                 },

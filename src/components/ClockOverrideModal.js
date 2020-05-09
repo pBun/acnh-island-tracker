@@ -8,22 +8,27 @@ import { FormControl, FormControlLabel, Checkbox, Button } from '@material-ui/co
 import DateFnsUtils from '@date-io/date-fns';
 import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 
+import SessionContext from '../context/currentSession';
+
 export default function ClockOverrideModal({ open, handleConfirm, handleCancel }) {
-    const [overrideClock, setOverrideClock] = React.useState(false);
-    const [islandTimestamp, setIslandTimestamp] = React.useState(new Date());
+    const { session } = React.useContext(SessionContext);
+    const [overrideClock, setOverrideClock] = React.useState(!!session.islandOffset);
+    const [curTimestamp, setCurTimestamp] = React.useState(new Date());
+    const [islandOffset, setIslandOffset] = React.useState(session.islandOffset || 0);
     const [pickerSynced, setPickerSynced] = React.useState(true);
     React.useEffect(() => {
         if (!window || !pickerSynced) return;
         let updateTimeout;
-        const updateIslandTimestamp = () => {
-            setIslandTimestamp(Date.now());
-            updateTimeout = window.setTimeout(updateIslandTimestamp, 10000);
+        const updateCurTimestamp = () => {
+            setCurTimestamp(Date.now());
+            updateTimeout = window.setTimeout(updateCurTimestamp, 10000);
         };
-        updateIslandTimestamp();
+        updateCurTimestamp();
         return () => {
             window.clearTimeout(updateTimeout);
         };
     }, [pickerSynced]);
+    const islandTimestamp = overrideClock ? curTimestamp + islandOffset : curTimestamp;
     return (
         <Dialog
             open={open}
@@ -60,9 +65,9 @@ export default function ClockOverrideModal({ open, handleConfirm, handleCancel }
                         <KeyboardDateTimePicker
                             helperText="Nintendo Switch clock"
                             value={islandTimestamp}
-                            onChange={(newTimestamp) => {
-                                setIslandTimestamp(newTimestamp);
-                                setPickerSynced(false);
+                            onChange={(newIslandTimestamp) => {
+                                const newOffset = newIslandTimestamp - curTimestamp;
+                                setIslandOffset(newOffset);
                             }}
                             disabled={!overrideClock}
                             format="MM/dd/yyyy HH:mm"
@@ -75,8 +80,8 @@ export default function ClockOverrideModal({ open, handleConfirm, handleCancel }
             <Button
                 onClick={() => {
                     handleCancel();
-                    setPickerSynced(true);
-                    setOverrideClock(false);
+                    setOverrideClock(!!session.islandOffset);
+                    setIslandOffset(session.islandOffset || 0);
                 }}
                 color="primary"
             >
@@ -85,9 +90,7 @@ export default function ClockOverrideModal({ open, handleConfirm, handleCancel }
             <Button
                 disabled={!islandTimestamp}
                 onClick={() => {
-                    handleConfirm(overrideClock ? islandTimestamp : Date.now());
-                    setPickerSynced(true);
-                    setOverrideClock(false);
+                    handleConfirm(overrideClock ? islandOffset : 0);
                 }}
                 color="primary"
             >
