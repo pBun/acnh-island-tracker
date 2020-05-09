@@ -118,7 +118,7 @@ export default function TemporaryDrawer({ open, handleClose, handleItemClick }) 
                             id: 'settings-privacy',
                             url: '/privacy/',
                             icon: <LockIcon />,
-                            text: 'Privacy data',
+                            text: 'Data privacy',
                         })}
                     </List>
                 </div>
