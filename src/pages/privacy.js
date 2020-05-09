@@ -8,7 +8,7 @@ import PageTitle from "../components/PageTitle";
 
 const SessionPage = () => {
     return (
-        <SiteMenu title="Session Data | ACNH Island Tracker">
+        <SiteMenu title="Session Data">
             <SEO />
             <PageTitle>
                 Current Session

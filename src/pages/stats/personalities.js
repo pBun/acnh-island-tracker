@@ -8,7 +8,7 @@ import PageTitle from "../../components/PageTitle";
 const StatsPage = () => {
     return (
         <SiteMenu>
-            <SEO title="Personality Stats | ACNH Island Tracker" />
+            <SEO title="Personality Stats" />
             <PageTitle>
                 Villager Sightings by Personalities
             </PageTitle>

@@ -8,7 +8,7 @@ import PageTitle from "../components/PageTitle";
 const NotFoundPage = () => {
     return (
         <SiteMenu>
-            <SEO title="404: Not found | ACNH Island Tracker" />
+            <SEO title="404: Not found" />
             <PageTitle>
                 404 NOT FOUND
             </PageTitle>

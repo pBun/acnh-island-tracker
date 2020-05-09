@@ -44,7 +44,7 @@ export default function IndexPage() {
 
     return (
         <SiteMenu>
-            <SEO title="ACNH Island Tracker" />
+            <SEO title="Recent Acitvity" />
             <PageTitle>
                 Recent Activity
             </PageTitle>
