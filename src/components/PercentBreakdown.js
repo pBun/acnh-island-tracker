@@ -283,7 +283,7 @@ function PercentBreakdownTable({ villagerPropName }) {
         name: prop,
         count: data[prop].length,
         percent: Math.round(
-            data[prop].length / Math.max(1, session.sightings.length * 100)
+            data[prop].length / Math.max(1, session.sightings.length) * 100
         ),
         history: data[prop],
     }));
