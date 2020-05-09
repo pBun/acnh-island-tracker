@@ -124,7 +124,7 @@ export default function BottomAppBar({ children }) {
                                     setLoading(false);
                                 })
                                 .then(() => {
-                                    setSnackMessage(`${villager} tracked successfully!`);
+                                    setSnackMessage(`${villager.name} tracked successfully!`);
                                     setLoading(false);
                                 });
                         }}
