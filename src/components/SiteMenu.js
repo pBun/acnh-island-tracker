@@ -58,8 +58,6 @@ export default function BottomAppBar({ children }) {
     const [snackMessage, setSnackMessage] = React.useState('');
     const [loading, setLoading] = React.useState(false);
     const [drawerOpen, setDrawerOpen] = React.useState(false);
-    // const [menuAnchorEl, setMenuAnchorEl] = React.useState(null);
-    // const isMenuOpen = Boolean(menuAnchorEl);
     const menuId = 'menu-drawer';
     return (
         <>
