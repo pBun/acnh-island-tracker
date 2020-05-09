@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[7],{"74bx":function(e,a,t){"use strict";t.r(a);var n=t("q1tI"),l=t.n(n),c=t("vrFN"),i=t("RMc2"),r=t("1lFR"),s=t("S7Tf");a.default=function(){return l.a.createElement(i.a,null,l.a.createElement(c.a,{title:"Species Stats"}),l.a.createElement(s.a,null,"Villager Sightings by Species"),l.a.createElement(r.a,{villagerPropName:"species"}))}}}]);
+//# sourceMappingURL=component---src-pages-stats-species-js-55c3d4513eeff22192f5.js.map
