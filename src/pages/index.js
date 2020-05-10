@@ -13,16 +13,12 @@ import EqualizerIcon from "@material-ui/icons/Equalizer";
 
 import Page from "../components/page";
 
-const useStyles = makeStyles(theme => ({
-    text: {
-        margin: theme.spacing(3, 2, 2),
+const useStyles = makeStyles((theme) => ({
+    intro: {
+        margin: theme.spacing(2, 5, 2),
     },
     listTitle: {
-        margin: theme.spacing(3, 2, 0),
-    },
-    icon: {
-        backgroundColor: theme.palette.text.primary,
-        color: theme.palette.background.paper,
+        margin: theme.spacing(3, 5, 0),
     },
     list: {
         paddingBottom: theme.spacing(3),
@@ -45,7 +41,7 @@ export default function IndexPage() {
     );
     return (
         <Page title={site.siteMetadata.title}>
-            <Typography variant="body1" component="p" className={classes.text}>
+            <Typography variant="body1" component="p" className={classes.intro}>
                 Hi, I built this tool to track and compare villager appearance
                 rates on Animal Crossing: New Horizon Mystery Islands. The goal
                 is to demystify how villagers are rolled when traveling to each
@@ -64,7 +60,6 @@ export default function IndexPage() {
                         <Avatar
                             alt="1"
                             src="/images/1.png"
-                            className={classes.icon}
                         />
                     </ListItemIcon>
                     <ListItemText
@@ -82,7 +77,6 @@ export default function IndexPage() {
                         <Avatar
                             alt="2"
                             src="/images/2.png"
-                            className={classes.icon}
                         />
                     </ListItemIcon>
                     <ListItemText
@@ -100,7 +94,6 @@ export default function IndexPage() {
                         <Avatar
                             alt="3"
                             src="/images/3.png"
-                            className={classes.icon}
                         />
                     </ListItemIcon>
                     <ListItemText

@@ -24,6 +24,9 @@ const useStyles = makeStyles(theme => ({
     dialogContainer: {
         paddingTop: theme.spacing(2),
     },
+    checkboxLabel: {
+        fontSize: "0.75rem",
+    },
 }));
 
 export default function ClockOverrideModal({
@@ -84,10 +87,11 @@ export default function ClockOverrideModal({
                                 }
                                 name="overrideClock"
                                 size="small"
+                                color="primary"
                             />
                         }
                         label={
-                            <span style={{ fontSize: "0.75rem" }}>
+                            <span className={classes.checkboxLabel}>
                                 Override current time
                             </span>
                         }

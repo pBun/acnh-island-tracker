@@ -1,20 +1,35 @@
 import React from "react";
-import { Paper, Typography, Divider } from "@material-ui/core";
+import { Paper, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import SEO from "../components/seo";
 import SiteMenu from "../components/SiteMenu";
 
 const useStyles = makeStyles(theme => ({
-    title: {
-        padding: theme.spacing(2),
-    },
     container: {
-        margin: theme.spacing(2, 0),
+        position: 'relative',
+        margin: theme.spacing(6, 0, 0),
+        padding: theme.spacing(3, 0, 0),
+    },
+    title: {
+        display: 'inline-block',
+        position: 'absolute',
+        left: theme.spacing(2),
+        top: 0,
+        transform: 'translateY(-50%)',
+        color: '#30849e',
+        backgroundColor: '#ffdf4e',
+        paddingLeft: theme.spacing(3),
+        paddingRight: theme.spacing(3),
+        paddingTop: '0.25em',
+        paddingBottom: '0.25em',
+        fontSize: '1rem',
+        borderRadius: '1em',
+
     },
     note: {
         display: "block",
-        margin: theme.spacing(2, 1, 0),
+        margin: theme.spacing(2, 2, 0),
         color: theme.palette.text.hint,
         textAlign: "center",
     },
@@ -28,11 +43,10 @@ const SessionPage = ({ title, children, variant }) => {
     return (
         <SiteMenu>
             <SEO title={title} />
-            <Paper className={classes.container}>
-                <Typography className={classes.title} variant="h5">
+            <Paper elevation={0} className={classes.container}>
+                <Typography className={classes.title} variant="h6" component="h1">
                     {title}
                 </Typography>
-                <Divider />
                 {children}
             </Paper>
             <Typography

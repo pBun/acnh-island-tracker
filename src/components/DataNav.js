@@ -35,12 +35,11 @@ export default function DataNav({ hideIndex }) {
                     <Divider />
                 </>
             )}
-            <ListItem button component={Link} to={"/data/recent/"}>
+            <ListItem button component={Link} to={"/data/tracked/"}>
                 <ListItemText
                     primary={
                         <>
-                            <FlightIcon className={classes.textIcon} /> Recently
-                            Tracked Villagers
+                            <FlightIcon className={classes.textIcon} /> Tracked Villagers
                         </>
                     }
                     secondary="Your tracked villagers"

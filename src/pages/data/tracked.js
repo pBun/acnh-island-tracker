@@ -22,10 +22,11 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: theme.palette.background.paper,
     },
     avatar: {
+        color: '#30849e',
+        backgroundColor: '#e5f4fc',
+        borderColor: '#aadcf6',
         borderWidth: 1,
-        borderStyle: "solid",
-        backgroundColor: theme.palette.grey[100],
-        borderColor: theme.palette.grey[300],
+        borderStyle: 'solid',
     },
 }));
 
@@ -55,7 +56,7 @@ export default function IndexPage() {
         },
         {}
     );
-    const pageTitle = `Recently Tracked Villagers ${
+    const pageTitle = `Tracked Villagers ${
         recentSightings.length ? `(${recentSightings.length})` : ""
     }`;
     return (

@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
         marginLeft: -12,
     },
     container: {
-        paddingBottom: 93,
+        paddingBottom: 120,
     },
     appBar: {
         top: "auto",
