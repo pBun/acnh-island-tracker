@@ -13,6 +13,7 @@ import PetsIcon from '@material-ui/icons/Pets';
 import GridOnIcon from '@material-ui/icons/GridOn';
 import FlightIcon from '@material-ui/icons/Flight';
 import LaunchIcon from '@material-ui/icons/Launch';
+import WcIcon from '@material-ui/icons/Wc';
 
 const useStyles = makeStyles(theme => ({
     textIcon: {
@@ -104,6 +105,22 @@ export default function DataNav({ hideIndex }) {
                         </>
                     )}
                     secondary="Your tracked villagers grouped by personality"
+                />
+            </ListItem>
+            <ListItem
+                button
+                component={Link}
+                to="/data/by-gender"
+            >
+                <ListItemText
+                    primary={(
+                        <>
+                            <WcIcon className={classes.textIcon} />
+                            {' '}
+                            Grouped by Gender
+                        </>
+                    )}
+                    secondary="Your tracked villagers grouped by gender"
                 />
             </ListItem>
             <ListItem
