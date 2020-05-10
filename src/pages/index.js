@@ -21,8 +21,8 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(3, 2, 0),
     },
     icon: {
-        backgroundColor: theme.palette.grey[200],
-        color: theme.palette.text.hint,
+        backgroundColor: theme.palette.text.primary,
+        color: theme.palette.background.paper,
     },
     list: {
         paddingBottom: theme.spacing(3),

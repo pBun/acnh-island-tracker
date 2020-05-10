@@ -25,9 +25,6 @@ import ClockOverrideModal from "../components/ClockOverrideModal";
 import VillagerModal from "../components/VillagerModal";
 
 const useStyles = makeStyles(theme => ({
-    clock: {
-        color: theme.palette.common.white,
-    },
     buttonProgress: {
         color: 'rgba(0, 0, 0, 0.54)',
         position: 'absolute',
@@ -147,7 +144,6 @@ export default function BottomAppBar({ children }) {
                     />
                     <div className={classes.grow} />
                     <IconButton
-                        edge="end"
                         component={Link}
                         to="/data/"
                         color="inherit"
