@@ -1,7 +1,5 @@
 import React from "react";
 import { Link } from "gatsby";
-import { makeStyles } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
@@ -15,18 +13,7 @@ import PetsIcon from '@material-ui/icons/Pets';
 import GridOnIcon from '@material-ui/icons/GridOn';
 import FlightIcon from '@material-ui/icons/Flight';
 
-const useStyles = makeStyles({
-    header: {
-        paddingTop: 20,
-        paddingLeft: 16,
-        paddingRight: 16,
-        paddingBottom: 8,
-        fontWeight: 'bold',
-    },
-});
-
 export default function DataNav({ hideIndex }) {
-    const classes = useStyles();
     return (
         <List component="div">
             {!hideIndex && (
@@ -62,7 +49,6 @@ export default function DataNav({ hideIndex }) {
             </ListItem>
             <ListItem
                 button
-                component="span"
                 component={Link}
                 to="/data/by-villager/"
             >

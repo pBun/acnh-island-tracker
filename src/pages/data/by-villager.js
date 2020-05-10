@@ -1,5 +1,4 @@
 import React from 'react';
-import Paper from "@material-ui/core/Paper";
 
 import SiteMenu from '../../components/SiteMenu';
 import PercentBreakdown from '../../components/PercentBreakdown';

@@ -1,5 +1,4 @@
 import React from "react";
-import { Typography } from "@material-ui/core";
 
 import SiteMenu from "../components/SiteMenu";
 import Page from "../components/page";

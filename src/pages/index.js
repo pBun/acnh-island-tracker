@@ -1,5 +1,4 @@
 import React from "react";
-import { format } from 'date-fns';
 import { useStaticQuery, graphql, Link } from "gatsby";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";

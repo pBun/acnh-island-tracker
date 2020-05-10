@@ -7,11 +7,9 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
-import Paper from "@material-ui/core/Paper";
 import Fab from "@material-ui/core/Fab";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Snackbar from "@material-ui/core/Snackbar";
 import AddIcon from "@material-ui/icons/Add";
@@ -25,7 +23,6 @@ import AppContext from '../context/app';
 import IslandTime from "../components/IslandTime";
 import ClockOverrideModal from "../components/ClockOverrideModal";
 import VillagerModal from "../components/VillagerModal";
-import SiteMenuDrawer from "../components/SiteMenuDrawer";
 
 const useStyles = makeStyles(theme => ({
     clock: {

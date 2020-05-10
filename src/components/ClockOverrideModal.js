@@ -24,9 +24,8 @@ export default function ClockOverrideModal({ open, handleConfirm, handleCancel }
     const [overrideClock, setOverrideClock] = React.useState(!!session.islandOffset);
     const [curTimestamp, setCurTimestamp] = React.useState(new Date());
     const [islandOffset, setIslandOffset] = React.useState(session.islandOffset || 0);
-    const [pickerSynced, setPickerSynced] = React.useState(true);
     React.useEffect(() => {
-        if (!window || !pickerSynced) return;
+        if (!window) return;
         let updateTimeout;
         const updateCurTimestamp = () => {
             setCurTimestamp(Date.now());
@@ -36,7 +35,7 @@ export default function ClockOverrideModal({ open, handleConfirm, handleCancel }
         return () => {
             window.clearTimeout(updateTimeout);
         };
-    }, [pickerSynced]);
+    }, []);
     const islandTimestamp = overrideClock ? curTimestamp + islandOffset : curTimestamp;
     return (
         <Dialog
