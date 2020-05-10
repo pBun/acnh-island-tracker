@@ -32,7 +32,7 @@ export default function FormModal({ children, open, handleClockSettings, handleC
             </DialogTitle>
             <Divider />
             <DialogContent className={classes.dialogContainer}>
-                <DialogContentText style={{maxWidth: 400}}>
+                <DialogContentText>
                     Please ensure that your
                     {' '}
                     <Link variant="body1" color="primary" component="button" onClick={() => handleClockSettings()}>
