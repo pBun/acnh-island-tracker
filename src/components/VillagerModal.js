@@ -1,4 +1,6 @@
 import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Divider from "@material-ui/core/Divider";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
 import Dialog from "@material-ui/core/Dialog";
@@ -10,7 +12,14 @@ import IslandTime from "../components/IslandTime";
 
 import VilagerCombobox from "./VillagerCombobox";
 
+const useStyles = makeStyles(theme => ({
+    dialogContainer: {
+        paddingTop: theme.spacing(2),
+    },
+}));
+
 export default function FormModal({ children, open, handleClockSettings, handleConfirm, handleCancel }) {
+    const classes = useStyles();
     const [selectedVillager, setSelectedVillager] = React.useState(null);
     return (
         <Dialog
@@ -21,7 +30,8 @@ export default function FormModal({ children, open, handleClockSettings, handleC
             <DialogTitle id="form-dialog-title">
                 Track Villager
             </DialogTitle>
-            <DialogContent>
+            <Divider />
+            <DialogContent className={classes.dialogContainer}>
                 <DialogContentText style={{maxWidth: 400}}>
                     Please ensure that your
                     {' '}

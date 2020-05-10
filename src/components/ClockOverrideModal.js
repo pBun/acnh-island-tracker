@@ -1,4 +1,6 @@
 import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Divider from "@material-ui/core/Divider";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -10,7 +12,14 @@ import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pi
 
 import SessionContext from '../context/currentSession';
 
+const useStyles = makeStyles(theme => ({
+    dialogContainer: {
+        paddingTop: theme.spacing(2),
+    },
+}));
+
 export default function ClockOverrideModal({ open, handleConfirm, handleCancel }) {
+    const classes = useStyles();
     const { session } = React.useContext(SessionContext);
     const [overrideClock, setOverrideClock] = React.useState(!!session.islandOffset);
     const [curTimestamp, setCurTimestamp] = React.useState(new Date());
@@ -36,9 +45,10 @@ export default function ClockOverrideModal({ open, handleConfirm, handleCancel }
             aria-labelledby="form-dialog-title"
         >
             <DialogTitle id="form-dialog-title">Clock Preferences</DialogTitle>
-            <DialogContent>
+            <Divider />
+            <DialogContent className={classes.dialogContainer}>
                 <DialogContentText>
-                    Update your clock preferences based on your current Switch settings.
+                    Update your clock preferences based on your current Nintendo Switch settings.
                 </DialogContentText>
                 <FormControl
                     margin="normal"
