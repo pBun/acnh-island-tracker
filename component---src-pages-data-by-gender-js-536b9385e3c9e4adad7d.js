@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[4],{"wbl+":function(e,t,n){"use strict";n.r(t);var a=n("q1tI"),r=n.n(a),c=n("1lFR"),i=n("YQnL");t.default=function(){return r.a.createElement(i.a,{title:"Species Stats"},r.a.createElement(c.a,{villagerPropName:"gender"}))}}}]);
+//# sourceMappingURL=component---src-pages-data-by-gender-js-536b9385e3c9e4adad7d.js.map
