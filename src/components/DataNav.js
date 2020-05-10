@@ -52,7 +52,7 @@ export default function DataNav({ hideIndex }) {
                         <>
                             <FlightIcon className={classes.textIcon} />
                             {' '}
-                            Tracked Villagers
+                            Recently Tracked Villagers
                         </>
                     )}
                     secondary="Your tracked villagers"

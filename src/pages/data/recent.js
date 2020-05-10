@@ -50,7 +50,7 @@ export default function IndexPage() {
         (acc[data['date']] = acc[data['date']] || []).push(data);
         return acc;
     }, {});
-    const pageTitle = `Recent Activity ${
+    const pageTitle = `Recently Tracked Villagers ${
         recentSightings.length
         ? `(${recentSightings.length})`
         : ''
@@ -86,11 +86,7 @@ export default function IndexPage() {
                             </ListItem>
                         ))}
                     </React.Fragment>
-                )) : (
-                    <ListSubheader className={classes.subheader}>
-                        You haven't tracked any villagers yet!
-                    </ListSubheader>
-                )}
+                )) : ''}
             </List>
         </Page>
     );
