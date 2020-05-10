@@ -21,6 +21,8 @@ import SessionContext from "../context/currentSession";
 
 import { VILLAGERS } from "../util/villager";
 
+const ROWS_PER_PAGE = [10, 20, 50, 100];
+
 const useStyles = makeStyles(theme => ({
     root: {
         width: "100%",
@@ -244,7 +246,7 @@ function PercentBreakdownTable({ villagerPropName }) {
     const [order, setOrder] = React.useState("desc");
     const [orderBy, setOrderBy] = React.useState("count");
     const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [rowsPerPage, setRowsPerPage] = React.useState(ROWS_PER_PAGE[0]);
 
     const data = {};
     const availableProps = VILLAGERS.reduce((acc, curVal) => {
@@ -287,16 +289,16 @@ function PercentBreakdownTable({ villagerPropName }) {
         ),
         history: data[prop],
     }));
-    const emptyRows =
-        rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
-    const rowsPerPageOptions = [10];
-    if (availableProps.length >= 50) {
-        rowsPerPageOptions.push(50);
-    }
-    if (availableProps.length >= 100) {
-        rowsPerPageOptions.push(100);
-    }
-    if (availableProps.length > 100) {
+    const emptyRows = (rows.length / rowsPerPage) > 1
+        ? rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage)
+        : 0;
+    const rowsPerPageOptions = [ROWS_PER_PAGE[0]];
+    ROWS_PER_PAGE.forEach(rc => {
+        if (availableProps.length >= rc) {
+            rowsPerPageOptions.push(rc);
+        }
+    });
+    if (availableProps.length > ROWS_PER_PAGE[0]) {
         rowsPerPageOptions.push(availableProps.length);
     }
     return (
