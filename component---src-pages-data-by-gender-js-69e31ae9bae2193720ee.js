@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[4],{"wbl+":function(e,n,t){"use strict";t.r(n);var a=t("q1tI"),r=t.n(a),l=t("1lFR"),c=t("YQnL");n.default=function(){return r.a.createElement(c.a,{title:"Gender Stats"},r.a.createElement(l.a,{villagerPropName:"gender"}))}}}]);
+//# sourceMappingURL=component---src-pages-data-by-gender-js-69e31ae9bae2193720ee.js.map
