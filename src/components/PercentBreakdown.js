@@ -331,7 +331,7 @@ function PercentBreakdownTable({ villagerPropName }) {
             <TablePagination
                 rowsPerPageOptions={rowsPerPageOptions}
                 component="div"
-                count={Math.ceil(rows.length / rowsPerPage)}
+                count={rows.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onChangePage={handleChangePage}
