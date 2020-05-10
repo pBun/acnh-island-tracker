@@ -13,12 +13,12 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Snackbar from "@material-ui/core/Snackbar";
 import AddIcon from "@material-ui/icons/Add";
-import ScheduleIcon from '@material-ui/icons/Schedule';
-import EqualizerIcon from '@material-ui/icons/Equalizer';
-import HomeIcon from '@material-ui/icons/Home';
+import ScheduleIcon from "@material-ui/icons/Schedule";
+import EqualizerIcon from "@material-ui/icons/Equalizer";
+import HomeIcon from "@material-ui/icons/Home";
 
-import SessionContext from '../context/currentSession';
-import AppContext from '../context/app';
+import SessionContext from "../context/currentSession";
+import AppContext from "../context/app";
 
 import IslandTime from "../components/IslandTime";
 import ClockOverrideModal from "../components/ClockOverrideModal";
@@ -26,10 +26,10 @@ import VillagerModal from "../components/VillagerModal";
 
 const useStyles = makeStyles(theme => ({
     buttonProgress: {
-        color: 'rgba(0, 0, 0, 0.54)',
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
+        color: "rgba(0, 0, 0, 0.54)",
+        position: "absolute",
+        top: "50%",
+        left: "50%",
         marginTop: -12,
         marginLeft: -12,
     },
@@ -65,11 +65,11 @@ export default function BottomAppBar({ children }) {
         closeTrackerModal,
     } = React.useContext(AppContext);
     const { trackVillager, setIslandOffset } = React.useContext(SessionContext);
-    const [snackMessage, setSnackMessage] = React.useState('');
+    const [snackMessage, setSnackMessage] = React.useState("");
     return (
         <>
             <CssBaseline />
-            {loading && (<LinearProgress color="secondary" />)}
+            {loading && <LinearProgress color="secondary" />}
 
             <Container className={classes.container} maxWidth="sm">
                 {children}
@@ -84,18 +84,15 @@ export default function BottomAppBar({ children }) {
                         <ScheduleIcon />
                     </IconButton>
                     <List component="div">
-                        <ListItem
-                            dense={true}
-                            className={classes.clock}
-                        >
+                        <ListItem dense={true} className={classes.clock}>
                             <ListItemText
                                 primary={<IslandTime template="h:mm a" />}
                                 secondary={<IslandTime template="EEE. MMM d" />}
                                 primaryTypographyProps={{
-                                    color: 'inherit',
+                                    color: "inherit",
                                 }}
                                 secondaryTypographyProps={{
-                                    color: 'inherit',
+                                    color: "inherit",
                                     style: { opacity: 0.6 },
                                 }}
                             />
@@ -103,10 +100,12 @@ export default function BottomAppBar({ children }) {
                     </List>
                     <ClockOverrideModal
                         open={clockModalOpen}
-                        handleConfirm={(islandOffset) => {
+                        handleConfirm={islandOffset => {
                             closeClockModal();
                             setIslandOffset({ islandOffset });
-                            setSnackMessage('Success! Your clock has been updated');
+                            setSnackMessage(
+                                "Success! Your clock has been updated"
+                            );
                         }}
                         handleCancel={() => {
                             closeClockModal();
@@ -126,16 +125,18 @@ export default function BottomAppBar({ children }) {
                         handleClockSettings={() => {
                             openClockModal();
                         }}
-                        handleConfirm={(villager) => {
+                        handleConfirm={villager => {
                             if (!villager) return;
                             closeTrackerModal();
                             trackVillager({ villager: villager.name })
-                                .catch((err) => {
-                                    setSnackMessage('Ajax error =(');
+                                .catch(err => {
+                                    setSnackMessage("Ajax error =(");
                                 })
                                 .then(() => {
                                     closeTrackerModal();
-                                    setSnackMessage(`${villager.name} tracked successfully!`);
+                                    setSnackMessage(
+                                        `${villager.name} tracked successfully!`
+                                    );
                                 });
                         }}
                         handleCancel={() => {
@@ -143,11 +144,7 @@ export default function BottomAppBar({ children }) {
                         }}
                     />
                     <div className={classes.grow} />
-                    <IconButton
-                        component={Link}
-                        to="/data/"
-                        color="inherit"
-                    >
+                    <IconButton component={Link} to="/data/" color="inherit">
                         <EqualizerIcon />
                     </IconButton>
                     <IconButton
@@ -161,11 +158,11 @@ export default function BottomAppBar({ children }) {
                 </Toolbar>
             </AppBar>
             <Snackbar
-                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                anchorOrigin={{ vertical: "top", horizontal: "center" }}
                 open={!!snackMessage}
                 autoHideDuration={6000}
                 onClose={() => {
-                    setSnackMessage('');
+                    setSnackMessage("");
                 }}
                 key={snackMessage}
                 message={snackMessage}

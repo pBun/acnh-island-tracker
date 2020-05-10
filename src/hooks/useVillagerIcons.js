@@ -4,7 +4,9 @@ export default function useVillagerIcons() {
     const villagerIconsQuery = useStaticQuery(
         graphql`
             query {
-                allFile(filter: { relativeDirectory: { eq: "villager-icons" } }) {
+                allFile(
+                    filter: { relativeDirectory: { eq: "villager-icons" } }
+                ) {
                     edges {
                         node {
                             publicURL
@@ -16,6 +18,8 @@ export default function useVillagerIcons() {
         `
     );
     const villagerIcons = {};
-    villagerIconsQuery.allFile.edges.forEach(edge => { villagerIcons[edge.node.name] = edge.node.publicURL });
+    villagerIconsQuery.allFile.edges.forEach(edge => {
+        villagerIcons[edge.node.name] = edge.node.publicURL;
+    });
     return villagerIcons;
 }

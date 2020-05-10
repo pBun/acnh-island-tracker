@@ -19,13 +19,20 @@ const SessionPage = () => {
     return (
         <Page title="Data Privacy" variant="text">
             <Typography variant="body1" className={classes.text}>
-                This control deletes all data from your browser. Please reach out to me on <a href="https://twitter.com/peebun">Twitter (@peebun)</a> if you'd like me to delete your data collected on the <a href="https://docs.google.com/spreadsheets/d/1p542EQ85gdgLJfjZcI3SSmTdsnZKNi6KKjjjSdGkl7Q/edit?usp=sharing">Google Sheet</a>.
+                This control deletes all data from your browser. Please reach
+                out to me on{" "}
+                <a href="https://twitter.com/peebun">Twitter (@peebun)</a> if
+                you'd like me to delete your data collected on the{" "}
+                <a href="https://docs.google.com/spreadsheets/d/1p542EQ85gdgLJfjZcI3SSmTdsnZKNi6KKjjjSdGkl7Q/edit?usp=sharing">
+                    Google Sheet
+                </a>
+                .
             </Typography>
             <div className={classes.resetContainer}>
                 <ResetSession />
             </div>
         </Page>
-    )
+    );
 };
 
 export default SessionPage;

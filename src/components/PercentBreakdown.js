@@ -58,8 +58,8 @@ const useStyles = makeStyles(theme => ({
         width: 1,
     },
     tableHead: {
-        fontWeight: 'bold',
-    }
+        fontWeight: "bold",
+    },
 }));
 
 function descendingComparator(a, b, orderBy) {
@@ -89,13 +89,7 @@ function stableSort(array, comparator) {
 }
 
 function EnhancedTableHead(props) {
-    const {
-        villagerPropName,
-        classes,
-        order,
-        orderBy,
-        onRequestSort,
-    } = props;
+    const { villagerPropName, classes, order, orderBy, onRequestSort } = props;
     const createSortHandler = property => event => {
         onRequestSort(event, property);
     };
@@ -188,7 +182,10 @@ function Row(props) {
                             >
                                 {`${row.name} Sighting History`}
                             </Typography>
-                            <Table size="small" aria-label={`${row.name} history`}>
+                            <Table
+                                size="small"
+                                aria-label={`${row.name} history`}
+                            >
                                 <TableHead>
                                     <TableRow>
                                         <TableCell>Villager</TableCell>
@@ -285,13 +282,15 @@ function PercentBreakdownTable({ villagerPropName }) {
         name: prop,
         count: data[prop].length,
         percent: Math.round(
-            data[prop].length / Math.max(1, session.sightings.length) * 100
+            (data[prop].length / Math.max(1, session.sightings.length)) * 100
         ),
         history: data[prop],
     }));
-    const emptyRows = (rows.length / rowsPerPage) > 1
-        ? rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage)
-        : 0;
+    const emptyRows =
+        rows.length / rowsPerPage > 1
+            ? rowsPerPage -
+              Math.min(rowsPerPage, rows.length - page * rowsPerPage)
+            : 0;
     const rowsPerPageOptions = [ROWS_PER_PAGE[0]];
     ROWS_PER_PAGE.forEach(rc => {
         const c = availableProps.length;

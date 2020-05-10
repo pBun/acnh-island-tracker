@@ -6,11 +6,19 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { FormControl, FormControlLabel, Checkbox, Button } from '@material-ui/core';
-import DateFnsUtils from '@date-io/date-fns';
-import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import {
+    FormControl,
+    FormControlLabel,
+    Checkbox,
+    Button,
+} from "@material-ui/core";
+import DateFnsUtils from "@date-io/date-fns";
+import {
+    KeyboardDateTimePicker,
+    MuiPickersUtilsProvider,
+} from "@material-ui/pickers";
 
-import SessionContext from '../context/currentSession';
+import SessionContext from "../context/currentSession";
 
 const useStyles = makeStyles(theme => ({
     dialogContainer: {
@@ -18,12 +26,20 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function ClockOverrideModal({ open, handleConfirm, handleCancel }) {
+export default function ClockOverrideModal({
+    open,
+    handleConfirm,
+    handleCancel,
+}) {
     const classes = useStyles();
     const { session } = React.useContext(SessionContext);
-    const [overrideClock, setOverrideClock] = React.useState(!!session.islandOffset);
+    const [overrideClock, setOverrideClock] = React.useState(
+        !!session.islandOffset
+    );
     const [curTimestamp, setCurTimestamp] = React.useState(new Date());
-    const [islandOffset, setIslandOffset] = React.useState(session.islandOffset || 0);
+    const [islandOffset, setIslandOffset] = React.useState(
+        session.islandOffset || 0
+    );
     React.useEffect(() => {
         if (!window) return;
         let updateTimeout;
@@ -36,7 +52,9 @@ export default function ClockOverrideModal({ open, handleConfirm, handleCancel }
             window.clearTimeout(updateTimeout);
         };
     }, []);
-    const islandTimestamp = overrideClock ? curTimestamp + islandOffset : curTimestamp;
+    const islandTimestamp = overrideClock
+        ? curTimestamp + islandOffset
+        : curTimestamp;
     return (
         <Dialog
             open={open}
@@ -47,35 +65,40 @@ export default function ClockOverrideModal({ open, handleConfirm, handleCancel }
             <Divider />
             <DialogContent className={classes.dialogContainer}>
                 <DialogContentText>
-                    Set the clock based on your current Nintendo Switch settings. This is so we can determine significance of in-game time and date.
+                    Set the clock based on your current Nintendo Switch
+                    settings. This is so we can determine significance of
+                    in-game time and date.
                 </DialogContentText>
                 <FormControl
                     margin="normal"
                     style={{
-                        display: 'block',
+                        display: "block",
                     }}
                 >
                     <FormControlLabel
-                        control={(
+                        control={
                             <Checkbox
                                 checked={overrideClock}
-                                onChange={(e) => setOverrideClock(e.target.checked)}
+                                onChange={e =>
+                                    setOverrideClock(e.target.checked)
+                                }
                                 name="overrideClock"
                                 size="small"
                             />
-                        )}
-                        label={(
-                            <span style={{fontSize: '0.75rem'}}>
+                        }
+                        label={
+                            <span style={{ fontSize: "0.75rem" }}>
                                 Override current time
                             </span>
-                        )}
+                        }
                     />
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <KeyboardDateTimePicker
                             helperText="Nintendo Switch clock"
                             value={islandTimestamp}
-                            onChange={(newIslandTimestamp) => {
-                                const newOffset = newIslandTimestamp - curTimestamp;
+                            onChange={newIslandTimestamp => {
+                                const newOffset =
+                                    newIslandTimestamp - curTimestamp;
                                 setIslandOffset(newOffset);
                             }}
                             disabled={!overrideClock}
@@ -86,25 +109,25 @@ export default function ClockOverrideModal({ open, handleConfirm, handleCancel }
                 </FormControl>
             </DialogContent>
             <DialogActions>
-            <Button
-                onClick={() => {
-                    handleCancel();
-                    setOverrideClock(!!session.islandOffset);
-                    setIslandOffset(session.islandOffset || 0);
-                }}
-                color="primary"
-            >
-                Cancel
-            </Button>
-            <Button
-                disabled={!islandTimestamp}
-                onClick={() => {
-                    handleConfirm(overrideClock ? islandOffset : 0);
-                }}
-                color="primary"
-            >
-                Set
-            </Button>
+                <Button
+                    onClick={() => {
+                        handleCancel();
+                        setOverrideClock(!!session.islandOffset);
+                        setIslandOffset(session.islandOffset || 0);
+                    }}
+                    color="primary"
+                >
+                    Cancel
+                </Button>
+                <Button
+                    disabled={!islandTimestamp}
+                    onClick={() => {
+                        handleConfirm(overrideClock ? islandOffset : 0);
+                    }}
+                    color="primary"
+                >
+                    Set
+                </Button>
             </DialogActions>
         </Dialog>
     );

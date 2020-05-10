@@ -1,7 +1,5 @@
-import React, {
-    createContext,
-} from 'react';
-import PropTypes from 'prop-types';
+import React, { createContext } from "react";
+import PropTypes from "prop-types";
 
 const initialState = {
     loading: false,
@@ -20,9 +18,15 @@ const initialState = {
 
 const AppContext = createContext(initialState);
 export const AppProvider = ({ children }) => {
-    const [clockModalOpen, setClockModalOpen] = React.useState(initialState.clockModalOpen);
-    const [trackerModalOpen, setTrackerModalOpen] = React.useState(initialState.trackerModalOpen);
-    const [siteMenuOpen, setSiteMenuOpen] = React.useState(initialState.siteMenuOpen);
+    const [clockModalOpen, setClockModalOpen] = React.useState(
+        initialState.clockModalOpen
+    );
+    const [trackerModalOpen, setTrackerModalOpen] = React.useState(
+        initialState.trackerModalOpen
+    );
+    const [siteMenuOpen, setSiteMenuOpen] = React.useState(
+        initialState.siteMenuOpen
+    );
     const [loading, setLoading] = React.useState(initialState.loading);
     return (
         <AppContext.Provider

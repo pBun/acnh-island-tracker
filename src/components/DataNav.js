@@ -7,17 +7,17 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 import LockIcon from "@material-ui/icons/Lock";
-import PeopleIcon from '@material-ui/icons/People';
-import MoodIcon from '@material-ui/icons/Mood';
-import PetsIcon from '@material-ui/icons/Pets';
-import GridOnIcon from '@material-ui/icons/GridOn';
-import FlightIcon from '@material-ui/icons/Flight';
-import LaunchIcon from '@material-ui/icons/Launch';
-import WcIcon from '@material-ui/icons/Wc';
+import PeopleIcon from "@material-ui/icons/People";
+import MoodIcon from "@material-ui/icons/Mood";
+import PetsIcon from "@material-ui/icons/Pets";
+import GridOnIcon from "@material-ui/icons/GridOn";
+import FlightIcon from "@material-ui/icons/Flight";
+import LaunchIcon from "@material-ui/icons/Launch";
+import WcIcon from "@material-ui/icons/Wc";
 
 const useStyles = makeStyles(theme => ({
     textIcon: {
-        fontSize: '0.8em',
+        fontSize: "0.8em",
     },
 }));
 
@@ -27,99 +27,66 @@ export default function DataNav({ hideIndex }) {
         <List component="div">
             {!hideIndex && (
                 <>
-                    <ListItem
-                        button
-                        component={Link}
-                        to={'/data/'}
-                    >
+                    <ListItem button component={Link} to={"/data/"}>
                         <ListItemText
-                            primary={(
-                                <Typography variant="h6">
-                                    Data
-                                </Typography>
-                            )}
+                            primary={<Typography variant="h6">Data</Typography>}
                         />
                     </ListItem>
                     <Divider />
                 </>
             )}
-            <ListItem
-                button
-                component={Link}
-                to={'/data/recent/'}
-            >
+            <ListItem button component={Link} to={"/data/recent/"}>
                 <ListItemText
-                    primary={(
+                    primary={
                         <>
-                            <FlightIcon className={classes.textIcon} />
-                            {' '}
-                            Recently Tracked Villagers
+                            <FlightIcon className={classes.textIcon} /> Recently
+                            Tracked Villagers
                         </>
-                    )}
+                    }
                     secondary="Your tracked villagers"
                 />
             </ListItem>
-            <ListItem
-                button
-                component={Link}
-                to="/data/by-villager/"
-            >
+            <ListItem button component={Link} to="/data/by-villager/">
                 <ListItemText
-                    primary={(
+                    primary={
                         <>
-                            <PeopleIcon className={classes.textIcon} />
-                            {' '}
-                            Grouped by Villager
+                            <PeopleIcon className={classes.textIcon} /> Grouped
+                            by Villager
                         </>
-                    )}
+                    }
                     secondary="Your tracked villagers grouped by name"
                 />
             </ListItem>
-            <ListItem
-                button
-                component={Link}
-                to="/data/by-species/"
-            >
+            <ListItem button component={Link} to="/data/by-species/">
                 <ListItemText
-                    primary={(
+                    primary={
                         <>
-                            <PetsIcon className={classes.textIcon} />
-                            {' '}
-                            Grouped by Species
+                            <PetsIcon className={classes.textIcon} /> Grouped by
+                            Species
                         </>
-                    )}
+                    }
                     secondary="Your tracked villagers grouped by species"
                 />
             </ListItem>
-            <ListItem
-                button
-                component={Link}
-                to="/data/by-personality"
-            >
+            <ListItem button component={Link} to="/data/by-personality">
                 <ListItemText
-                    primary={(
+                    primary={
                         <>
-                            <MoodIcon className={classes.textIcon} />
-                            {' '}
-                            Grouped by Personality
+                            <MoodIcon className={classes.textIcon} /> Grouped by
+                            Personality
                         </>
-                    )}
+                    }
                     secondary="Your tracked villagers grouped by personality"
                 />
             </ListItem>
-            <ListItem
-                button
-                component={Link}
-                to="/data/by-gender"
-            >
+            <ListItem button component={Link} to="/data/by-gender">
                 <ListItemText
-                    primary={(
+                    primary={
                         <>
-                            <WcIcon className={classes.textIcon} />
-                            {' '}
-                            Grouped by Gender
+                            <WcIcon className={classes.textIcon} /> Grouped by
+                            Gender
                         </>
-                    )}
+                    }
                     secondary="Your tracked villagers grouped by gender"
                 />
             </ListItem>
@@ -131,31 +98,23 @@ export default function DataNav({ hideIndex }) {
                 rel="noopener noreferrer"
             >
                 <ListItemText
-                    primary={(
+                    primary={
                         <>
-                            <GridOnIcon className={classes.textIcon} />
-                            {' '}
-                            Raw Data
-                            {' '}
+                            <GridOnIcon className={classes.textIcon} /> Raw Data{" "}
                             <LaunchIcon className={classes.textIcon} />
                         </>
-                    )}
+                    }
                     secondary="See everyone's tracked villager data in Google Sheets"
                 />
             </ListItem>
-            <ListItem
-                button
-                component={Link}
-                to={'/data/privacy/'}
-            >
+            <ListItem button component={Link} to={"/data/privacy/"}>
                 <ListItemText
-                    primary={(
+                    primary={
                         <>
-                            <LockIcon className={classes.textIcon} />
-                            {' '}
-                            Privacy Settings
+                            <LockIcon className={classes.textIcon} /> Privacy
+                            Settings
                         </>
-                    )}
+                    }
                 />
             </ListItem>
         </List>

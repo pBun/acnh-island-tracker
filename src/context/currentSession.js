@@ -1,16 +1,13 @@
-import React, {
-    createContext,
-    useReducer,
-    useEffect,
-} from 'react';
-import queryString from 'query-string';
-import { format } from 'date-fns';
-import PropTypes from 'prop-types';
+import React, { createContext, useReducer, useEffect } from "react";
+import queryString from "query-string";
+import { format } from "date-fns";
+import PropTypes from "prop-types";
 
-import AppContext from './app';
+import AppContext from "./app";
 
-const LOCAL_STORAGE_KEY = 'islandTrackerSession';
-const SHEET_URL = 'https://script.google.com/macros/s/AKfycbw_4jsHZE4PkIePUPbzPAlzzcXEeWibBltRUzeLu0zpztsVAEg/exec';
+const LOCAL_STORAGE_KEY = "islandTrackerSession";
+const SHEET_URL =
+    "https://script.google.com/macros/s/AKfycbw_4jsHZE4PkIePUPbzPAlzzcXEeWibBltRUzeLu0zpztsVAEg/exec";
 
 const getInitialSession = () => ({
     id: Math.random().toString(36).substr(2, 12),
@@ -21,13 +18,13 @@ const getInitialSession = () => ({
 
 function reducer(state, action) {
     switch (action.type) {
-        case 'setIslandOffset':
+        case "setIslandOffset":
             const { islandOffset } = action.payload;
             return {
                 ...state,
                 islandOffset,
             };
-        case 'trackVillager':
+        case "trackVillager":
             return {
                 ...state,
                 sightings: [
@@ -38,7 +35,7 @@ function reducer(state, action) {
                     },
                 ],
             };
-        case 'reset':
+        case "reset":
             return getInitialSession();
         default:
             throw new Error();
@@ -46,21 +43,26 @@ function reducer(state, action) {
 }
 const initialState = {
     session: getInitialSession(),
-    setIslandOffset: (opts) => {},
-    trackVillager: (opts) => {},
+    setIslandOffset: opts => {},
+    trackVillager: opts => {},
     resetSession: () => {},
 };
 const SessionContext = createContext(initialState);
 export const SessionProvider = ({ children }) => {
-    const {
-        startLoading,
-        stopLoading,
-    } = React.useContext(AppContext);
-    const localStateString = window && window.localStorage.getItem(LOCAL_STORAGE_KEY);
+    const { startLoading, stopLoading } = React.useContext(AppContext);
+    const localStateString =
+        window && window.localStorage.getItem(LOCAL_STORAGE_KEY);
     const localState = localStateString && JSON.parse(localStateString);
-    const [state, dispatch] = useReducer(reducer, localState || getInitialSession());
+    const [state, dispatch] = useReducer(
+        reducer,
+        localState || getInitialSession()
+    );
     useEffect(() => {
-        window && window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(state));
+        window &&
+            window.localStorage.setItem(
+                LOCAL_STORAGE_KEY,
+                JSON.stringify(state)
+            );
     }, [state]);
     return (
         <SessionContext.Provider
@@ -68,47 +70,57 @@ export const SessionProvider = ({ children }) => {
                 session: state,
                 setIslandOffset: ({ islandOffset }) => {
                     dispatch({
-                        type: 'setIslandOffset',
+                        type: "setIslandOffset",
                         payload: {
                             islandOffset,
                         },
                     });
                 },
                 resetSession: () => {
-                    dispatch({ type: 'reset' });
+                    dispatch({ type: "reset" });
                 },
                 trackVillager: ({ villager }) => {
                     return new Promise((resolve, reject) => {
                         startLoading();
                         const timestamp = Date.now();
                         const qs = queryString.stringify({
-                            timestamp: encodeURIComponent(format(timestamp, 'MM/dd/yyyy hh:mm:ss')),
-                            'island_timestamp': encodeURIComponent(format(timestamp + state.islandOffset, 'MM/dd/yyyy hh:mm:ss')),
+                            timestamp: encodeURIComponent(
+                                format(timestamp, "MM/dd/yyyy hh:mm:ss")
+                            ),
+                            island_timestamp: encodeURIComponent(
+                                format(
+                                    timestamp + state.islandOffset,
+                                    "MM/dd/yyyy hh:mm:ss"
+                                )
+                            ),
                             villager: encodeURIComponent(villager),
-                            'session_id': encodeURIComponent(state.id),
+                            session_id: encodeURIComponent(state.id),
                         });
                         var request = new XMLHttpRequest();
-                        request.open('GET', `${SHEET_URL}?${qs}`, true);
-                        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-                        request.onload = function() {
+                        request.open("GET", `${SHEET_URL}?${qs}`, true);
+                        request.setRequestHeader(
+                            "Content-Type",
+                            "application/x-www-form-urlencoded; charset=UTF-8"
+                        );
+                        request.onload = function () {
                             if (this.status < 200 || this.status > 400) {
                                 stopLoading();
                                 return reject();
                             }
                             dispatch({
-                                type: 'trackVillager',
+                                type: "trackVillager",
                                 payload: {
                                     timestamp,
                                     villager,
-                                }
+                                },
                             });
                             resolve();
                             stopLoading();
-                        }
-                        request.onerror = function() {
+                        };
+                        request.onerror = function () {
                             stopLoading();
                             reject();
-                        }
+                        };
                         request.send();
                     });
                 },

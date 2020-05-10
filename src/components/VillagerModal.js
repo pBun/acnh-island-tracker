@@ -18,7 +18,13 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function FormModal({ children, open, handleClockSettings, handleConfirm, handleCancel }) {
+export default function FormModal({
+    children,
+    open,
+    handleClockSettings,
+    handleConfirm,
+    handleCancel,
+}) {
     const classes = useStyles();
     const [selectedVillager, setSelectedVillager] = React.useState(null);
     return (
@@ -27,24 +33,23 @@ export default function FormModal({ children, open, handleClockSettings, handleC
             onClose={handleCancel}
             aria-labelledby="form-dialog-title"
         >
-            <DialogTitle id="form-dialog-title">
-                Track Villager
-            </DialogTitle>
+            <DialogTitle id="form-dialog-title">Track Villager</DialogTitle>
             <Divider />
             <DialogContent className={classes.dialogContainer}>
                 <DialogContentText>
-                    Please ensure that your
-                    {' '}
-                    <Link variant="body1" color="primary" component="button" onClick={() => handleClockSettings()}>
+                    Please ensure that your{" "}
+                    <Link
+                        variant="body1"
+                        color="primary"
+                        component="button"
+                        onClick={() => handleClockSettings()}
+                    >
                         current clock settings
-                    </Link>
-                    {' '}
-                    <span style={{display: 'inline-block'}}>
+                    </Link>{" "}
+                    <span style={{ display: "inline-block" }}>
                         (
-                        <IslandTime />
-                        )
-                    </span>
-                    {' '}
+                        <IslandTime />)
+                    </span>{" "}
                     match the clock on your Nintendo Switch.
                 </DialogContentText>
                 <VilagerCombobox
