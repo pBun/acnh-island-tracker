@@ -131,6 +131,7 @@ export default function BottomAppBar({ children }) {
                         }}
                         handleConfirm={(villager) => {
                             if (!villager) return;
+                            closeTrackerModal();
                             trackVillager({ villager: villager.name })
                                 .catch((err) => {
                                     setSnackMessage('Ajax error =(');
