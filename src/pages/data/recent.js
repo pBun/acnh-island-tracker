@@ -10,6 +10,8 @@ import Avatar from "@material-ui/core/Avatar";
 
 import SessionContext from '../../context/currentSession';
 
+import useVillagerIcons from "../../hooks/useVillagerIcons";
+
 import SiteMenu from "../../components/SiteMenu";
 import Page from "../../components/page";
 
@@ -26,6 +28,8 @@ export default function IndexPage() {
     const classes = useStyles();
     const { session } = React.useContext(SessionContext);
 
+    const villagerIcons = useVillagerIcons();
+
     const recentSightings = session.sightings.sort((a, b) => b.timestamp - a.timestamp);
     const recentSightingsFormatted = recentSightings.map((sighting) => {
         const islandTimestamp = sighting.timestamp + session.islandOffset;
@@ -34,6 +38,7 @@ export default function IndexPage() {
             villager: sighting.villager,
             date:  format(islandTimestamp, 'MMM d, yyyy'),
             time: format(islandTimestamp, 'h:mm a'),
+            icon: villagerIcons[sighting.villager],
         };
     });
     const recentSightingsGroupedByDate = recentSightingsFormatted.reduce((acc, data) => {
@@ -64,7 +69,7 @@ export default function IndexPage() {
                                     <ListItemAvatar>
                                         <Avatar
                                             alt={data.villager}
-                                            src={data.villagerImage}
+                                            src={data.icon}
                                         />
                                     </ListItemAvatar>
                                     <ListItemText
