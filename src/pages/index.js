@@ -51,7 +51,7 @@ export default function IndexPage() {
         <SiteMenu>
             <Page title={site.siteMetadata.title}>
                 <Typography variant="body1" component="p" className={classes.text}>
-                    Hi! I built this tool to track and compare Mystery Island villager appearance stats! Let's demystify a small corner of Animal Crossing: New Horizon so we can all invite Raymond to live on our islands! <a href={`https://twitter.com/${site.siteMetadata.author}`}>Reach out if you'd like to chat!</a>
+                    Hi! I built this tool to track and compare Mystery Island villager appearance stats! Let's demystify a small corner of Animal Crossing: New Horizon so we can all invite Raymond to live on our islands!
                 </Typography>
                 <Typography variant="h6" component="h2" className={classes.listTitle}>
                     Getting started
