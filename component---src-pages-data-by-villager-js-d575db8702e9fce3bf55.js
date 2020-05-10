@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[6],{L8bj:function(e,a,t){"use strict";t.r(a);var n=t("q1tI"),l=t.n(n),r=t("RMc2"),c=t("1lFR"),i=t("YQnL");a.default=function(){return l.a.createElement(r.a,null,l.a.createElement(i.a,{title:"Villager Stats"},l.a.createElement(c.a,{villagerPropName:"name"})))}}}]);
+//# sourceMappingURL=component---src-pages-data-by-villager-js-d575db8702e9fce3bf55.js.map
