@@ -5,7 +5,7 @@ import Page from "../../components/page";
 
 const StatsPage = () => {
     return (
-        <Page title="Personality Stats">
+        <Page title="Grouped by Personality">
             <PercentBreakdown villagerPropName="personality" />
         </Page>
     );

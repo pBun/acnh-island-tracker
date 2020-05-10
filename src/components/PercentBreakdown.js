@@ -244,7 +244,7 @@ function PercentBreakdownTable({ villagerPropName }) {
     const [order, setOrder] = React.useState("desc");
     const [orderBy, setOrderBy] = React.useState("count");
     const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(25);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
     const data = {};
     const availableProps = VILLAGERS.reduce((acc, curVal) => {
@@ -289,7 +289,7 @@ function PercentBreakdownTable({ villagerPropName }) {
     }));
     const emptyRows =
         rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
-    const rowsPerPageOptions = [25];
+    const rowsPerPageOptions = [10];
     if (availableProps.length >= 50) {
         rowsPerPageOptions.push(50);
     }
