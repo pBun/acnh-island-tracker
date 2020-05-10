@@ -16,6 +16,7 @@ const useStyles = makeStyles(theme => ({
         display: 'block',
         margin: theme.spacing(2, 1, 0),
         color: theme.palette.text.hint,
+        textAlign: 'center',
     },
     noteLink: {
         color: theme.palette.text.hint,
@@ -35,7 +36,7 @@ const SessionPage = ({ title, children, variant }) => {
                 {children}
             </Paper>
             <Typography variant="body2" component="span" className={classes.note}>
-                Reach out to me (<a href="https://twitter.com/peebun" className={classes.noteLink} target="_blank" rel="noopener noreferrer">@peebun</a>) if you'd like to chat. Special thanks to Mau for helping me with statistics, and filthykasual for <a href="https://imgur.com/a/3NnyBTM" className={classes.noteLink} target="_blank" rel="noopener noreferrer">the sick villager icons</a>.
+                Reach out to <a href="https://twitter.com/peebun" className={classes.noteLink} target="_blank" rel="noopener noreferrer">me</a> if you'd like to chat. Also, a special thanks to <a href="https://twitter.com/MauF0x" className={classes.noteLink} target="_blank" rel="noopener noreferrer">Mau</a> for helping with statistics, and filthykasual for <a href="https://imgur.com/a/3NnyBTM" className={classes.noteLink} target="_blank" rel="noopener noreferrer">the sick villager icons</a>.
             </Typography>
         </SiteMenu>
     );

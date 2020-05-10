@@ -22,6 +22,12 @@ const useStyles = makeStyles(theme => ({
     subheader: {
         backgroundColor: theme.palette.background.paper,
     },
+    avatar: {
+        borderWidth: 1,
+        borderStyle: 'solid',
+        backgroundColor: theme.palette.grey[100],
+        borderColor: theme.palette.grey[300],
+    },
 }));
 
 export default function IndexPage() {
@@ -70,6 +76,7 @@ export default function IndexPage() {
                                 >
                                     <ListItemAvatar>
                                         <Avatar
+                                            className={classes.avatar}
                                             alt={data.villager}
                                             src={data.icon}
                                         />
