@@ -294,7 +294,8 @@ function PercentBreakdownTable({ villagerPropName }) {
         : 0;
     const rowsPerPageOptions = [ROWS_PER_PAGE[0]];
     ROWS_PER_PAGE.forEach(rc => {
-        if (availableProps.length >= rc) {
+        const c = availableProps.length;
+        if (rc > ROWS_PER_PAGE[0] && c >= rc) {
             rowsPerPageOptions.push(rc);
         }
     });
@@ -338,6 +339,7 @@ function PercentBreakdownTable({ villagerPropName }) {
                 page={page}
                 onChangePage={handleChangePage}
                 onChangeRowsPerPage={handleChangeRowsPerPage}
+                labelRowsPerPage=""
             />
         </TableContainer>
     );
