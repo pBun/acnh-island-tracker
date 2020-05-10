@@ -8,6 +8,8 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import Avatar from "@material-ui/core/Avatar";
 
+import { getVillager } from "../../util/villager";
+
 import SessionContext from "../../context/currentSession";
 
 import useVillagerIcons from "../../hooks/useVillagerIcons";
@@ -42,8 +44,7 @@ export default function IndexPage() {
     const recentSightingsFormatted = recentSightings.map(sighting => {
         const islandTimestamp = sighting.timestamp + session.islandOffset;
         return {
-            timestamp: sighting.timestamp,
-            villager: sighting.villager,
+            villager: getVillager(sighting.villager),
             date: format(islandTimestamp, "MMM d, yyyy"),
             time: format(islandTimestamp, "h:mm a"),
             icon: villagerIcons[sighting.villager],
@@ -73,19 +74,19 @@ export default function IndexPage() {
                                       key={data.timestamp}
                                       button
                                       component="a"
-                                      href={`https://nookipedia.com/wiki/${data.villager}`}
+                                      href={`https://nookipedia.com/wiki/${data.villager.name}`}
                                       target="_blank"
                                       rel="noopener noreferrer"
                                   >
                                       <ListItemAvatar>
                                           <Avatar
                                               className={classes.avatar}
-                                              alt={data.villager}
+                                              alt={data.villager.name}
                                               src={data.icon}
                                           />
                                       </ListItemAvatar>
                                       <ListItemText
-                                          primary={data.villager}
+                                          primary={`${data.villager.name} (${data.villager.personality} ${data.villager.species})`}
                                           secondary={data.time}
                                       />
                                   </ListItem>
