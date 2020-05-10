@@ -11,8 +11,8 @@ const SHEET_URL =
 
 const getInitialSession = () => ({
     id: Math.random().toString(36).substr(2, 12),
-    timestamp: null,
-    islandOffset: 0,
+    timestamp: Date.now(),
+    islandOffset: null,
     sightings: [],
 });
 
