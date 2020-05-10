@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "gatsby";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Container from "@material-ui/core/Container";
@@ -10,12 +11,16 @@ import Paper from "@material-ui/core/Paper";
 import Fab from "@material-ui/core/Fab";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Snackbar from "@material-ui/core/Snackbar";
-import MenuIcon from "@material-ui/icons/Menu";
 import AddIcon from "@material-ui/icons/Add";
+import ScheduleIcon from '@material-ui/icons/Schedule';
+import EqualizerIcon from '@material-ui/icons/Equalizer';
+import HomeIcon from '@material-ui/icons/Home';
 
 import SessionContext from '../context/currentSession';
+import AppContext from '../context/app';
 
 import IslandTime from "../components/IslandTime";
 import ClockOverrideModal from "../components/ClockOverrideModal";
@@ -23,6 +28,9 @@ import VillagerModal from "../components/VillagerModal";
 import SiteMenuDrawer from "../components/SiteMenuDrawer";
 
 const useStyles = makeStyles(theme => ({
+    clock: {
+        color: theme.palette.common.white,
+    },
     buttonProgress: {
         color: 'rgba(0, 0, 0, 0.54)',
         position: 'absolute',
@@ -31,7 +39,7 @@ const useStyles = makeStyles(theme => ({
         marginTop: -12,
         marginLeft: -12,
     },
-    paper: {
+    container: {
         paddingBottom: 93,
     },
     appBar: {
@@ -53,32 +61,42 @@ const useStyles = makeStyles(theme => ({
 
 export default function BottomAppBar({ children }) {
     const classes = useStyles();
-    const [modalOpen, setModalOpen] = React.useState('');
+    const {
+        loading,
+        clockModalOpen,
+        trackerModalOpen,
+        openClockModal,
+        closeClockModal,
+        openTrackerModal,
+        closeTrackerModal,
+    } = React.useContext(AppContext);
     const { trackVillager, setIslandOffset } = React.useContext(SessionContext);
     const [snackMessage, setSnackMessage] = React.useState('');
-    const [loading, setLoading] = React.useState(false);
-    const [drawerOpen, setDrawerOpen] = React.useState(false);
-    const menuId = 'menu-drawer';
     return (
         <>
             <CssBaseline />
             {loading && (<LinearProgress color="secondary" />)}
-            <Paper square className={classes.paper}>
-                <Container>
-                    {children}
-                </Container>
-            </Paper>
+
+            <Container className={classes.container} maxWidth="sm">
+                {children}
+            </Container>
             <AppBar position="fixed" color="primary" className={classes.appBar}>
                 <Toolbar>
-                    <List>
+                    <IconButton
+                        edge="end"
+                        onClick={() => openClockModal()}
+                        color="inherit"
+                    >
+                        <ScheduleIcon />
+                    </IconButton>
+                    <List component="div">
                         <ListItem
-                            button
-                            component="span"
-                            onClick={() => setModalOpen('clock')}
+                            dense={true}
+                            className={classes.clock}
                         >
                             <ListItemText
-                                primary={<IslandTime template="hh:mm a" />}
-                                secondary={<IslandTime template="MMM d" />}
+                                primary={<IslandTime template="h:mm a" />}
+                                secondary={<IslandTime template="EEE, MMM d" />}
                                 primaryTypographyProps={{
                                     color: 'inherit',
                                 }}
@@ -90,58 +108,61 @@ export default function BottomAppBar({ children }) {
                         </ListItem>
                     </List>
                     <ClockOverrideModal
-                        open={modalOpen === 'clock'}
+                        open={clockModalOpen}
                         handleConfirm={(islandOffset) => {
-                            setModalOpen('');
+                            closeClockModal();
                             setIslandOffset({ islandOffset });
                             setSnackMessage('Success! Your clock has been updated');
                         }}
                         handleCancel={() => {
-                            setModalOpen('');
+                            closeClockModal();
                         }}
                     />
                     <Fab
                         color="secondary"
                         aria-label="add"
                         className={classes.fabButton}
-                        onClick={() => setModalOpen('track')}
+                        onClick={() => openTrackerModal()}
                         disabled={loading}
                     >
                         <AddIcon />
                     </Fab>
                     <VillagerModal
-                        open={modalOpen === 'track'}
+                        open={trackerModalOpen}
                         handleClockSettings={() => {
-                            setModalOpen('clock')
+                            openClockModal();
                         }}
                         handleConfirm={(villager) => {
                             if (!villager) return;
-                            setModalOpen('');
-                            setLoading(true);
                             trackVillager({ villager: villager.name })
                                 .catch((err) => {
                                     setSnackMessage('Ajax error =(');
-                                    setLoading(false);
                                 })
                                 .then(() => {
+                                    closeTrackerModal();
                                     setSnackMessage(`${villager.name} tracked successfully!`);
-                                    setLoading(false);
                                 });
                         }}
                         handleCancel={() => {
-                            setModalOpen('');
+                            closeTrackerModal();
                         }}
                     />
                     <div className={classes.grow} />
                     <IconButton
-                        edge="start"
-                        aria-label="show more"
-                        aria-controls={menuId}
-                        aria-haspopup="true"
-                        onClick={() => setDrawerOpen(true)}
+                        edge="end"
+                        component={Link}
+                        to="/data/"
                         color="inherit"
                     >
-                        <MenuIcon />
+                        <EqualizerIcon />
+                    </IconButton>
+                    <IconButton
+                        edge="end"
+                        component={Link}
+                        to="/"
+                        color="inherit"
+                    >
+                        <HomeIcon />
                     </IconButton>
                 </Toolbar>
             </AppBar>
@@ -154,12 +175,6 @@ export default function BottomAppBar({ children }) {
                 }}
                 key={snackMessage}
                 message={snackMessage}
-            />
-            <SiteMenuDrawer
-                id={menuId}
-                open={drawerOpen}
-                handleClose={() => setDrawerOpen(false)}
-                handleItemClick={(item) => item === 'settings-clock' && setModalOpen('clock')}
             />
         </>
     );

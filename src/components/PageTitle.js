@@ -8,11 +8,16 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const PageTitle = ({ children }) => {
+const PageTitle = (props) => {
     const classes = useStyles();
     return (
-        <Typography className={classes.title} variant="h5" gutterBottom>
-            {children}
+        <Typography
+            className={classes.title}
+            variant="h5"
+            gutterBottom
+            {...props}
+        >
+            {props.children}
         </Typography>
     )
 };

@@ -101,7 +101,6 @@ function EnhancedTableHead(props) {
     return (
         <TableHead>
             <TableRow>
-                <TableCell padding="checkbox" />
                 {[
                     {
                         id: "category",
@@ -133,6 +132,7 @@ function EnhancedTableHead(props) {
                         </TableSortLabel>
                     </TableCell>
                 ))}
+                <TableCell padding="checkbox" />
             </TableRow>
         </TableHead>
     );
@@ -151,6 +151,10 @@ function Row(props) {
     return (
         <React.Fragment>
             <TableRow>
+                <TableCell component="th" scope="row">
+                    {row.name}
+                </TableCell>
+                <TableCell>{`${row.count} (${row.percent}%)`}</TableCell>
                 <TableCell padding="checkbox">
                     <IconButton
                         aria-label="expand row"
@@ -167,10 +171,6 @@ function Row(props) {
                         )}
                     </IconButton>
                 </TableCell>
-                <TableCell component="th" scope="row">
-                    {row.name}
-                </TableCell>
-                <TableCell>{`${row.count} (${row.percent}%)`}</TableCell>
             </TableRow>
             <TableRow>
                 <TableCell

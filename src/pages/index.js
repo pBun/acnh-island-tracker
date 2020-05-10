@@ -1,87 +1,131 @@
 import React from "react";
 import { format } from 'date-fns';
+import { useStaticQuery, graphql, Link } from "gatsby";
 import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import ListSubheader from "@material-ui/core/ListSubheader";
 import Avatar from "@material-ui/core/Avatar";
+import ScheduleIcon from '@material-ui/icons/Schedule';
+import AddIcon from "@material-ui/icons/Add";
+import EqualizerIcon from '@material-ui/icons/Equalizer';
 
-import SessionContext from '../context/currentSession';
+import AppContext from '../context/app';
 
-import SEO from "../components/seo";
 import SiteMenu from "../components/SiteMenu";
-import PageTitle from "../components/PageTitle";
+import Page from "../components/page";
 
-const useStyles = makeStyles(theme => ({
-    list: {
-        marginBottom: theme.spacing(2),
+const useStyles = makeStyles((theme) => ({
+    text: {
+        margin: theme.spacing(3, 2, 2),
     },
-    subheader: {
-        backgroundColor: theme.palette.background.paper,
+    listTitle: {
+        margin: theme.spacing(3, 2, 0),
+    },
+    icon: {
+        backgroundColor: theme.palette.grey[200],
+        color: theme.palette.text.hint,
     },
 }));
 
 export default function IndexPage() {
     const classes = useStyles();
-    const { session } = React.useContext(SessionContext);
-
-    const recentSightings = session.sightings.sort((a, b) => b.timestamp - a.timestamp);
-    const recentSightingsFormatted = recentSightings.map((sighting) => {
-        const islandTimestamp = sighting.timestamp + session.islandOffset;
-        return {
-            timestamp: sighting.timestamp,
-            villager: sighting.villager,
-            date:  format(islandTimestamp, 'MMM d, yyyy'),
-            time: format(islandTimestamp, 'h:mm a'),
-        };
-    });
-    const recentSightingsGroupedByDate = recentSightingsFormatted.reduce((acc, data) => {
-        (acc[data['date']] = acc[data['date']] || []).push(data);
-        return acc;
-    }, {});
-
+    const {
+        openTrackerModal,
+        openClockModal,
+    } = React.useContext(AppContext);
+    const { site } = useStaticQuery(
+        graphql`
+            query {
+                site {
+                    siteMetadata {
+                        title
+                        author
+                    }
+                }
+            }
+        `
+    );
     return (
         <SiteMenu>
-            <SEO title="Recent Acitvity" />
-            <PageTitle>
-                Recent Activity
-            </PageTitle>
-            <List className={classes.list}>
-                {recentSightings.length ? Object.keys(recentSightingsGroupedByDate).map((date) => (
-                    <React.Fragment key={date}>
-                        <ListSubheader className={classes.subheader}>
-                            {date}
-                        </ListSubheader>
-                        {recentSightingsGroupedByDate[date].map((data) => (
-                            <ListItem
-                                key={data.timestamp}
-                                button
-                                component="a"
-                                href={`https://nookipedia.com/wiki/${data.villager}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <ListItemAvatar>
-                                    <Avatar
-                                        alt={data.villager}
-                                        src={data.villagerImage}
-                                    />
-                                </ListItemAvatar>
-                                <ListItemText
-                                    primary={data.villager}
-                                    secondary={data.time}
-                                />
-                            </ListItem>
-                        ))}
-                    </React.Fragment>
-                )) : (
-                    <ListSubheader className={classes.subheader}>
-                        You haven't tracked any villagers yet!
-                    </ListSubheader>
-                )}
-            </List>
+            <Page title={site.siteMetadata.title}>
+                <Typography variant="body1" component="p" className={classes.text}>
+                    Hi! I built this tool to track and compare Mystery Island villager appearance stats! Let's demystify a small corner of Animal Crossing: New Horizon so we can all invite Raymond to live on our islands! <a href={`https://twitter.com/${site.siteMetadata.author}`}>Reach out if you'd like to chat!</a>
+                </Typography>
+                <Typography variant="h6" component="h2" className={classes.listTitle}>
+                    Getting started
+                </Typography>
+                <List component="div" dense={true}>
+                    <ListItem
+                        key="1"
+                        button
+                        component="span"
+                        onClick={() => openClockModal()}
+                    >
+                        <ListItemIcon>
+                            <Avatar alt="1" src="/images/1.png" className={classes.icon} />
+                        </ListItemIcon>
+                        <ListItemText
+                            primary="Set your clock"
+                            secondary={(
+                                <>
+                                    You can also click
+                                    {' '}
+                                    <ScheduleIcon fontSize="small" />
+                                    {' '}
+                                    in the bottom navbar.
+                                </>
+                            )}
+                        />
+                    </ListItem>
+                    <ListItem
+                        key="2"
+                        button
+                        component="span"
+                        onClick={() => openTrackerModal()}
+                    >
+                        <ListItemIcon>
+                            <Avatar alt="2" src="/images/2.png" className={classes.icon} />
+                        </ListItemIcon>
+                        <ListItemText
+                            primary="Track each villager you see"
+                            secondary={(
+                                <>
+                                    You can also click
+                                    {' '}
+                                    <AddIcon fontSize="small" />
+                                    {' '}
+                                    in the bottom navbar.
+                                </>
+                            )}
+                        />
+                    </ListItem>
+                    <ListItem
+                        key="3"
+                        button
+                        component={Link}
+                        to="/stats/"
+                    >
+                        <ListItemIcon>
+                            <Avatar alt="3" src="/images/3.png" className={classes.icon} />
+                        </ListItemIcon>
+                        <ListItemText
+                            primary="Analyze your data"
+                            secondary={(
+                                <>
+                                    You can also click
+                                    {' '}
+                                    <EqualizerIcon fontSize="small" />
+                                    {' '}
+                                    in the bottom navbar.
+                                </>
+                            )}
+                        />
+                    </ListItem>
+                </List>
+            </Page>
         </SiteMenu>
     );
 }
