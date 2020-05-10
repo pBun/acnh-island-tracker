@@ -47,7 +47,7 @@ export default function ClockOverrideModal({ open, handleConfirm, handleCancel }
             <Divider />
             <DialogContent className={classes.dialogContainer}>
                 <DialogContentText>
-                    Update your clock preferences based on your current Nintendo Switch settings.
+                    Set the clock based on your current Nintendo Switch settings. This is so we can determine significance of in-game time and date.
                 </DialogContentText>
                 <FormControl
                     margin="normal"
