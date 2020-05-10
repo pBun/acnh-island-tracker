@@ -12,6 +12,14 @@ const useStyles = makeStyles(theme => ({
     container: {
         margin: theme.spacing(2, 0),
     },
+    note: {
+        display: 'block',
+        margin: theme.spacing(2, 1, 0),
+        color: theme.palette.text.hint,
+    },
+    noteLink: {
+        color: theme.palette.text.hint,
+    },
 }));
 
 const SessionPage = ({ title, children, variant }) => {
@@ -26,6 +34,9 @@ const SessionPage = ({ title, children, variant }) => {
                 <Divider />
                 {children}
             </Paper>
+            <Typography variant="body2" component="span" className={classes.note}>
+                Reach out to me (<a href="https://twitter.com/peebun" className={classes.noteLink} target="_blank" rel="noopener noreferrer">@peebun</a>) if you'd like to chat. Special thanks to Mau for helping me with statistics, and filthykasual for <a href="https://imgur.com/a/3NnyBTM" className={classes.noteLink} target="_blank" rel="noopener noreferrer">the sick villager icons</a>.
+            </Typography>
         </SiteMenu>
     );
 };

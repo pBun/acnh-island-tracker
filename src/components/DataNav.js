@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "gatsby";
-import List from "@material-ui/core/List";
+import { makeStyles } from "@material-ui/core/styles";
 import Divider from "@material-ui/core/Divider";
+import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 import LockIcon from "@material-ui/icons/Lock";
@@ -12,8 +12,16 @@ import MoodIcon from '@material-ui/icons/Mood';
 import PetsIcon from '@material-ui/icons/Pets';
 import GridOnIcon from '@material-ui/icons/GridOn';
 import FlightIcon from '@material-ui/icons/Flight';
+import LaunchIcon from '@material-ui/icons/Launch';
+
+const useStyles = makeStyles(theme => ({
+    textIcon: {
+        fontSize: '0.8em',
+    },
+}));
 
 export default function DataNav({ hideIndex }) {
+    const classes = useStyles();
     return (
         <List component="div">
             {!hideIndex && (
@@ -39,11 +47,14 @@ export default function DataNav({ hideIndex }) {
                 component={Link}
                 to={'/data/recent/'}
             >
-                <ListItemIcon>
-                    <FlightIcon />
-                </ListItemIcon>
                 <ListItemText
-                    primary="Tracked Villagers"
+                    primary={(
+                        <>
+                            <FlightIcon className={classes.textIcon} />
+                            {' '}
+                            Tracked Villagers
+                        </>
+                    )}
                     secondary="Your tracked villagers"
                 />
             </ListItem>
@@ -52,11 +63,14 @@ export default function DataNav({ hideIndex }) {
                 component={Link}
                 to="/data/by-villager/"
             >
-                <ListItemIcon>
-                    <PeopleIcon />
-                </ListItemIcon>
                 <ListItemText
-                    primary="Grouped by Villager"
+                    primary={(
+                        <>
+                            <PeopleIcon className={classes.textIcon} />
+                            {' '}
+                            Grouped by Villager
+                        </>
+                    )}
                     secondary="Your tracked villagers grouped by name"
                 />
             </ListItem>
@@ -65,11 +79,14 @@ export default function DataNav({ hideIndex }) {
                 component={Link}
                 to="/data/by-species/"
             >
-                <ListItemIcon>
-                    <PetsIcon />
-                </ListItemIcon>
                 <ListItemText
-                    primary="Grouped by Species"
+                    primary={(
+                        <>
+                            <PetsIcon className={classes.textIcon} />
+                            {' '}
+                            Grouped by Species
+                        </>
+                    )}
                     secondary="Your tracked villagers grouped by species"
                 />
             </ListItem>
@@ -78,11 +95,14 @@ export default function DataNav({ hideIndex }) {
                 component={Link}
                 to="/data/by-personality"
             >
-                <ListItemIcon>
-                    <MoodIcon />
-                </ListItemIcon>
                 <ListItemText
-                    primary="Grouped by Personality"
+                    primary={(
+                        <>
+                            <MoodIcon className={classes.textIcon} />
+                            {' '}
+                            Grouped by Personality
+                        </>
+                    )}
                     secondary="Your tracked villagers grouped by personality"
                 />
             </ListItem>
@@ -93,11 +113,16 @@ export default function DataNav({ hideIndex }) {
                 target="_blank"
                 rel="noopener noreferrer"
             >
-                <ListItemIcon>
-                    <GridOnIcon />
-                </ListItemIcon>
                 <ListItemText
-                    primary="Raw Data"
+                    primary={(
+                        <>
+                            <GridOnIcon className={classes.textIcon} />
+                            {' '}
+                            Raw Data
+                            {' '}
+                            <LaunchIcon className={classes.textIcon} />
+                        </>
+                    )}
                     secondary="See everyone's tracked villager data in Google Sheets"
                 />
             </ListItem>
@@ -106,10 +131,15 @@ export default function DataNav({ hideIndex }) {
                 component={Link}
                 to={'/data/privacy/'}
             >
-                <ListItemIcon>
-                    <LockIcon />
-                </ListItemIcon>
-                <ListItemText primary="Privacy Settings" />
+                <ListItemText
+                    primary={(
+                        <>
+                            <LockIcon className={classes.textIcon} />
+                            {' '}
+                            Privacy Settings
+                        </>
+                    )}
+                />
             </ListItem>
         </List>
     );

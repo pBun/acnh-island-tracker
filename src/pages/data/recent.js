@@ -45,9 +45,11 @@ export default function IndexPage() {
         (acc[data['date']] = acc[data['date']] || []).push(data);
         return acc;
     }, {});
-    const pageTitle = recentSightings.length
-        ? `Recent Acitvity (${recentSightings.length})`
-        : 'Recent Activity';
+    const pageTitle = `Recent Activity ${
+        recentSightings.length
+        ? `(${recentSightings.length})`
+        : ''
+    }`;
     return (
         <SiteMenu>
             <Page title={pageTitle}>

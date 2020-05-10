@@ -1,5 +1,5 @@
 import React from "react";
-import { useStaticQuery, graphql, Link } from "gatsby";
+import { useStaticQuery, graphql } from "gatsby";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
@@ -10,8 +10,6 @@ import Avatar from "@material-ui/core/Avatar";
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import AddIcon from "@material-ui/icons/Add";
 import EqualizerIcon from '@material-ui/icons/Equalizer';
-
-import AppContext from '../context/app';
 
 import SiteMenu from "../components/SiteMenu";
 import Page from "../components/page";
@@ -31,10 +29,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function IndexPage() {
     const classes = useStyles();
-    const {
-        openTrackerModal,
-        openClockModal,
-    } = React.useContext(AppContext);
     const { site } = useStaticQuery(
         graphql`
             query {
@@ -51,18 +45,13 @@ export default function IndexPage() {
         <SiteMenu>
             <Page title={site.siteMetadata.title}>
                 <Typography variant="body1" component="p" className={classes.text}>
-                    Hi! I built this tool to track and compare Mystery Island villager appearance stats! Let's demystify a small corner of Animal Crossing: New Horizon so we can all invite Raymond to live on our islands!
+                    Hi, I built this tool to track and compare villager appearance rates on Animal Crossing: New Horizon Mystery Islands. The goal is to demystify how villagers are rolled when traveling to each Mystery Island.
                 </Typography>
                 <Typography variant="h6" component="h2" className={classes.listTitle}>
                     Getting started
                 </Typography>
                 <List component="div" dense={true}>
-                    <ListItem
-                        key="1"
-                        button
-                        component="span"
-                        onClick={() => openClockModal()}
-                    >
+                    <ListItem>
                         <ListItemIcon>
                             <Avatar alt="1" src="/images/1.png" className={classes.icon} />
                         </ListItemIcon>
@@ -70,7 +59,7 @@ export default function IndexPage() {
                             primary="Set your clock"
                             secondary={(
                                 <>
-                                    You can also click
+                                    By clicking
                                     {' '}
                                     <ScheduleIcon fontSize="small" />
                                     {' '}
@@ -79,12 +68,7 @@ export default function IndexPage() {
                             )}
                         />
                     </ListItem>
-                    <ListItem
-                        key="2"
-                        button
-                        component="span"
-                        onClick={() => openTrackerModal()}
-                    >
+                    <ListItem>
                         <ListItemIcon>
                             <Avatar alt="2" src="/images/2.png" className={classes.icon} />
                         </ListItemIcon>
@@ -92,7 +76,7 @@ export default function IndexPage() {
                             primary="Track each villager you see"
                             secondary={(
                                 <>
-                                    You can also click
+                                    By clicking
                                     {' '}
                                     <AddIcon fontSize="small" />
                                     {' '}
@@ -101,12 +85,7 @@ export default function IndexPage() {
                             )}
                         />
                     </ListItem>
-                    <ListItem
-                        key="3"
-                        button
-                        component={Link}
-                        to="/stats/"
-                    >
+                    <ListItem>
                         <ListItemIcon>
                             <Avatar alt="3" src="/images/3.png" className={classes.icon} />
                         </ListItemIcon>
@@ -114,7 +93,7 @@ export default function IndexPage() {
                             primary="Analyze your data"
                             secondary={(
                                 <>
-                                    You can also click
+                                    By clicking
                                     {' '}
                                     <EqualizerIcon fontSize="small" />
                                     {' '}
