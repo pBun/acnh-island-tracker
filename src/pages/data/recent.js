@@ -12,7 +12,6 @@ import SessionContext from '../../context/currentSession';
 
 import useVillagerIcons from "../../hooks/useVillagerIcons";
 
-import SiteMenu from "../../components/SiteMenu";
 import Page from "../../components/page";
 
 const useStyles = makeStyles(theme => ({
@@ -57,44 +56,42 @@ export default function IndexPage() {
         : ''
     }`;
     return (
-        <SiteMenu>
-            <Page title={pageTitle}>
-                <List className={classes.list}>
-                    {recentSightings.length ? Object.keys(recentSightingsGroupedByDate).map((date) => (
-                        <React.Fragment key={date}>
-                            <ListSubheader className={classes.subheader}>
-                                {date}
-                            </ListSubheader>
-                            {recentSightingsGroupedByDate[date].map((data) => (
-                                <ListItem
-                                    key={data.timestamp}
-                                    button
-                                    component="a"
-                                    href={`https://nookipedia.com/wiki/${data.villager}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    <ListItemAvatar>
-                                        <Avatar
-                                            className={classes.avatar}
-                                            alt={data.villager}
-                                            src={data.icon}
-                                        />
-                                    </ListItemAvatar>
-                                    <ListItemText
-                                        primary={data.villager}
-                                        secondary={data.time}
-                                    />
-                                </ListItem>
-                            ))}
-                        </React.Fragment>
-                    )) : (
+        <Page title={pageTitle}>
+            <List className={classes.list}>
+                {recentSightings.length ? Object.keys(recentSightingsGroupedByDate).map((date) => (
+                    <React.Fragment key={date}>
                         <ListSubheader className={classes.subheader}>
-                            You haven't tracked any villagers yet!
+                            {date}
                         </ListSubheader>
-                    )}
-                </List>
-            </Page>
-        </SiteMenu>
+                        {recentSightingsGroupedByDate[date].map((data) => (
+                            <ListItem
+                                key={data.timestamp}
+                                button
+                                component="a"
+                                href={`https://nookipedia.com/wiki/${data.villager}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <ListItemAvatar>
+                                    <Avatar
+                                        className={classes.avatar}
+                                        alt={data.villager}
+                                        src={data.icon}
+                                    />
+                                </ListItemAvatar>
+                                <ListItemText
+                                    primary={data.villager}
+                                    secondary={data.time}
+                                />
+                            </ListItem>
+                        ))}
+                    </React.Fragment>
+                )) : (
+                    <ListSubheader className={classes.subheader}>
+                        You haven't tracked any villagers yet!
+                    </ListSubheader>
+                )}
+            </List>
+        </Page>
     );
 }
