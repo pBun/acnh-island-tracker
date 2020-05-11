@@ -7,7 +7,7 @@ const getInitialState = () => ({
     loading: false,
     trackerModalOpen: false,
     allowDataShare: false,
-    trackingPreference: 'mystery-island',
+    trackingPreference: "mystery-island",
 });
 function reducer(state, action) {
     switch (action.type) {
@@ -42,7 +42,7 @@ const initialContext = {
     setLoading: () => {},
     setTrackerModalState: () => {},
     setAllowDataShare: approval => {},
-    setTrackingPreference: preference => {}
+    setTrackingPreference: preference => {},
 };
 const AppContext = React.createContext(initialContext);
 export const AppProvider = ({ children }) => {
@@ -88,7 +88,10 @@ export const AppProvider = ({ children }) => {
                     dispatch({ type: "setAllowDataShare", payload: approval });
                 },
                 setTrackingPreference: preference => {
-                    dispatch({ type: "setTrackingPreference", payload: preference });
+                    dispatch({
+                        type: "setTrackingPreference",
+                        payload: preference,
+                    });
                 },
                 resetAppData: () => {
                     dispatch({ type: "reset" });

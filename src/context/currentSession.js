@@ -51,10 +51,7 @@ export const SessionProvider = ({ children }) => {
         reducer,
         localState || getInitialSession()
     );
-    const {
-        currentSystemTimestamp,
-        getPrettySystemTime,
-    } = useCurrentTime();
+    const { currentSystemTimestamp, getPrettySystemTime } = useCurrentTime();
     React.useEffect(() => {
         window &&
             window.localStorage.setItem(

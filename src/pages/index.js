@@ -53,7 +53,9 @@ export default function IndexPage() {
     return (
         <Page title={site.siteMetadata.title}>
             <Typography variant="body1" component="p" className={classes.intro}>
-                Hi, this is a tool for tracking and comparing villager spawns on mystery islands and the campsite within the game Animal Crossing: New Horizon. Raymond for everyone!.
+                Hi, this is a tool for tracking and comparing villager spawns on
+                mystery islands and the campsite within the game Animal
+                Crossing: New Horizon. Raymond for everyone!.
             </Typography>
             <Typography
                 variant="h6"

@@ -127,74 +127,91 @@ export default function VillagersPage() {
         setPage(0);
     };
     const startIndex = page * villagersPerPage;
-    const availableSpecies = allVillagers.reduce((acc, v) => {
-        if (acc.indexOf(v.species) < 0) acc.push(v.species);
-        return acc;
-    }, []).sort();
-    const availablePersonalities = allVillagers.reduce((acc, v) => {
-        if (acc.indexOf(v.personality) < 0) acc.push(v.personality);
-        return acc;
-    }, []).sort();
+    const availableSpecies = allVillagers
+        .reduce((acc, v) => {
+            if (acc.indexOf(v.species) < 0) acc.push(v.species);
+            return acc;
+        }, [])
+        .sort();
+    const availablePersonalities = allVillagers
+        .reduce((acc, v) => {
+            if (acc.indexOf(v.personality) < 0) acc.push(v.personality);
+            return acc;
+        }, [])
+        .sort();
     const filteredVillagers = allVillagers
-        .filter(villager => speciesFilter === 'All' || speciesFilter === villager.species)
-        .filter(villager => personalityFilter === 'All' || personalityFilter === villager.personality);
-    const villagersToRender = filteredVillagers.slice(startIndex, startIndex + villagersPerPage);
+        .filter(
+            villager =>
+                speciesFilter === "All" || speciesFilter === villager.species
+        )
+        .filter(
+            villager =>
+                personalityFilter === "All" ||
+                personalityFilter === villager.personality
+        );
+    const villagersToRender = filteredVillagers.slice(
+        startIndex,
+        startIndex + villagersPerPage
+    );
     return (
         <Page title={`All Villagers (${filteredVillagers.length})`}>
             <div className={classes.filters}>
                 <FormControl className={classes.formControl}>
-                    <InputLabel id="species-select-label">Filter Species</InputLabel>
+                    <InputLabel id="species-select-label">
+                        Filter Species
+                    </InputLabel>
                     <Select
                         labelId="species-select-label"
                         id="species-select"
                         value={speciesFilter}
-                        onChange={(e) => setSpeciesFilter(e.target.value)}
+                        onChange={e => setSpeciesFilter(e.target.value)}
                     >
                         <MenuItem value="All">All</MenuItem>
                         {availableSpecies.map(species => (
-                            <MenuItem key={species} value={species}>{species}</MenuItem>
+                            <MenuItem key={species} value={species}>
+                                {species}
+                            </MenuItem>
                         ))}
                     </Select>
                 </FormControl>
                 <FormControl className={classes.formControl}>
-                    <InputLabel id="personality-select-label">Filter Personality</InputLabel>
+                    <InputLabel id="personality-select-label">
+                        Filter Personality
+                    </InputLabel>
                     <Select
                         labelId="personality-select-label"
                         id="personality-select"
                         value={personalityFilter}
-                        onChange={(e) => setPersonalityFilter(e.target.value)}
+                        onChange={e => setPersonalityFilter(e.target.value)}
                     >
                         <MenuItem value="All">All</MenuItem>
                         {availablePersonalities.map(personality => (
-                            <MenuItem key={personality} value={personality}>{personality}</MenuItem>
+                            <MenuItem key={personality} value={personality}>
+                                {personality}
+                            </MenuItem>
                         ))}
                     </Select>
                 </FormControl>
             </div>
             <List className={classes.list}>
-                {villagersToRender.map(
-                    villager => (
-                        <ListItem
-                            key={villager.id}
-                            button
-                            component="a"
-                            href={`https://nookipedia.com/wiki/${villager.name}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            <ListItemAvatar>
-                                <Avatar
-                                    alt={villager.name}
-                                    src={villager.icon}
-                                />
-                            </ListItemAvatar>
-                            <ListItemText
-                                primary={villager.name}
-                                secondary={`${villager.personality} ${villager.species}`}
-                            />
-                        </ListItem>
-                    )
-                )}
+                {villagersToRender.map(villager => (
+                    <ListItem
+                        key={villager.id}
+                        button
+                        component="a"
+                        href={`https://nookipedia.com/wiki/${villager.name}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <ListItemAvatar>
+                            <Avatar alt={villager.name} src={villager.icon} />
+                        </ListItemAvatar>
+                        <ListItemText
+                            primary={villager.name}
+                            secondary={`${villager.personality} ${villager.species}`}
+                        />
+                    </ListItem>
+                ))}
             </List>
             <TablePagination
                 component="div"

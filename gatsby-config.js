@@ -1,8 +1,9 @@
 module.exports = {
     siteMetadata: {
-        siteUrl: 'https://dodotracker.com/',
+        siteUrl: "https://dodotracker.com/",
         title: "Dodo Tracker",
-        description: "A tool for tracking and comparing villager spawns on mystery islands and the campsite within the game Animal Crossing: New Horizon. Raymond for everyone!",
+        description:
+            "A tool for tracking and comparing villager spawns on mystery islands and the campsite within the game Animal Crossing: New Horizon. Raymond for everyone!",
         author: "@peebun",
     },
     plugins: [

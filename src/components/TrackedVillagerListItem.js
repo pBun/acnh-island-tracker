@@ -12,11 +12,7 @@ import Avatar from "@material-ui/core/Avatar";
 
 const TrackedVillagerListItem = props => {
     // const classes = useStyles();
-    const {
-        villager,
-        timestamp,
-        ...otherProps
-    } = props;
+    const { villager, timestamp, ...otherProps } = props;
     return (
         <ListItem
             button
@@ -27,10 +23,7 @@ const TrackedVillagerListItem = props => {
             {...otherProps}
         >
             <ListItemAvatar>
-                <Avatar
-                    alt={villager.name}
-                    src={villager.icon}
-                />
+                <Avatar alt={villager.name} src={villager.icon} />
             </ListItemAvatar>
             <ListItemText
                 primary={`${villager.name} (${villager.personality} ${villager.species})`}

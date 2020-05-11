@@ -14,16 +14,15 @@ export default function TrackedMysteryIslandVillagersPage() {
     // const classes = useStyles();
     const { session } = React.useContext(SessionContext);
 
-    const filteredSightings = session.sightings
-        .filter(s => !s.location || s.location === "mystery-island");
+    const filteredSightings = session.sightings.filter(
+        s => !s.location || s.location === "mystery-island"
+    );
     const pageTitle = `Tracked Mystery Island Villagers ${
         filteredSightings.length ? `(${filteredSightings.length})` : ""
     }`;
     return (
         <Page title={pageTitle}>
-            <TrackedVillagers
-                sightings={filteredSightings}
-            />
+            <TrackedVillagers sightings={filteredSightings} />
         </Page>
     );
 }

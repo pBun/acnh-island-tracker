@@ -60,7 +60,7 @@ const useStyles = makeStyles(theme => ({
         opacity: 0.6,
     },
     progressBar: {
-        position: 'fixed',
+        position: "fixed",
         top: 0,
         left: 0,
         right: 0,
@@ -76,14 +76,17 @@ export default function BottomAppBar({ children }) {
         setClockModalState,
         setTrackerModalState,
     } = React.useContext(AppContext);
-    const {
-        trackVillager,
-    } = React.useContext(SessionContext);
+    const { trackVillager } = React.useContext(SessionContext);
     const [snackMessage, setSnackMessage] = React.useState("");
     return (
         <>
             <CssBaseline />
-            {loading && <LinearProgress color="secondary" className={classes.progressBar} />}
+            {loading && (
+                <LinearProgress
+                    color="secondary"
+                    className={classes.progressBar}
+                />
+            )}
 
             <Container className={classes.container} maxWidth="sm">
                 {children}
