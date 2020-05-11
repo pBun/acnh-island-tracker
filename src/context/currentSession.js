@@ -93,6 +93,7 @@ export const SessionProvider = ({ children }) => {
                             id: state.id,
                             timestamp,
                             villager,
+                            location,
                         })
                             .catch(() => {
                                 setLoading(false);

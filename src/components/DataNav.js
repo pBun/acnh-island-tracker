@@ -8,11 +8,11 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 import LockIcon from "@material-ui/icons/Lock";
-import PeopleIcon from "@material-ui/icons/People";
+import PersonIcon from "@material-ui/icons/Person";
 import MoodIcon from "@material-ui/icons/Mood";
 import PetsIcon from "@material-ui/icons/Pets";
 import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
-import FlightIcon from "@material-ui/icons/Flight";
+import PeopleIcon from "@material-ui/icons/People";
 import LaunchIcon from "@material-ui/icons/Launch";
 import WcIcon from "@material-ui/icons/Wc";
 
@@ -41,7 +41,7 @@ export default function DataNav({ hideIndex }) {
                 <ListItemText
                     primary={
                         <>
-                            <FlightIcon className={classes.textIcon} /> Tracked
+                            <PeopleIcon className={classes.textIcon} /> Tracked
                             Villagers
                         </>
                     }
@@ -52,7 +52,7 @@ export default function DataNav({ hideIndex }) {
                 <ListItemText
                     primary={
                         <>
-                            <PeopleIcon className={classes.textIcon} /> Grouped
+                            <PersonIcon className={classes.textIcon} /> Grouped
                             by Villager
                         </>
                     }
@@ -97,7 +97,7 @@ export default function DataNav({ hideIndex }) {
                 <ListItemText
                     primary={
                         <>
-                            <FlightIcon className={classes.textIcon} /> Tracked
+                            <PeopleIcon className={classes.textIcon} /> Tracked
                             Villagers
                         </>
                     }
@@ -122,7 +122,7 @@ export default function DataNav({ hideIndex }) {
                     secondary="See everyone's tracked villager data in Google Sheets"
                 />
             </ListItem>
-            <ListItem button component={Link} to={"/data/mystery-islands/privacy/"}>
+            <ListItem button component={Link} to={"/data/privacy/"}>
                 <ListItemText
                     primary={
                         <>
