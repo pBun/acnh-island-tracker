@@ -24,6 +24,15 @@ const useStyles = makeStyles(theme => ({
     combobox: {
         marginTop: theme.spacing(3),
     },
+    radioGroupLabel: {
+        marginBottom: theme.spacing(1),
+        fontSize: "0.9rem",
+    },
+    radioLabel: {
+        "& .MuiFormControlLabel-label": {
+            fontSize: "0.9rem",
+        },
+    },
 }));
 
 export default function FormModal({
@@ -34,7 +43,12 @@ export default function FormModal({
     handleCancel,
 }) {
     const classes = useStyles();
-    const { allowDataShare, setAllowDataShare, trackingPreference, setTrackingPreference } = React.useContext(AppContext);
+    const {
+        allowDataShare,
+        setAllowDataShare,
+        trackingPreference,
+        setTrackingPreference,
+    } = React.useContext(AppContext);
     const [selectedVillager, setSelectedVillager] = React.useState(null);
     return (
         <Dialog
@@ -47,20 +61,27 @@ export default function FormModal({
             </ChatStyleHeadline>
             <DialogContent>
                 <FormControl component="fieldset">
-                    <FormLabel component="legend">Location</FormLabel>
+                    <FormLabel
+                        component="legend"
+                        className={classes.radioGroupLabel}
+                    >
+                        Location
+                    </FormLabel>
                     <RadioGroup
                         aria-label="tracking location"
                         name="tracking-location"
                         value={trackingPreference}
-                        onChange={(e) => setTrackingPreference(e.target.value)}
+                        onChange={e => setTrackingPreference(e.target.value)}
                         defaultValue="mystery-island"
                     >
                         <FormControlLabel
+                            className={classes.radioLabel}
                             value="mystery-island"
                             control={<Radio color="primary" />}
                             label="Mystery Island"
                         />
                         <FormControlLabel
+                            className={classes.radioLabel}
                             value="campsite"
                             control={<Radio color="primary" />}
                             label="Campsite"
