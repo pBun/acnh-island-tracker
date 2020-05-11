@@ -27,8 +27,8 @@ module.exports = {
         {
             resolve: `gatsby-plugin-manifest`,
             options: {
-                name: `ACNH Island Tracker`,
-                short_name: `Island Tracker`,
+                name: `Dodo Tracker (Animal Crossing: New Horizons)`,
+                short_name: `Dodo Tracker`,
                 start_url: `/`,
                 background_color: `#1591d1`,
                 theme_color: `#1591d1`,
