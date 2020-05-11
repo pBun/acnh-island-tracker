@@ -12,7 +12,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Snackbar from "@material-ui/core/Snackbar";
-import FlightIcon from "@material-ui/icons/Flight";
+import AddIcon from "@material-ui/icons/Add";
 import ScheduleIcon from "@material-ui/icons/Schedule";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
 import HomeIcon from "@material-ui/icons/Home";
@@ -144,7 +144,7 @@ export default function BottomAppBar({ children }) {
                             onClick={() => setTrackerModalState(true)}
                             disabled={loading}
                         >
-                            <FlightIcon />
+                            <AddIcon />
                         </Fab>
                     </ButtonTooltip>
                     <TrackerModal

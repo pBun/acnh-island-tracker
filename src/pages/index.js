@@ -6,7 +6,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ScheduleIcon from "@material-ui/icons/Schedule";
-import FlightIcon from "@material-ui/icons/Flight";
+import AddIcon from "@material-ui/icons/Add";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
 
 import Page from "../components/page";
@@ -85,7 +85,7 @@ export default function IndexPage() {
                         secondary={
                             <>
                                 By clicking{" "}
-                                <FlightIcon
+                                <AddIcon
                                     className={classes.inlinePrimaryIcon}
                                 />{" "}
                                 (Track Villager) in the bottom navbar.
