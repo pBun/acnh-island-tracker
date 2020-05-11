@@ -24,6 +24,7 @@ function reducer(state, action) {
                     {
                         timestamp: action.payload.timestamp,
                         villager: action.payload.villager,
+                        location: action.payload.location,
                     },
                 ],
             };
@@ -70,7 +71,7 @@ export const SessionProvider = ({ children }) => {
                 resetSessionData: () => {
                     dispatch({ type: "reset" });
                 },
-                trackVillager: ({ villager }) => {
+                trackVillager: ({ villager, location }) => {
                     return new Promise((resolve, reject) => {
                         const timestamp = Date.now();
                         const updateState = () => {
@@ -79,6 +80,7 @@ export const SessionProvider = ({ children }) => {
                                 payload: {
                                     timestamp,
                                     villager,
+                                    location,
                                 },
                             });
                         };

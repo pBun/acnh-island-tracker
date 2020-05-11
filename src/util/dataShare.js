@@ -6,7 +6,7 @@ export const DATA_SHARE_URL =
 const DATA_UPLOAD_URL =
     "https://script.google.com/macros/s/AKfycbw_4jsHZE4PkIePUPbzPAlzzcXEeWibBltRUzeLu0zpztsVAEg/exec";
 
-export function shareSighting({ id, villager, timestamp }) {
+export function shareSighting({ id, villager, timestamp, location, }) {
     return new Promise((resolve, reject) => {
         const qs = queryString.stringify({
             timestamp: encodeURIComponent(
@@ -14,7 +14,7 @@ export function shareSighting({ id, villager, timestamp }) {
             ),
             villager: encodeURIComponent(villager),
             session_id: encodeURIComponent(id),
-            spawn_type: encodeURIComponent('mystery-island'),
+            spawn_type: encodeURIComponent(location || 'mystery-island'),
         });
         var request = new XMLHttpRequest();
         request.open("GET", `${DATA_UPLOAD_URL}?${qs}`, true);
