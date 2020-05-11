@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function IndexPage() {
+export default function TrackedVillagersPage() {
     const classes = useStyles();
     const { session } = React.useContext(SessionContext);
 
@@ -41,18 +41,25 @@ export default function IndexPage() {
     const recentSightings = session.sightings.sort(
         (a, b) => b.timestamp - a.timestamp
     );
-    const recentSightingsFormatted = recentSightings.map(sighting => {
-        const islandTimestamp = sighting.timestamp + session.islandOffset;
+    const recentSightingsFormatted = recentSightings.map((sighting, index) => {
+        const islandTimestamp = typeof session.islandOffset === 'number'
+            ? sighting.timestamp + session.islandOffset
+            : '';
         return {
             villager: getVillager(sighting.villager),
-            date: format(islandTimestamp, "MMM d, yyyy"),
-            time: format(islandTimestamp, "h:mm a"),
             icon: villagerIcons[sighting.villager],
+            timestamp: sighting.timestamp,
+            date: islandTimestamp
+                ? format(islandTimestamp, "MMM d, yyyy")
+                : 'Unknown Date',
+            time: islandTimestamp
+                ? format(islandTimestamp, "h:mm a")
+                : 'Unknown Time',
         };
     });
     const recentSightingsGroupedByDate = recentSightingsFormatted.reduce(
         (acc, data) => {
-            (acc[data["date"]] = acc[data["date"]] || []).push(data);
+            (acc[data.date] = acc[data.date] || []).push(data);
             return acc;
         },
         {}
