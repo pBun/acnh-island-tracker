@@ -4,16 +4,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import Avatar from "@material-ui/core/Avatar";
 import ScheduleIcon from "@material-ui/icons/Schedule";
 import FlightIcon from "@material-ui/icons/Flight";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
 
 import Page from "../components/page";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
     intro: {
         margin: theme.spacing(2, 5, 2),
     },
@@ -22,6 +20,20 @@ const useStyles = makeStyles((theme) => ({
     },
     list: {
         paddingBottom: theme.spacing(3),
+    },
+    inlineIcon: {
+        verticalAlign: "middle",
+        backgroundColor: theme.palette.primary.main,
+        color: theme.palette.primary.contrastText,
+        borderRadius: '1em',
+        padding: "0.2em",
+    },
+    inlinePrimaryIcon: {
+        verticalAlign: "middle",
+        backgroundColor: theme.palette.secondary.main,
+        color: theme.palette.secondary.contrastText,
+        borderRadius: '1em',
+        padding: "0.2em",
     },
 }));
 
@@ -56,52 +68,43 @@ export default function IndexPage() {
             </Typography>
             <List component="div" dense={true} className={classes.list}>
                 <ListItem>
-                    <ListItemIcon>
-                        <Avatar
-                            alt="1"
-                            src="/images/1.png"
-                        />
-                    </ListItemIcon>
                     <ListItemText
-                        primary="Set your clock"
+                        primary="1. Set your clock"
                         secondary={
                             <>
-                                By clicking <ScheduleIcon fontSize="small" /> in
-                                the bottom navbar.
+                                By clicking{" "}
+                                <ScheduleIcon
+                                    className={classes.inlineIcon}
+                                />{" "}
+                                (Clock Settings) in the bottom navbar.
                             </>
                         }
                     />
                 </ListItem>
                 <ListItem>
-                    <ListItemIcon>
-                        <Avatar
-                            alt="2"
-                            src="/images/2.png"
-                        />
-                    </ListItemIcon>
                     <ListItemText
-                        primary="Track each villager you see"
+                        primary="2. Track each villager you see"
                         secondary={
                             <>
-                                By clicking <FlightIcon fontSize="small" /> in the
-                                bottom navbar.
+                                By clicking{" "}
+                                <FlightIcon
+                                    className={classes.inlinePrimaryIcon}
+                                />{" "}
+                                (Track Villager) in the bottom navbar.
                             </>
                         }
                     />
                 </ListItem>
                 <ListItem>
-                    <ListItemIcon>
-                        <Avatar
-                            alt="3"
-                            src="/images/3.png"
-                        />
-                    </ListItemIcon>
                     <ListItemText
-                        primary="Analyze your data"
+                        primary="3. Analyze your data"
                         secondary={
                             <>
-                                By clicking <EqualizerIcon fontSize="small" />{" "}
-                                in the bottom navbar.
+                                By clicking{" "}
+                                <EqualizerIcon
+                                    className={classes.inlineIcon}
+                                />{" "}
+                                (Data) in the bottom navbar.
                             </>
                         }
                     />

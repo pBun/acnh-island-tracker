@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "gatsby";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -16,6 +16,7 @@ import FlightIcon from "@material-ui/icons/Flight";
 import ScheduleIcon from "@material-ui/icons/Schedule";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
 import HomeIcon from "@material-ui/icons/Home";
+import Tooltip from "@material-ui/core/Tooltip";
 
 import SessionContext from "../context/currentSession";
 import AppContext from "../context/app";
@@ -23,6 +24,15 @@ import AppContext from "../context/app";
 import IslandTime from "../components/IslandTime";
 import ClockOverrideModal from "../components/ClockOverrideModal";
 import VillagerModal from "../components/VillagerModal";
+
+const ButtonTooltip = withStyles((theme) => ({
+    tooltip: {
+        backgroundColor: theme.palette.secondary.main,
+        color: theme.palette.secondary.contrastText,
+        boxShadow: 0,
+        fontSize: theme.typography.fontSize,
+    },
+}))(Tooltip);
 
 const useStyles = makeStyles(theme => ({
     buttonProgress: {
@@ -83,14 +93,16 @@ export default function BottomAppBar({ children }) {
             </Container>
             <AppBar position="fixed" color="primary" className={classes.appBar}>
                 <Toolbar>
-                    <IconButton
-                        edge="start"
-                        onClick={() => setClockModalState(true)}
-                        color="inherit"
-                        className={classes.iconButton}
-                    >
-                        <ScheduleIcon />
-                    </IconButton>
+                    <ButtonTooltip title="Clock Settings" placement="top">
+                        <IconButton
+                            edge="start"
+                            onClick={() => setClockModalState(true)}
+                            color="inherit"
+                            className={classes.iconButton}
+                        >
+                            <ScheduleIcon />
+                        </IconButton>
+                    </ButtonTooltip>
                     <List component="div" className={classes.islandTime}>
                         <ListItem
                             dense={true}
@@ -123,15 +135,17 @@ export default function BottomAppBar({ children }) {
                             setClockModalState(false);
                         }}
                     />
-                    <Fab
-                        color="secondary"
-                        aria-label="add"
-                        className={classes.fabButton}
-                        onClick={() => setTrackerModalState(true)}
-                        disabled={loading}
-                    >
-                        <FlightIcon />
-                    </Fab>
+                    <ButtonTooltip title="Track Villager" placement="top">
+                        <Fab
+                            color="secondary"
+                            aria-label="add"
+                            className={classes.fabButton}
+                            onClick={() => setTrackerModalState(true)}
+                            disabled={loading}
+                        >
+                            <FlightIcon />
+                        </Fab>
+                    </ButtonTooltip>
                     <VillagerModal
                         open={trackerModalOpen}
                         handleClockSettings={() => {
@@ -155,23 +169,27 @@ export default function BottomAppBar({ children }) {
                         }}
                     />
                     <div className={classes.grow} />
-                    <IconButton
-                        component={Link}
-                        to="/data/"
-                        color="inherit"
-                        className={classes.iconButton}
-                    >
-                        <EqualizerIcon />
-                    </IconButton>
-                    <IconButton
-                        edge="end"
-                        component={Link}
-                        to="/"
-                        color="inherit"
-                        className={classes.iconButton}
-                    >
-                        <HomeIcon />
-                    </IconButton>
+                    <ButtonTooltip title="Data" placement="top">
+                        <IconButton
+                            component={Link}
+                            to="/data/"
+                            color="inherit"
+                            className={classes.iconButton}
+                        >
+                            <EqualizerIcon />
+                        </IconButton>
+                    </ButtonTooltip>
+                    <ButtonTooltip title="Home" placement="top">
+                        <IconButton
+                            edge="end"
+                            component={Link}
+                            to="/"
+                            color="inherit"
+                            className={classes.iconButton}
+                        >
+                            <HomeIcon />
+                        </IconButton>
+                    </ButtonTooltip>
                 </Toolbar>
             </AppBar>
             <Snackbar

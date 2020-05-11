@@ -64,7 +64,7 @@ export default function ClockOverrideModal({
             onClose={handleCancel}
             aria-labelledby="form-dialog-title"
         >
-            <DialogTitle id="form-dialog-title">Clock Preferences</DialogTitle>
+            <DialogTitle id="form-dialog-title">Clock Settings</DialogTitle>
             <Divider />
             <DialogContent className={classes.dialogContainer}>
                 <DialogContentText>
