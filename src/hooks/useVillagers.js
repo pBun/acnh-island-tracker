@@ -15,7 +15,6 @@ export default function useVillagers() {
             id,
         };
     });
-    console.log(villagerIcons, allVillagers[0].icon);
     const getVillager = villagerName => {
         return allVillagers.find(villager => villager.name === villagerName);
     };

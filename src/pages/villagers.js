@@ -119,10 +119,6 @@ export default function VillagersPage() {
     const [speciesFilter, setSpeciesFilter] = React.useState("All");
     const [personalityFilter, setPersonalityFilter] = React.useState("All");
     const [villagersPerPage, setVillagersPerPage] = React.useState(10);
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
-    const startIndex = page * villagersPerPage;
     const availableSpecies = allVillagers
         .reduce((acc, v) => {
             if (acc.indexOf(v.species) < 0) acc.push(v.species);
@@ -145,9 +141,12 @@ export default function VillagersPage() {
                 personalityFilter === "All" ||
                 personalityFilter === villager.personality
         );
+    const startIndex = Math.max(page * villagersPerPage, 0);
+    const endIndex = startIndex + (villagersPerPage >= 0
+        ? villagersPerPage : filteredVillagers.length);
     const villagersToRender = filteredVillagers.slice(
         startIndex,
-        startIndex + villagersPerPage
+        endIndex,
     );
     return (
         <Page title={`All Villagers (${filteredVillagers.length})`}>
@@ -219,10 +218,11 @@ export default function VillagersPage() {
                     inputProps: { "aria-label": "villagers per page" },
                     native: true,
                 }}
-                onChangePage={handleChangePage}
+                onChangePage={(event, newPage) => {
+                    setPage(newPage);
+                }}
                 onChangeRowsPerPage={(event) => {
-                    const perPage = parseInt(event.target.value, 10);
-                    setVillagersPerPage(perPage > 0 ? perPage : villagersToRender.length);
+                    setVillagersPerPage(parseInt(event.target.value, 10));
                     setPage(0);
                 }}
                 labelRowsPerPage=""
