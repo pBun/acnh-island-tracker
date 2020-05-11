@@ -1,2 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[5],{"f4+Q":function(e,n,t){"use strict";t.r(n);var a=t("q1tI"),r=t.n(a),o=t("1lFR"),i=t("YQnL");n.default=function(){return r.a.createElement(i.a,{title:"Grouped by Personality"},r.a.createElement(o.a,{villagerPropName:"personality"}))}}}]);
-//# sourceMappingURL=component---src-pages-data-by-personality-js-798ce3e51851e491cda5.js.map

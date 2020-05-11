@@ -1,2 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[7],{aJMd:function(e,a,t){"use strict";t.r(a);var n=t("q1tI"),l=t.n(n),r=t("vrFN"),i=t("RMc2"),s=t("1lFR"),c=t("S7Tf");a.default=function(){return l.a.createElement(i.a,null,l.a.createElement(r.a,{title:"Personality Stats | ACNH Island Tracker"}),l.a.createElement(c.a,null,"Villager Sightings by Personalities"),l.a.createElement(s.a,{villagerPropName:"personality"}))}}}]);
-//# sourceMappingURL=component---src-pages-stats-personalities-js-bb6ccaba541176f604bb.js.map

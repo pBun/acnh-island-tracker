@@ -1,2 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[8],{"74bx":function(e,a,t){"use strict";t.r(a);var n=t("q1tI"),l=t.n(n),r=t("vrFN"),c=t("RMc2"),i=t("1lFR"),s=t("S7Tf");a.default=function(){return l.a.createElement(c.a,null,l.a.createElement(r.a,{title:"Species Stats | ACNH Island Tracker"}),l.a.createElement(s.a,null,"Villager Sightings by Species"),l.a.createElement(i.a,{villagerPropName:"species"}))}}}]);
-//# sourceMappingURL=component---src-pages-stats-species-js-88bf015c59023d400c1f.js.map

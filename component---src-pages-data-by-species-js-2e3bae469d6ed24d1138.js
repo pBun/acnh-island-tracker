@@ -1,2 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[6],{zQB9:function(e,n,t){"use strict";t.r(n);var a=t("q1tI"),r=t.n(a),c=t("1lFR"),i=t("YQnL");n.default=function(){return r.a.createElement(i.a,{title:"Grouped by Species"},r.a.createElement(c.a,{villagerPropName:"species"}))}}}]);
-//# sourceMappingURL=component---src-pages-data-by-species-js-2e3bae469d6ed24d1138.js.map

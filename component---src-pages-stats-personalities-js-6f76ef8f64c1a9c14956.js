@@ -1,2 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[6],{aJMd:function(e,a,t){"use strict";t.r(a);var n=t("q1tI"),l=t.n(n),r=t("vrFN"),i=t("RMc2"),s=t("1lFR"),c=t("S7Tf");a.default=function(){return l.a.createElement(i.a,null,l.a.createElement(r.a,{title:"Personality Stats"}),l.a.createElement(c.a,null,"Villager Sightings by Personalities"),l.a.createElement(s.a,{villagerPropName:"personality"}))}}}]);
-//# sourceMappingURL=component---src-pages-stats-personalities-js-6f76ef8f64c1a9c14956.js.map
