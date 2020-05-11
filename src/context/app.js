@@ -54,10 +54,14 @@ export const AppProvider = ({ children }) => {
         localState || getInitialState()
     );
     React.useEffect(() => {
+        if (!window) return;
+        // only store the data share var
+        const stateToStore = getInitialState();
+        stateToStore.allowDataShare = state.allowDataShare;
         window &&
             window.localStorage.setItem(
                 LOCAL_STORAGE_KEY,
-                JSON.stringify(state)
+                JSON.stringify(stateToStore)
             );
     }, [state]);
     return (
