@@ -59,9 +59,6 @@ const useStyles = makeStyles(theme => ({
     dateLabel: {
         opacity: 0.6,
     },
-    islandTime: {
-        marginLeft: theme.spacing(1),
-    },
 }));
 
 export default function BottomAppBar({ children }) {
