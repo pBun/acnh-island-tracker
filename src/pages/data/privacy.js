@@ -1,9 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -47,7 +45,7 @@ const SessionPage = () => {
                                 Support the community by sending villager sighting data to
                                 {" "}
                                 <a
-                                    href="https://docs.google.com/spreadsheets/d/1p542EQ85gdgLJfjZcI3SSmTdsnZKNi6KKjjjSdGkl7Q/edit?usp=sharing"
+                                    href={DATA_SHARE_URL}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     style={{ color: "inherit" }}
@@ -79,7 +77,7 @@ const SessionPage = () => {
                                 Delete all session data stored in your browser. Note that this does not delete data stored in
                                 {" "}
                                 <a
-                                    href="https://docs.google.com/spreadsheets/d/1p542EQ85gdgLJfjZcI3SSmTdsnZKNi6KKjjjSdGkl7Q/edit?usp=sharing"
+                                    href={DATA_SHARE_URL}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     style={{ color: "inherit" }}
