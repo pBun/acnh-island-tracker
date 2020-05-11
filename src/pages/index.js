@@ -53,10 +53,7 @@ export default function IndexPage() {
     return (
         <Page title={site.siteMetadata.title}>
             <Typography variant="body1" component="p" className={classes.intro}>
-                Hi, I built this tool to track and compare villager spawn rates
-                on Animal Crossing: New Horizon Mystery Islands. The goal is to
-                demystify how villagers are rolled when traveling to each
-                Mystery Island.
+                Hi, I built this tool for others to track villager spawns on both mystery islands and the campsite.
             </Typography>
             <Typography
                 variant="h6"
