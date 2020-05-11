@@ -59,6 +59,13 @@ const useStyles = makeStyles(theme => ({
     dateLabel: {
         opacity: 0.6,
     },
+    progressBar: {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1,
+    },
 }));
 
 export default function BottomAppBar({ children }) {
@@ -76,7 +83,7 @@ export default function BottomAppBar({ children }) {
     return (
         <>
             <CssBaseline />
-            {loading && <LinearProgress color="secondary" />}
+            {loading && <LinearProgress color="secondary" className={classes.progressBar} />}
 
             <Container className={classes.container} maxWidth="sm">
                 {children}

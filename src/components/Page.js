@@ -3,7 +3,7 @@ import { Paper, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import SEO from "../components/seo";
-import SiteMenu from "../components/SiteMenu";
+import Layout from "../components/Layout";
 import ChatStyleHeadline from "../components/ChatStyleHeadline";
 
 const useStyles = makeStyles(theme => ({
@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 const SessionPage = ({ title, children, variant }) => {
     const classes = useStyles();
     return (
-        <SiteMenu>
+        <Layout>
             <SEO title={title} />
             <Paper elevation={0} className={classes.container}>
                 <ChatStyleHeadline component="h1">{title}</ChatStyleHeadline>
@@ -81,7 +81,7 @@ const SessionPage = ({ title, children, variant }) => {
                 </a>
                 .
             </Typography>
-        </SiteMenu>
+        </Layout>
     );
 };
 
