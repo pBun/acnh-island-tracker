@@ -6,7 +6,7 @@ const LOCAL_STORAGE_KEY = "islandTrackerApp";
 const getInitialState = () => ({
     loading: false,
     trackerModalOpen: false,
-    allowDataShare: false,
+    allowDataShare: true,
     trackingPreference: "mystery-island",
 });
 function reducer(state, action) {
