@@ -6,6 +6,7 @@ export const VILLAGERS =
     villagerData.feed.entry &&
     villagerData.feed.entry.map(v => {
         return {
+            id: v.gsx$villager.$t.replace(/[^a-zA-Z0-9-_]/g, '').toLowerCase(),
             name: v.gsx$villager.$t,
             species: v.gsx$species.$t,
             gender: v.gsx$gender.$t,

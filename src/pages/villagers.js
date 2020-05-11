@@ -177,7 +177,7 @@ export default function VillagersPage() {
                 {villagersToRender.map(
                     villager => (
                         <ListItem
-                            key={villager.name}
+                            key={villager.id}
                             button
                             component="a"
                             href={`https://nookipedia.com/wiki/${villager.name}`}
@@ -187,7 +187,7 @@ export default function VillagersPage() {
                             <ListItemAvatar>
                                 <Avatar
                                     alt={villager.name}
-                                    src={villagerIcons[villager.name]}
+                                    src={villagerIcons[villager.id]}
                                 />
                             </ListItemAvatar>
                             <ListItemText
