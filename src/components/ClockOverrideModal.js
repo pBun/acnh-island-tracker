@@ -35,13 +35,20 @@ export default function ClockOverrideModal({
     handleCancel,
 }) {
     const classes = useStyles();
-    const { session, currentSystemTimestamp } = React.useContext(SessionContext);
-    const initialOverrideClock = typeof session.islandOffset === 'number'
-        ? !!session.islandOffset
-        : DEFAULT_CLOCK_OVERRIDE_STATE;
+    const { session, currentSystemTimestamp } = React.useContext(
+        SessionContext
+    );
+    const initialOverrideClock =
+        typeof session.islandOffset === "number"
+            ? !!session.islandOffset
+            : DEFAULT_CLOCK_OVERRIDE_STATE;
     const initialPotentialIslandOffset = session.islandOffset || 0;
-    const [overrideClock, setOverrideClock] = React.useState(initialOverrideClock);
-    const [potentialIslandOffset, setPotentialIslandOffset] = React.useState(initialPotentialIslandOffset);
+    const [overrideClock, setOverrideClock] = React.useState(
+        initialOverrideClock
+    );
+    const [potentialIslandOffset, setPotentialIslandOffset] = React.useState(
+        initialPotentialIslandOffset
+    );
     const potentialIslandTimestamp = overrideClock
         ? currentSystemTimestamp + potentialIslandOffset
         : currentSystemTimestamp;
@@ -51,11 +58,7 @@ export default function ClockOverrideModal({
         setPotentialIslandOffset(initialPotentialIslandOffset);
     };
     return (
-        <Dialog
-            open={open}
-            onClose={reset}
-            aria-labelledby="form-dialog-title"
-        >
+        <Dialog open={open} onClose={reset} aria-labelledby="form-dialog-title">
             <ChatStyleHeadline id="form-dialog-title" component="h2">
                 Clock Settings
             </ChatStyleHeadline>
@@ -65,9 +68,7 @@ export default function ClockOverrideModal({
                     settings. This is so we can determine significance of
                     in-game time and date.
                 </DialogContentText>
-                <FormControl
-                    margin="normal"
-                >
+                <FormControl margin="normal">
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <KeyboardDateTimePicker
                             label="Nintendo Switch clock"
@@ -103,16 +104,15 @@ export default function ClockOverrideModal({
                 </FormControl>
             </DialogContent>
             <DialogActions>
-                <Button
-                    onClick={reset}
-                    color="primary"
-                >
+                <Button onClick={reset} color="primary">
                     Cancel
                 </Button>
                 <Button
                     disabled={!potentialIslandTimestamp}
                     onClick={() => {
-                        handleConfirm(overrideClock ? potentialIslandOffset : 0);
+                        handleConfirm(
+                            overrideClock ? potentialIslandOffset : 0
+                        );
                     }}
                     color="primary"
                 >

@@ -25,14 +25,14 @@ const useStyles = makeStyles(theme => ({
         verticalAlign: "middle",
         backgroundColor: theme.palette.primary.main,
         color: theme.palette.primary.contrastText,
-        borderRadius: '1em',
+        borderRadius: "1em",
         padding: "0.2em",
     },
     inlinePrimaryIcon: {
         verticalAlign: "middle",
         backgroundColor: theme.palette.secondary.main,
         color: theme.palette.secondary.contrastText,
-        borderRadius: '1em',
+        borderRadius: "1em",
         padding: "0.2em",
     },
 }));
@@ -54,9 +54,9 @@ export default function IndexPage() {
     return (
         <Page title={site.siteMetadata.title}>
             <Typography variant="body1" component="p" className={classes.intro}>
-                Hi, I built this tool to track and compare villager appearance
-                rates on Animal Crossing: New Horizon Mystery Islands. The goal
-                is to demystify how villagers are rolled when traveling to each
+                Hi, I built this tool to track and compare villager spawn rates
+                on Animal Crossing: New Horizon Mystery Islands. The goal is to
+                demystify how villagers are rolled when traveling to each
                 Mystery Island.
             </Typography>
             <Typography
@@ -73,9 +73,7 @@ export default function IndexPage() {
                         secondary={
                             <>
                                 By clicking{" "}
-                                <ScheduleIcon
-                                    className={classes.inlineIcon}
-                                />{" "}
+                                <ScheduleIcon className={classes.inlineIcon} />{" "}
                                 (Clock Settings) in the bottom navbar.
                             </>
                         }
@@ -101,9 +99,7 @@ export default function IndexPage() {
                         secondary={
                             <>
                                 By clicking{" "}
-                                <EqualizerIcon
-                                    className={classes.inlineIcon}
-                                />{" "}
+                                <EqualizerIcon className={classes.inlineIcon} />{" "}
                                 (Data) in the bottom navbar.
                             </>
                         }

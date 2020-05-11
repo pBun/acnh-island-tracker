@@ -85,13 +85,15 @@ export default function FormModal({
                         }
                         label={
                             <span className={classes.checkboxLabel}>
-                                Support the community by sending your villager sightings to
-                                {" "}
+                                Support the community by sending your villager
+                                sightings to{" "}
                                 <a
                                     href="https://docs.google.com/spreadsheets/d/1p542EQ85gdgLJfjZcI3SSmTdsnZKNi6KKjjjSdGkl7Q/edit?usp=sharing"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                >our spreadsheet</a>
+                                >
+                                    our spreadsheet
+                                </a>
                                 .
                             </span>
                         }

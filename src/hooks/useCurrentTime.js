@@ -4,7 +4,9 @@ import { format } from "date-fns";
 const DEFAULT_TEMPLATE = "MMM d, yyyy hh:mm a";
 
 export default function useCurrentTime(islandOffset) {
-    const [currentSystemTimestamp, setCurTimestamp] = React.useState(Date.now());
+    const [currentSystemTimestamp, setCurTimestamp] = React.useState(
+        Date.now()
+    );
     React.useEffect(() => {
         if (!window) return;
         let updateTimeout;
@@ -17,14 +19,15 @@ export default function useCurrentTime(islandOffset) {
             window.clearTimeout(updateTimeout);
         };
     }, [islandOffset]);
-    const currentIslandTimestamp = typeof islandOffset === 'number'
-        ? currentSystemTimestamp + islandOffset
-        : null;
-    const getPrettySystemTime = (template=DEFAULT_TEMPLATE) => {
+    const currentIslandTimestamp =
+        typeof islandOffset === "number"
+            ? currentSystemTimestamp + islandOffset
+            : null;
+    const getPrettySystemTime = (template = DEFAULT_TEMPLATE) => {
         return format(currentSystemTimestamp, template);
     };
-    const getPrettyIslandTime = (template=DEFAULT_TEMPLATE) => {
-        if (typeof currentIslandTimestamp !== "number") return '';
+    const getPrettyIslandTime = (template = DEFAULT_TEMPLATE) => {
+        if (typeof currentIslandTimestamp !== "number") return "";
         return format(currentIslandTimestamp, template);
     };
     return {

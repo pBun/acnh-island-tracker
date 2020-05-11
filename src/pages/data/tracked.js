@@ -24,11 +24,11 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: theme.palette.background.paper,
     },
     avatar: {
-        color: '#30849e',
-        backgroundColor: '#e5f4fc',
-        borderColor: '#aadcf6',
+        color: "#30849e",
+        backgroundColor: "#e5f4fc",
+        borderColor: "#aadcf6",
         borderWidth: 1,
-        borderStyle: 'solid',
+        borderStyle: "solid",
     },
 }));
 

@@ -1,7 +1,8 @@
 import queryString from "query-string";
 import { format } from "date-fns";
 
-export const DATA_SHARE_URL = "https://docs.google.com/spreadsheets/d/1p542EQ85gdgLJfjZcI3SSmTdsnZKNi6KKjjjSdGkl7Q/edit?usp=sharing";
+export const DATA_SHARE_URL =
+    "https://docs.google.com/spreadsheets/d/1p542EQ85gdgLJfjZcI3SSmTdsnZKNi6KKjjjSdGkl7Q/edit?usp=sharing";
 const DATA_UPLOAD_URL =
     "https://script.google.com/macros/s/AKfycbw_4jsHZE4PkIePUPbzPAlzzcXEeWibBltRUzeLu0zpztsVAEg/exec";
 
@@ -11,15 +12,15 @@ export function shareSighting({ id, villager, timestamp, islandOffset }) {
             timestamp: encodeURIComponent(
                 format(timestamp, "MM/dd/yyyy hh:mm:ss")
             ),
-            island_timestamp: typeof islandOffset === 'number'
-                ? encodeURIComponent(
-                    format(
-                        timestamp + islandOffset,
-                        "MM/dd/yyyy hh:mm:ss"
-                    )
-                )
-                : null
-            ,
+            island_timestamp:
+                typeof islandOffset === "number"
+                    ? encodeURIComponent(
+                          format(
+                              timestamp + islandOffset,
+                              "MM/dd/yyyy hh:mm:ss"
+                          )
+                      )
+                    : null,
             villager: encodeURIComponent(villager),
             session_id: encodeURIComponent(id),
         });

@@ -50,10 +50,7 @@ const initialState = {
 };
 const SessionContext = React.createContext(initialState);
 export const SessionProvider = ({ children }) => {
-    const {
-        allowDataShare,
-        setLoading,
-    } = React.useContext(AppContext);
+    const { allowDataShare, setLoading } = React.useContext(AppContext);
     const localStateString =
         window && window.localStorage.getItem(LOCAL_STORAGE_KEY);
     const localState = localStateString && JSON.parse(localStateString);
@@ -115,15 +112,16 @@ export const SessionProvider = ({ children }) => {
                             islandOffset: state.islandOffset,
                             timestamp,
                             villager,
-                        }).catch(() => {
-                            setLoading(false);
-                            return reject();
                         })
-                        .then(() => {
-                            updateState();
-                            setLoading(false);
-                            return resolve();
-                        });
+                            .catch(() => {
+                                setLoading(false);
+                                return reject();
+                            })
+                            .then(() => {
+                                updateState();
+                                setLoading(false);
+                                return resolve();
+                            });
                     });
                 },
             }}

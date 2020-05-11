@@ -8,25 +8,24 @@ import ChatStyleHeadline from "../components/ChatStyleHeadline";
 
 const useStyles = makeStyles(theme => ({
     container: {
-        position: 'relative',
+        position: "relative",
         margin: theme.spacing(6, 0, 0),
         padding: theme.spacing(3, 0, 0),
     },
     title: {
-        display: 'inline-block',
-        position: 'absolute',
+        display: "inline-block",
+        position: "absolute",
         left: theme.spacing(2),
         top: 0,
-        transform: 'translateY(-50%)',
-        color: '#30849e',
-        backgroundColor: '#ffdf4e',
+        transform: "translateY(-50%)",
+        color: "#30849e",
+        backgroundColor: "#ffdf4e",
         paddingLeft: theme.spacing(3),
         paddingRight: theme.spacing(3),
-        paddingTop: '0.25em',
-        paddingBottom: '0.25em',
-        fontSize: '1rem',
-        borderRadius: '1em',
-
+        paddingTop: "0.25em",
+        paddingBottom: "0.25em",
+        fontSize: "1rem",
+        borderRadius: "1em",
     },
     note: {
         display: "block",
@@ -45,9 +44,7 @@ const SessionPage = ({ title, children, variant }) => {
         <SiteMenu>
             <SEO title={title} />
             <Paper elevation={0} className={classes.container}>
-                <ChatStyleHeadline component="h1">
-                    {title}
-                </ChatStyleHeadline>
+                <ChatStyleHeadline component="h1">{title}</ChatStyleHeadline>
                 {children}
             </Paper>
             <Typography

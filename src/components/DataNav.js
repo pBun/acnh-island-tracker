@@ -39,7 +39,8 @@ export default function DataNav({ hideIndex }) {
                 <ListItemText
                     primary={
                         <>
-                            <FlightIcon className={classes.textIcon} /> Tracked Villagers
+                            <FlightIcon className={classes.textIcon} /> Tracked
+                            Villagers
                         </>
                     }
                     secondary="Your tracked villagers"

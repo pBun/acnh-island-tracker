@@ -29,21 +29,23 @@ const useStyles = makeStyles(theme => ({
 
 const SessionPage = () => {
     const classes = useStyles();
-    const { allowDataShare, setAllowDataShare, resetAppData } = React.useContext(AppContext);
+    const {
+        allowDataShare,
+        setAllowDataShare,
+        resetAppData,
+    } = React.useContext(AppContext);
     const { resetSessionData } = React.useContext(SessionContext);
     return (
         <Page title="Data Privacy" variant="text">
-            <List
-                className={classes.root}
-            >
+            <List className={classes.root}>
                 <ListItem>
                     <ListItemText
                         id="switch-list-label-data-share"
                         primary="Allow Data Share"
-                        secondary={(
+                        secondary={
                             <>
-                                Support the community by sending villager sighting data to
-                                {" "}
+                                Support the community by sending villager
+                                sighting data to{" "}
                                 <a
                                     href={DATA_SHARE_URL}
                                     target="_blank"
@@ -54,16 +56,19 @@ const SessionPage = () => {
                                 </a>
                                 .
                             </>
-                        )}
+                        }
                     />
                     <ListItemSecondaryAction>
                         <Checkbox
                             edge="end"
                             color="primary"
-                            onChange={(e) => { setAllowDataShare(e.target.checked) }}
+                            onChange={e => {
+                                setAllowDataShare(e.target.checked);
+                            }}
                             checked={allowDataShare}
                             inputProps={{
-                                "aria-labelledby": "switch-list-label-data-share",
+                                "aria-labelledby":
+                                    "switch-list-label-data-share",
                             }}
                         />
                     </ListItemSecondaryAction>
@@ -72,10 +77,11 @@ const SessionPage = () => {
                     <ListItemText
                         id="switch-list-label-delete-all"
                         primary="Reset Session"
-                        secondary={(
+                        secondary={
                             <>
-                                Delete all session and app data stored in your browser. Note that this does not delete data stored in
-                                {" "}
+                                Delete all session and app data stored in your
+                                browser. Note that this does not delete data
+                                stored in{" "}
                                 <a
                                     href={DATA_SHARE_URL}
                                     target="_blank"
@@ -84,8 +90,7 @@ const SessionPage = () => {
                                 >
                                     our spreadsheet
                                 </a>
-                                . Please reach out to
-                                {" "}
+                                . Please reach out to{" "}
                                 <a
                                     href="https://twitter.com/peebun"
                                     target="_blank"
@@ -93,11 +98,10 @@ const SessionPage = () => {
                                     style={{ color: "inherit" }}
                                 >
                                     me
-                                </a>
-                                {" "}
+                                </a>{" "}
                                 if you'd like me to delete this data.
                             </>
-                        )}
+                        }
                     />
                     <ListItemSecondaryAction>
                         <IconButton

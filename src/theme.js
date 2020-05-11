@@ -1,14 +1,13 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 
-const DODO_YELLOW = '#ffdf4e';
+const DODO_YELLOW = "#ffdf4e";
 const DODO_BLUE = "#1591d1";
 const DODO_BLUE_TEXT = "#30849e";
 const DODO_WHITE_TEXT = "#f6f8e2";
 // const DODO_RED = '#fa4a4c';
-const DODO_TEXT_BG = '#fffae4';
-const DODO_LIGHT_BLUE = '#aadcf6';
-const DODO_PAPER = '#fcfdf7';
-
+const DODO_TEXT_BG = "#fffae4";
+const DODO_LIGHT_BLUE = "#aadcf6";
+const DODO_PAPER = "#fcfdf7";
 
 // A custom theme for this app
 const defaultTheme = createMuiTheme();
@@ -27,15 +26,15 @@ const theme = createMuiTheme({
             paper: DODO_PAPER,
         },
         action: {
-            active: 'rgba(6, 48, 69, 0.54)',
-            hover: 'rgba(6, 48, 69, 0.04)',
+            active: "rgba(6, 48, 69, 0.54)",
+            hover: "rgba(6, 48, 69, 0.04)",
             hoverOpacity: 0.04,
-            selected: 'rgba(6, 48, 69, 0.04)',
+            selected: "rgba(6, 48, 69, 0.04)",
             selectedOpacity: 0.8,
-            disabled: 'rgba(6, 48, 69, 0.26)',
-            disabledBackground: 'rgba(6, 48, 69, 0.12)',
+            disabled: "rgba(6, 48, 69, 0.26)",
+            disabledBackground: "rgba(6, 48, 69, 0.12)",
             disabledOpacity: 0.38,
-            focus: 'rgba(6, 48, 69, 0.12)',
+            focus: "rgba(6, 48, 69, 0.12)",
             focusOpacity: 0.12,
             activatedOpacity: 0.12,
         },
@@ -59,7 +58,7 @@ const theme = createMuiTheme({
         MuiDialog: {
             container: {
                 "& .MuiDialog-paper": {
-                    overflow: 'initial',
+                    overflow: "initial",
                 },
             },
         },

@@ -24,7 +24,7 @@ import AppContext from "../context/app";
 import ClockOverrideModal from "../components/ClockOverrideModal";
 import TrackerModal from "../components/TrackerModal";
 
-const ButtonTooltip = withStyles((theme) => ({
+const ButtonTooltip = withStyles(theme => ({
     tooltip: {
         backgroundColor: theme.palette.secondary.main,
         color: theme.palette.secondary.contrastText,
@@ -60,9 +60,7 @@ const useStyles = makeStyles(theme => ({
         right: 0,
         margin: "0 auto",
     },
-    iconButton: {
-
-    },
+    iconButton: {},
     dateLabel: {
         opacity: 0.6,
     },
@@ -80,7 +78,11 @@ export default function BottomAppBar({ children }) {
         setClockModalState,
         setTrackerModalState,
     } = React.useContext(AppContext);
-    const { trackVillager, setIslandOffset, getPrettyIslandTime } = React.useContext(SessionContext);
+    const {
+        trackVillager,
+        setIslandOffset,
+        getPrettyIslandTime,
+    } = React.useContext(SessionContext);
     const [snackMessage, setSnackMessage] = React.useState("");
     return (
         <>
