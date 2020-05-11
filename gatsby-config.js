@@ -2,7 +2,7 @@ module.exports = {
     pathPrefix: `/acnh-island-tracker`,
     siteMetadata: {
         title: `Mystery Island Tracker for ACNH`,
-        description: `This is a tool for tracking and comparing villager appearances on Mystery Islands within the game Animal Crossing: New Horizon. Let's demystify the magic; Raymond for everyone!`,
+        description: `This is a tool for tracking and comparing villager spawns on Mystery Islands within the game Animal Crossing: New Horizon. Let's demystify the magic; Raymond for everyone!`,
         author: `@peebun`,
     },
     plugins: [
