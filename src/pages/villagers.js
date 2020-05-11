@@ -122,10 +122,6 @@ export default function VillagersPage() {
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
-    const handleChangeRowsPerPage = event => {
-        setVillagersPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
     const startIndex = page * villagersPerPage;
     const availableSpecies = allVillagers
         .reduce((acc, v) => {
@@ -224,7 +220,11 @@ export default function VillagersPage() {
                     native: true,
                 }}
                 onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
+                onChangeRowsPerPage={(event) => {
+                    const perPage = parseInt(event.target.value, 10);
+                    setVillagersPerPage(perPage > 0 ? perPage : villagersToRender.length);
+                    setPage(0);
+                }}
                 labelRowsPerPage=""
                 ActionsComponent={TablePaginationActions}
             />
