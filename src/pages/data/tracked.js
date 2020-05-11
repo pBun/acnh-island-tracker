@@ -38,19 +38,12 @@ export default function TrackedVillagersPage() {
         (a, b) => b.timestamp - a.timestamp
     );
     const recentSightingsFormatted = recentSightings.map((sighting, index) => {
-        const islandTimestamp = typeof session.islandOffset === 'number'
-            ? sighting.timestamp + session.islandOffset
-            : '';
         const villager = getVillager(sighting.villager);
         return {
             icon: villagerIcons[villager.id],
             timestamp: sighting.timestamp,
-            date: islandTimestamp
-                ? format(islandTimestamp, "MMM d, yyyy")
-                : 'Unknown Date',
-            time: islandTimestamp
-                ? format(islandTimestamp, "h:mm a")
-                : 'Unknown Time',
+            date: format(sighting.timestamp, "MMM d, yyyy"),
+            time: format(sighting.timestamp, "h:mm a"),
             villager,
         };
     });

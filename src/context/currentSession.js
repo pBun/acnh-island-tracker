@@ -35,9 +35,9 @@ function reducer(state, action) {
 }
 const initialState = {
     session: getInitialSession(),
-    setIslandOffset: opts => {},
     trackVillager: opts => {},
     resetSessionData: () => {},
+    currentSystemTimestamp: null,
     getPrettySystemTime: () => {},
 };
 const SessionContext = React.createContext(initialState);
