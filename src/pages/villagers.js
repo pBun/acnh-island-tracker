@@ -4,6 +4,10 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ListItemText from "@material-ui/core/ListItemText";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
 import Avatar from "@material-ui/core/Avatar";
 import TablePagination from "@material-ui/core/TablePagination";
 import IconButton from "@material-ui/core/IconButton";
@@ -25,12 +29,17 @@ const useStyles = makeStyles(theme => ({
     subheader: {
         backgroundColor: theme.palette.background.paper,
     },
-    avatar: {
-
-    },
     customPagination: {
         flexShrink: 0,
         marginLeft: theme.spacing(2.5),
+    },
+    formControl: {
+        margin: theme.spacing(1),
+        width: "100%",
+    },
+    filters: {
+        display: "flex",
+        padding: theme.spacing(2, 4, 1),
     },
 }));
 
@@ -109,6 +118,8 @@ export default function VillagersPage() {
     const classes = useStyles();
     const villagerIcons = useVillagerIcons();
     const [page, setPage] = React.useState(0);
+    const [speciesFilter, setSpeciesFilter] = React.useState("All");
+    const [personalityFilter, setPersonalityFilter] = React.useState("All");
     const [villagersPerPage, setVillagersPerPage] = React.useState(10);
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -118,10 +129,52 @@ export default function VillagersPage() {
         setPage(0);
     };
     const startIndex = page * villagersPerPage;
+    const availableSpecies = VILLAGERS.reduce((acc, v) => {
+        if (acc.indexOf(v.species) < 0) acc.push(v.species);
+        return acc;
+    }, []).sort();
+    const availablePersonalities = VILLAGERS.reduce((acc, v) => {
+        if (acc.indexOf(v.personality) < 0) acc.push(v.personality);
+        return acc;
+    }, []).sort();
+    const filteredVillagers = VILLAGERS
+        .filter(villager => speciesFilter === 'All' || speciesFilter === villager.species)
+        .filter(villager => personalityFilter === 'All' || personalityFilter === villager.personality);
+    const villagersToRender = filteredVillagers.slice(startIndex, startIndex + villagersPerPage);
     return (
-        <Page title={`All Villagers (${VILLAGERS.length})`}>
+        <Page title={`All Villagers (${filteredVillagers.length})`}>
+            <div className={classes.filters}>
+                <FormControl className={classes.formControl}>
+                    <InputLabel id="species-select-label">Filter Species</InputLabel>
+                    <Select
+                        labelId="species-select-label"
+                        id="species-select"
+                        value={speciesFilter}
+                        onChange={(e) => setSpeciesFilter(e.target.value)}
+                    >
+                        <MenuItem value="All">All</MenuItem>
+                        {availableSpecies.map(species => (
+                            <MenuItem key={species} value={species}>{species}</MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+                <FormControl className={classes.formControl}>
+                    <InputLabel id="personality-select-label">Filter Personality</InputLabel>
+                    <Select
+                        labelId="personality-select-label"
+                        id="personality-select"
+                        value={personalityFilter}
+                        onChange={(e) => setPersonalityFilter(e.target.value)}
+                    >
+                        <MenuItem value="All">All</MenuItem>
+                        {availablePersonalities.map(personality => (
+                            <MenuItem key={personality} value={personality}>{personality}</MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+            </div>
             <List className={classes.list}>
-                {VILLAGERS.slice(startIndex, startIndex + villagersPerPage).map(
+                {villagersToRender.map(
                     villager => (
                         <ListItem
                             key={villager.name}
@@ -133,7 +186,6 @@ export default function VillagersPage() {
                         >
                             <ListItemAvatar>
                                 <Avatar
-                                    className={classes.avatar}
                                     alt={villager.name}
                                     src={villagerIcons[villager.name]}
                                 />
@@ -149,7 +201,7 @@ export default function VillagersPage() {
             <TablePagination
                 component="div"
                 rowsPerPageOptions={[10, 25, 50, { label: "All", value: -1 }]}
-                count={VILLAGERS.length}
+                count={filteredVillagers.length}
                 rowsPerPage={villagersPerPage}
                 page={page}
                 SelectProps={{
