@@ -8,7 +8,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
 
-import Page from "../components/page";
+import Page from "../components/Page";
 
 const useStyles = makeStyles(theme => ({
     intro: {

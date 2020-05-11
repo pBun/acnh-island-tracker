@@ -99,10 +99,10 @@ export default function BottomAppBar({ children }) {
                         handleClockSettings={() => {
                             setClockModalState(true);
                         }}
-                        handleConfirm={villager => {
+                        handleConfirm={(villager, location) => {
                             if (!villager) return;
                             setTrackerModalState(false);
-                            trackVillager({ villager: villager.name })
+                            trackVillager({ villager: villager.name, location })
                                 .catch(err => {
                                     setSnackMessage("Ajax error =(");
                                 })

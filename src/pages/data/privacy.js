@@ -13,7 +13,7 @@ import { DATA_SHARE_URL } from "../../util/dataShare";
 import AppContext from "../../context/app";
 import SessionContext from "../../context/currentSession";
 
-import Page from "../../components/page";
+import Page from "../../components/Page";
 
 const useStyles = makeStyles(theme => ({
     text: {

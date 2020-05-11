@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Divider from "@material-ui/core/Divider";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
+import ListSubheader from "@material-ui/core/ListSubheader";
 import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 import LockIcon from "@material-ui/icons/Lock";
@@ -35,7 +36,8 @@ export default function DataNav({ hideIndex }) {
                     <Divider />
                 </>
             )}
-            <ListItem button component={Link} to={"/data/tracked/"}>
+            <ListSubheader>Mystery Islands</ListSubheader>
+            <ListItem button component={Link} to={"/data/mystery-islands/tracked/"}>
                 <ListItemText
                     primary={
                         <>
@@ -46,7 +48,7 @@ export default function DataNav({ hideIndex }) {
                     secondary="Your tracked villagers"
                 />
             </ListItem>
-            <ListItem button component={Link} to="/data/by-villager/">
+            <ListItem button component={Link} to="/data/mystery-islands/by-villager/">
                 <ListItemText
                     primary={
                         <>
@@ -57,7 +59,7 @@ export default function DataNav({ hideIndex }) {
                     secondary="Your tracked villagers grouped by name"
                 />
             </ListItem>
-            <ListItem button component={Link} to="/data/by-species/">
+            <ListItem button component={Link} to="/data/mystery-islands/by-species/">
                 <ListItemText
                     primary={
                         <>
@@ -68,7 +70,7 @@ export default function DataNav({ hideIndex }) {
                     secondary="Your tracked villagers grouped by species"
                 />
             </ListItem>
-            <ListItem button component={Link} to="/data/by-personality">
+            <ListItem button component={Link} to="/data/mystery-islands/by-personality">
                 <ListItemText
                     primary={
                         <>
@@ -79,7 +81,7 @@ export default function DataNav({ hideIndex }) {
                     secondary="Your tracked villagers grouped by personality"
                 />
             </ListItem>
-            <ListItem button component={Link} to="/data/by-gender">
+            <ListItem button component={Link} to="/data/mystery-islands/by-gender">
                 <ListItemText
                     primary={
                         <>
@@ -90,6 +92,19 @@ export default function DataNav({ hideIndex }) {
                     secondary="Your tracked villagers grouped by gender"
                 />
             </ListItem>
+            <ListSubheader>Campsite</ListSubheader>
+            <ListItem button component={Link} to={"/data/campsite/tracked/"}>
+                <ListItemText
+                    primary={
+                        <>
+                            <FlightIcon className={classes.textIcon} /> Tracked
+                            Villagers
+                        </>
+                    }
+                    secondary="Your tracked campsite villagers"
+                />
+            </ListItem>
+            <ListSubheader>Other</ListSubheader>
             <ListItem
                 button
                 component="a"
@@ -107,7 +122,7 @@ export default function DataNav({ hideIndex }) {
                     secondary="See everyone's tracked villager data in Google Sheets"
                 />
             </ListItem>
-            <ListItem button component={Link} to={"/data/privacy/"}>
+            <ListItem button component={Link} to={"/data/mystery-islands/privacy/"}>
                 <ListItemText
                     primary={
                         <>

@@ -16,11 +16,9 @@ import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
 
-import { VILLAGERS } from "../util/villager";
+import useVillagers from "../hooks/useVillagers";
 
-import useVillagerIcons from "../hooks/useVillagerIcons";
-
-import Page from "../components/page";
+import Page from "../components/Page";
 
 const useStyles = makeStyles(theme => ({
     list: {
@@ -116,7 +114,7 @@ function TablePaginationActions(props) {
 
 export default function VillagersPage() {
     const classes = useStyles();
-    const villagerIcons = useVillagerIcons();
+    const { allVillagers } = useVillagers();
     const [page, setPage] = React.useState(0);
     const [speciesFilter, setSpeciesFilter] = React.useState("All");
     const [personalityFilter, setPersonalityFilter] = React.useState("All");
@@ -129,15 +127,15 @@ export default function VillagersPage() {
         setPage(0);
     };
     const startIndex = page * villagersPerPage;
-    const availableSpecies = VILLAGERS.reduce((acc, v) => {
+    const availableSpecies = allVillagers.reduce((acc, v) => {
         if (acc.indexOf(v.species) < 0) acc.push(v.species);
         return acc;
     }, []).sort();
-    const availablePersonalities = VILLAGERS.reduce((acc, v) => {
+    const availablePersonalities = allVillagers.reduce((acc, v) => {
         if (acc.indexOf(v.personality) < 0) acc.push(v.personality);
         return acc;
     }, []).sort();
-    const filteredVillagers = VILLAGERS
+    const filteredVillagers = allVillagers
         .filter(villager => speciesFilter === 'All' || speciesFilter === villager.species)
         .filter(villager => personalityFilter === 'All' || personalityFilter === villager.personality);
     const villagersToRender = filteredVillagers.slice(startIndex, startIndex + villagersPerPage);
@@ -187,7 +185,7 @@ export default function VillagersPage() {
                             <ListItemAvatar>
                                 <Avatar
                                     alt={villager.name}
-                                    src={villagerIcons[villager.id]}
+                                    src={villager.icon}
                                 />
                             </ListItemAvatar>
                             <ListItemText

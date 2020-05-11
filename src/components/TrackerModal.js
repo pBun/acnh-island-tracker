@@ -8,6 +8,9 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import FormLabel from "@material-ui/core/FormLabel";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import Radio from "@material-ui/core/Radio";
 
 import AppContext from "../context/app";
 
@@ -31,7 +34,7 @@ export default function FormModal({
     handleCancel,
 }) {
     const classes = useStyles();
-    const { allowDataShare, setAllowDataShare } = React.useContext(AppContext);
+    const { allowDataShare, setAllowDataShare, trackingPreference, setTrackingPreference } = React.useContext(AppContext);
     const [selectedVillager, setSelectedVillager] = React.useState(null);
     return (
         <Dialog
@@ -43,9 +46,28 @@ export default function FormModal({
                 Track Villager
             </ChatStyleHeadline>
             <DialogContent>
-                <DialogContentText>
-
-                </DialogContentText>
+                <FormControl component="fieldset">
+                    <FormLabel component="legend">Location</FormLabel>
+                    <RadioGroup
+                        aria-label="tracking location"
+                        name="tracking-location"
+                        value={trackingPreference}
+                        onChange={(e) => setTrackingPreference(e.target.value)}
+                        defaultValue="mystery-island"
+                    >
+                        <FormControlLabel
+                            value="mystery-island"
+                            control={<Radio color="primary" />}
+                            label="Mystery Island"
+                        />
+                        <FormControlLabel
+                            value="campsite"
+                            control={<Radio color="primary" />}
+                            label="Campsite"
+                        />
+                    </RadioGroup>
+                </FormControl>
+                <DialogContentText></DialogContentText>
                 <VilagerCombobox
                     value={selectedVillager}
                     onChange={(e, newVal) => setSelectedVillager(newVal)}
@@ -99,7 +121,7 @@ export default function FormModal({
                 <Button
                     disabled={!selectedVillager}
                     onClick={() => {
-                        handleConfirm(selectedVillager);
+                        handleConfirm(selectedVillager, trackingPreference);
                         setSelectedVillager(null);
                     }}
                     color="primary"
