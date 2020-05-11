@@ -14,6 +14,7 @@ export function shareSighting({ id, villager, timestamp }) {
             ),
             villager: encodeURIComponent(villager),
             session_id: encodeURIComponent(id),
+            spawn_type: encodeURIComponent('mystery-island'),
         });
         var request = new XMLHttpRequest();
         request.open("GET", `${DATA_UPLOAD_URL}?${qs}`, true);
