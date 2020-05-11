@@ -29,8 +29,8 @@ const useStyles = makeStyles(theme => ({
 
 const SessionPage = () => {
     const classes = useStyles();
-    const { allowDataShare, setAllowDataShare } = React.useContext(AppContext);
-    const { resetSession } = React.useContext(SessionContext);
+    const { allowDataShare, setAllowDataShare, resetAppData } = React.useContext(AppContext);
+    const { resetSessionData } = React.useContext(SessionContext);
     return (
         <Page title="Data Privacy" variant="text">
             <List
@@ -74,7 +74,7 @@ const SessionPage = () => {
                         primary="Reset Session"
                         secondary={(
                             <>
-                                Delete all session data stored in your browser. Note that this does not delete data stored in
+                                Delete all session and app data stored in your browser. Note that this does not delete data stored in
                                 {" "}
                                 <a
                                     href={DATA_SHARE_URL}
@@ -110,10 +110,11 @@ const SessionPage = () => {
                                 if (
                                     window &&
                                     window.confirm(
-                                        "Are you sure you want to delete your local session data? This cannot be undone."
+                                        "Are you sure you want to delete your local session and app data? This cannot be undone."
                                     )
                                 ) {
-                                    resetSession();
+                                    resetSessionData();
+                                    resetAppData();
                                 }
                             }}
                             aria-label="delete browser session data"

@@ -1,46 +1,90 @@
-import React, { createContext } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
-const initialState = {
+const LOCAL_STORAGE_KEY = "islandTrackerApp";
+
+const getInitialState = () => ({
     loading: false,
     clockModalOpen: false,
     trackerModalOpen: false,
     allowDataShare: false,
-    startLoading: () => {},
-    stopLoading: () => {},
-    openClockModal: () => {},
-    closeClockModal: () => {},
-    openTrackerModal: () => {},
-    closeTrackerModal: () => {},
-    setAllowDataShare: (approval) => {},
+});
+function reducer(state, action) {
+    switch (action.type) {
+        case "setLoading":
+            return {
+                ...state,
+                loading: action.payload,
+            };
+        case "setClockModalState":
+            return {
+                ...state,
+                clockModalOpen: action.payload,
+            };
+        case "setTrackerModalState":
+            return {
+                ...state,
+                trackerModalOpen: action.payload,
+            };
+        case "setAllowDataShare":
+            return {
+                ...state,
+                allowDataShare: action.payload,
+            };
+        case "reset":
+            return getInitialState();
+        default:
+            throw new Error();
+    }
+}
+const initialContext = {
+    state: getInitialState(),
+    setLoading: () => {},
+    setClockModalState: () => {},
+    setTrackerModalState: () => {},
+    setAllowDataShare: approval => {},
 };
-
-const AppContext = createContext(initialState);
+const AppContext = React.createContext(initialContext);
 export const AppProvider = ({ children }) => {
-    const [clockModalOpen, setClockModalOpen] = React.useState(
-        initialState.clockModalOpen
+    const localStateString =
+        window && window.localStorage.getItem(LOCAL_STORAGE_KEY);
+    const localState = localStateString && JSON.parse(localStateString);
+    const [state, dispatch] = React.useReducer(
+        reducer,
+        localState || getInitialState()
     );
-    const [trackerModalOpen, setTrackerModalOpen] = React.useState(
-        initialState.trackerModalOpen
-    );
-    const [allowDataShare, setAllowDataShare] = React.useState(
-        initialState.siteMenuOpen
-    );
-    const [loading, setLoading] = React.useState(initialState.loading);
+    React.useEffect(() => {
+        window &&
+            window.localStorage.setItem(
+                LOCAL_STORAGE_KEY,
+                JSON.stringify(state)
+            );
+    }, [state]);
     return (
         <AppContext.Provider
             value={{
-                loading,
-                clockModalOpen,
-                trackerModalOpen,
-                allowDataShare,
-                startLoading: () => setLoading(true),
-                stopLoading: () => setLoading(false),
-                openClockModal: () => setClockModalOpen(true),
-                closeClockModal: () => setClockModalOpen(false),
-                openTrackerModal: () => setTrackerModalOpen(true),
-                closeTrackerModal: () => setTrackerModalOpen(false),
-                setAllowDataShare: (approval) => setAllowDataShare(approval),
+                ...state,
+                setLoading: loadingState => {
+                    dispatch({ type: "setLoading", payload: loadingState });
+                },
+                setClockModalState: modalState => {
+                    dispatch({
+                        type: "setClockModalState",
+                        payload: modalState,
+                    });
+                },
+                setTrackerModalState: modalState => {
+                    dispatch({
+                        type: "setTrackerModalState",
+                        payload: modalState,
+                    });
+                },
+                setAllowDataShare: approval => {
+                    dispatch({ type: "setAllowDataShare", payload: approval });
+                },
+                resetAppData: () => {
+                    dispatch({ type: "reset" });
+                },
             }}
         >
             {children}

@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
 import { shareSighting } from "../util/dataShare";
@@ -42,9 +42,9 @@ const initialState = {
     session: getInitialSession(),
     setIslandOffset: opts => {},
     trackVillager: opts => {},
-    resetSession: () => {},
+    resetSessionData: () => {},
 };
-const SessionContext = createContext(initialState);
+const SessionContext = React.createContext(initialState);
 export const SessionProvider = ({ children }) => {
     const {
         allowDataShare,
@@ -54,11 +54,11 @@ export const SessionProvider = ({ children }) => {
     const localStateString =
         window && window.localStorage.getItem(LOCAL_STORAGE_KEY);
     const localState = localStateString && JSON.parse(localStateString);
-    const [state, dispatch] = useReducer(
+    const [state, dispatch] = React.useReducer(
         reducer,
         localState || getInitialSession()
     );
-    useEffect(() => {
+    React.useEffect(() => {
         window &&
             window.localStorage.setItem(
                 LOCAL_STORAGE_KEY,
@@ -77,7 +77,7 @@ export const SessionProvider = ({ children }) => {
                         },
                     });
                 },
-                resetSession: () => {
+                resetSessionData: () => {
                     dispatch({ type: "reset" });
                 },
                 trackVillager: ({ villager }) => {

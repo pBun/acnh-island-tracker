@@ -68,10 +68,8 @@ export default function BottomAppBar({ children }) {
         loading,
         clockModalOpen,
         trackerModalOpen,
-        openClockModal,
-        closeClockModal,
-        openTrackerModal,
-        closeTrackerModal,
+        setClockModalState,
+        setTrackerModalState,
     } = React.useContext(AppContext);
     const { trackVillager, setIslandOffset } = React.useContext(SessionContext);
     const [snackMessage, setSnackMessage] = React.useState("");
@@ -87,7 +85,7 @@ export default function BottomAppBar({ children }) {
                 <Toolbar>
                     <IconButton
                         edge="start"
-                        onClick={() => openClockModal()}
+                        onClick={() => setClockModalState(true)}
                         color="inherit"
                         className={classes.iconButton}
                     >
@@ -115,21 +113,21 @@ export default function BottomAppBar({ children }) {
                     <ClockOverrideModal
                         open={clockModalOpen}
                         handleConfirm={islandOffset => {
-                            closeClockModal();
+                            setClockModalState(false);
                             setIslandOffset({ islandOffset });
                             setSnackMessage(
                                 "Success! Your clock has been updated"
                             );
                         }}
                         handleCancel={() => {
-                            closeClockModal();
+                            setClockModalState(false);
                         }}
                     />
                     <Fab
                         color="secondary"
                         aria-label="add"
                         className={classes.fabButton}
-                        onClick={() => openTrackerModal()}
+                        onClick={() => setTrackerModalState(true)}
                         disabled={loading}
                     >
                         <FlightIcon />
@@ -137,24 +135,23 @@ export default function BottomAppBar({ children }) {
                     <VillagerModal
                         open={trackerModalOpen}
                         handleClockSettings={() => {
-                            openClockModal();
+                            setClockModalState(true);
                         }}
                         handleConfirm={villager => {
                             if (!villager) return;
-                            closeTrackerModal();
+                            setTrackerModalState(false);
                             trackVillager({ villager: villager.name })
                                 .catch(err => {
                                     setSnackMessage("Ajax error =(");
                                 })
                                 .then(() => () => {
-                                    closeTrackerModal();
                                     setSnackMessage(
                                         `${villager.name} tracked successfully!`
                                     );
                                 });
                         }}
                         handleCancel={() => {
-                            closeTrackerModal();
+                            setTrackerModalState(false);
                         }}
                     />
                     <div className={classes.grow} />
