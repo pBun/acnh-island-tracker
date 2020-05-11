@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import SEO from "../components/seo";
 import SiteMenu from "../components/SiteMenu";
+import ChatStyleHeadline from "../components/ChatStyleHeadline";
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -44,9 +45,9 @@ const SessionPage = ({ title, children, variant }) => {
         <SiteMenu>
             <SEO title={title} />
             <Paper elevation={0} className={classes.container}>
-                <Typography className={classes.title} variant="h6" component="h1">
+                <ChatStyleHeadline component="h1">
                     {title}
-                </Typography>
+                </ChatStyleHeadline>
                 {children}
             </Paper>
             <Typography

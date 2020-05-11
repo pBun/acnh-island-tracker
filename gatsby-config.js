@@ -31,8 +31,8 @@ module.exports = {
                 name: `ACNH Island Tracker`,
                 short_name: `Island Tracker`,
                 start_url: `/`,
-                background_color: `#3f51b5`,
-                theme_color: `#3f51b5`,
+                background_color: `#1591d1`,
+                theme_color: `#1591d1`,
                 display: `minimal-ui`,
                 icon: `src/images/favicon.png`,
                 icons: [

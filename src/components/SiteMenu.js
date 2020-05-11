@@ -21,9 +21,8 @@ import Tooltip from "@material-ui/core/Tooltip";
 import SessionContext from "../context/currentSession";
 import AppContext from "../context/app";
 
-import IslandTime from "../components/IslandTime";
 import ClockOverrideModal from "../components/ClockOverrideModal";
-import VillagerModal from "../components/VillagerModal";
+import TrackerModal from "../components/TrackerModal";
 
 const ButtonTooltip = withStyles((theme) => ({
     tooltip: {
@@ -81,7 +80,7 @@ export default function BottomAppBar({ children }) {
         setClockModalState,
         setTrackerModalState,
     } = React.useContext(AppContext);
-    const { trackVillager, setIslandOffset } = React.useContext(SessionContext);
+    const { trackVillager, setIslandOffset, getPrettyIslandTime } = React.useContext(SessionContext);
     const [snackMessage, setSnackMessage] = React.useState("");
     return (
         <>
@@ -110,8 +109,8 @@ export default function BottomAppBar({ children }) {
                             className={classes.clock}
                         >
                             <ListItemText
-                                primary={<IslandTime template="h:mm a" />}
-                                secondary={<IslandTime template="EEE. MMM d" />}
+                                primary={getPrettyIslandTime("h:mm a")}
+                                secondary={getPrettyIslandTime("EEE. MMM d")}
                                 primaryTypographyProps={{
                                     color: "inherit",
                                 }}
@@ -146,7 +145,7 @@ export default function BottomAppBar({ children }) {
                             <FlightIcon />
                         </Fab>
                     </ButtonTooltip>
-                    <VillagerModal
+                    <TrackerModal
                         open={trackerModalOpen}
                         handleClockSettings={() => {
                             setClockModalState(true);

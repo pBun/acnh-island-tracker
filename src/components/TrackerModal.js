@@ -7,23 +7,22 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 
+import SessionContext from "../context/currentSession";
 import AppContext from "../context/app";
 
-import IslandTime from "../components/IslandTime";
-
-import VilagerCombobox from "./VillagerCombobox";
+import ChatStyleHeadline from "../components/ChatStyleHeadline";
+import VilagerCombobox from "../components/VillagerCombobox";
 
 const useStyles = makeStyles(theme => ({
-    dialogContainer: {
-        paddingTop: theme.spacing(2),
-    },
     checkboxLabel: {
         fontSize: "0.75rem",
+    },
+    combobox: {
+        marginTop: theme.spacing(3),
     },
 }));
 
@@ -36,6 +35,7 @@ export default function FormModal({
 }) {
     const classes = useStyles();
     const { allowDataShare, setAllowDataShare } = React.useContext(AppContext);
+    const { currentIslandTimestamp, getPrettyIslandTime } = React.useContext(SessionContext);
     const [selectedVillager, setSelectedVillager] = React.useState(null);
     return (
         <Dialog
@@ -43,28 +43,28 @@ export default function FormModal({
             onClose={handleCancel}
             aria-labelledby="form-dialog-title"
         >
-            <DialogTitle id="form-dialog-title">Track Villager</DialogTitle>
-            <Divider />
-            <DialogContent className={classes.dialogContainer}>
-                <DialogContentText>
-                    Please ensure that your{" "}
-                    <Link
-                        variant="body1"
-                        color="primary"
-                        component="button"
-                        onClick={() => handleClockSettings()}
-                    >
-                        current clock settings
-                    </Link>{" "}
-                    <span style={{ display: "inline-block" }}>
-                        (
-                        <IslandTime />)
-                    </span>{" "}
-                    match the clock on your Nintendo Switch.
-                </DialogContentText>
+            <ChatStyleHeadline id="form-dialog-title" component="h2">
+                Track Villager
+            </ChatStyleHeadline>
+            <DialogContent>
+                {!currentIslandTimestamp && (
+                    <DialogContentText>
+                        We noticed that you haven't updated the{" "}
+                        <Link
+                            variant="body1"
+                            color="primary"
+                            component="button"
+                            onClick={() => handleClockSettings()}
+                        >
+                            clock settings
+                        </Link>
+                        . Please do this to ensure accurate data tracking.
+                    </DialogContentText>
+                )}
                 <VilagerCombobox
                     value={selectedVillager}
                     onChange={(e, newVal) => setSelectedVillager(newVal)}
+                    className={classes.combobox}
                 />
                 <FormControl
                     margin="normal"
@@ -86,7 +86,7 @@ export default function FormModal({
                         }
                         label={
                             <span className={classes.checkboxLabel}>
-                                Support the community by sending this data to
+                                Support the community by sending your villager sightings to
                                 {" "}
                                 <a
                                     href="https://docs.google.com/spreadsheets/d/1p542EQ85gdgLJfjZcI3SSmTdsnZKNi6KKjjjSdGkl7Q/edit?usp=sharing"

@@ -104,8 +104,6 @@ const SessionPage = () => {
                             edge="end"
                             className={classes.button}
                             variant="contained"
-                            // color="primary"
-                            startIcon={<DeleteIcon />}
                             onClick={() => {
                                 if (
                                     window &&

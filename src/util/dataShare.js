@@ -7,11 +7,12 @@ const DATA_UPLOAD_URL =
 
 export function shareSighting({ id, villager, timestamp, islandOffset }) {
     return new Promise((resolve, reject) => {
+        console.log(id, villager, timestamp, islandOffset);
         const qs = queryString.stringify({
             timestamp: encodeURIComponent(
                 format(timestamp, "MM/dd/yyyy hh:mm:ss")
             ),
-            island_timestamp: islandOffset
+            island_timestamp: typeof islandOffset === 'number'
                 ? encodeURIComponent(
                     format(
                         timestamp + islandOffset,

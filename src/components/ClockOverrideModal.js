@@ -5,7 +5,6 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import {
     FormControl,
     FormControlLabel,
@@ -20,10 +19,11 @@ import {
 
 import SessionContext from "../context/currentSession";
 
+import ChatStyleHeadline from "../components/ChatStyleHeadline";
+
+const DEFAULT_CLOCK_OVERRIDE_STATE = true;
+
 const useStyles = makeStyles(theme => ({
-    dialogContainer: {
-        paddingTop: theme.spacing(2),
-    },
     checkboxLabel: {
         fontSize: "0.75rem",
     },
@@ -35,38 +35,31 @@ export default function ClockOverrideModal({
     handleCancel,
 }) {
     const classes = useStyles();
-    const { session } = React.useContext(SessionContext);
-    const [overrideClock, setOverrideClock] = React.useState(
-        !!session.islandOffset
-    );
-    const [curTimestamp, setCurTimestamp] = React.useState(new Date());
-    const [islandOffset, setIslandOffset] = React.useState(
-        session.islandOffset || 0
-    );
-    React.useEffect(() => {
-        if (!window) return;
-        let updateTimeout;
-        const updateCurTimestamp = () => {
-            setCurTimestamp(Date.now());
-            updateTimeout = window.setTimeout(updateCurTimestamp, 10000);
-        };
-        updateCurTimestamp();
-        return () => {
-            window.clearTimeout(updateTimeout);
-        };
-    }, []);
-    const islandTimestamp = overrideClock
-        ? curTimestamp + islandOffset
-        : curTimestamp;
+    const { session, currentSystemTimestamp } = React.useContext(SessionContext);
+    const initialOverrideClock = typeof session.islandOffset === 'number'
+        ? !!session.islandOffset
+        : DEFAULT_CLOCK_OVERRIDE_STATE;
+    const initialPotentialIslandOffset = session.islandOffset || 0;
+    const [overrideClock, setOverrideClock] = React.useState(initialOverrideClock);
+    const [potentialIslandOffset, setPotentialIslandOffset] = React.useState(initialPotentialIslandOffset);
+    const potentialIslandTimestamp = overrideClock
+        ? currentSystemTimestamp + potentialIslandOffset
+        : currentSystemTimestamp;
+    const reset = () => {
+        handleCancel();
+        setOverrideClock(initialOverrideClock);
+        setPotentialIslandOffset(initialPotentialIslandOffset);
+    };
     return (
         <Dialog
             open={open}
-            onClose={handleCancel}
+            onClose={reset}
             aria-labelledby="form-dialog-title"
         >
-            <DialogTitle id="form-dialog-title">Clock Settings</DialogTitle>
-            <Divider />
-            <DialogContent className={classes.dialogContainer}>
+            <ChatStyleHeadline id="form-dialog-title" component="h2">
+                Clock Settings
+            </ChatStyleHeadline>
+            <DialogContent>
                 <DialogContentText>
                     Set the clock based on your current Nintendo Switch
                     settings. This is so we can determine significance of
@@ -74,16 +67,27 @@ export default function ClockOverrideModal({
                 </DialogContentText>
                 <FormControl
                     margin="normal"
-                    style={{
-                        display: "block",
-                    }}
                 >
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <KeyboardDateTimePicker
+                            label="Nintendo Switch clock"
+                            value={potentialIslandTimestamp}
+                            onChange={newIslandTimestamp => {
+                                const newOffset =
+                                    newIslandTimestamp - currentSystemTimestamp;
+                                setPotentialIslandOffset(newOffset);
+                            }}
+                            disabled={!overrideClock}
+                            format="MM/dd/yyyy HH:mm"
+                            showTodayButton
+                        />
+                    </MuiPickersUtilsProvider>
                     <FormControlLabel
                         control={
                             <Checkbox
-                                checked={overrideClock}
+                                checked={!overrideClock}
                                 onChange={e =>
-                                    setOverrideClock(e.target.checked)
+                                    setOverrideClock(!e.target.checked)
                                 }
                                 name="overrideClock"
                                 size="small"
@@ -92,45 +96,27 @@ export default function ClockOverrideModal({
                         }
                         label={
                             <span className={classes.checkboxLabel}>
-                                Override current time
+                                Synchronize clock via internet
                             </span>
                         }
                     />
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <KeyboardDateTimePicker
-                            helperText="Nintendo Switch clock"
-                            value={islandTimestamp}
-                            onChange={newIslandTimestamp => {
-                                const newOffset =
-                                    newIslandTimestamp - curTimestamp;
-                                setIslandOffset(newOffset);
-                            }}
-                            disabled={!overrideClock}
-                            format="MM/dd/yyyy HH:mm"
-                            showTodayButton
-                        />
-                    </MuiPickersUtilsProvider>
                 </FormControl>
             </DialogContent>
             <DialogActions>
                 <Button
-                    onClick={() => {
-                        handleCancel();
-                        setOverrideClock(!!session.islandOffset);
-                        setIslandOffset(session.islandOffset || 0);
-                    }}
+                    onClick={reset}
                     color="primary"
                 >
                     Cancel
                 </Button>
                 <Button
-                    disabled={!islandTimestamp}
+                    disabled={!potentialIslandTimestamp}
                     onClick={() => {
-                        handleConfirm(overrideClock ? islandOffset : 0);
+                        handleConfirm(overrideClock ? potentialIslandOffset : 0);
                     }}
                     color="primary"
                 >
-                    Set
+                    Save
                 </Button>
             </DialogActions>
         </Dialog>

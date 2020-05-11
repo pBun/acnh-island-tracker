@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 
 import { shareSighting } from "../util/dataShare";
 
+import useCurrentTime from "../hooks/useCurrentTime";
+
 import AppContext from "./app";
 
 const LOCAL_STORAGE_KEY = "islandTrackerSession";
@@ -48,8 +50,7 @@ const SessionContext = React.createContext(initialState);
 export const SessionProvider = ({ children }) => {
     const {
         allowDataShare,
-        startLoading,
-        stopLoading,
+        setLoading,
     } = React.useContext(AppContext);
     const localStateString =
         window && window.localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -58,6 +59,12 @@ export const SessionProvider = ({ children }) => {
         reducer,
         localState || getInitialSession()
     );
+    const {
+        currentSystemTimestamp,
+        getPrettySystemTime,
+        currentIslandTimestamp,
+        getPrettyIslandTime,
+    } = useCurrentTime(state.islandOffset);
     React.useEffect(() => {
         window &&
             window.localStorage.setItem(
@@ -69,6 +76,10 @@ export const SessionProvider = ({ children }) => {
         <SessionContext.Provider
             value={{
                 session: state,
+                currentSystemTimestamp,
+                getPrettySystemTime,
+                currentIslandTimestamp,
+                getPrettyIslandTime,
                 setIslandOffset: ({ islandOffset }) => {
                     dispatch({
                         type: "setIslandOffset",
@@ -96,19 +107,19 @@ export const SessionProvider = ({ children }) => {
                             updateState();
                             return resolve();
                         }
-                        startLoading();
+                        setLoading(true);
                         shareSighting({
                             id: state.id,
                             islandOffset: state.islandOffset,
                             timestamp,
                             villager,
                         }).catch(() => {
-                            stopLoading();
+                            setLoading(false);
                             return reject();
                         })
                         .then(() => {
                             updateState();
-                            stopLoading();
+                            setLoading(false);
                             return resolve();
                         });
                     });

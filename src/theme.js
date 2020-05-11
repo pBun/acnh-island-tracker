@@ -56,6 +56,23 @@ const theme = createMuiTheme({
                 paddingRight: defaultTheme.spacing(5),
             },
         },
+        MuiDialog: {
+            container: {
+                "& .MuiDialog-paper": {
+                    overflow: 'initial',
+                },
+            },
+        },
+        MuiDialogContent: {
+            root: {
+                padding: defaultTheme.spacing(5, 5, 0),
+            },
+        },
+        MuiDialogActions: {
+            root: {
+                padding: defaultTheme.spacing(2, 4, 2),
+            },
+        },
     },
 });
 
