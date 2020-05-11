@@ -45,6 +45,8 @@ const initialState = {
     setIslandOffset: opts => {},
     trackVillager: opts => {},
     resetSessionData: () => {},
+    getPrettyIslandTime: () => {},
+    getPrettySystemTime: () => {},
 };
 const SessionContext = React.createContext(initialState);
 export const SessionProvider = ({ children }) => {
