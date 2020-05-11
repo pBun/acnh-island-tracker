@@ -1,11 +1,13 @@
 module.exports = {
     siteMetadata: {
-        title: `Dodo Tracker`,
-        description: `A tool for tracking and comparing villager spawns on mystery islands and the campsite within the game Animal Crossing: New Horizon. Raymond for everyone!`,
-        author: `@peebun`,
+        siteUrl: 'https://dodotracker.com/',
+        title: "Dodo Tracker",
+        description: "A tool for tracking and comparing villager spawns on mystery islands and the campsite within the game Animal Crossing: New Horizon. Raymond for everyone!",
+        author: "@peebun",
     },
     plugins: [
-        `gatsby-plugin-react-helmet`,
+        "gatsby-plugin-cname",
+        "gatsby-plugin-react-helmet",
         "gatsby-plugin-top-layout",
         {
             resolve: "gatsby-plugin-material-ui",
@@ -15,25 +17,25 @@ module.exports = {
                 },
             },
         },
-        `gatsby-transformer-sharp`,
+        "gatsby-transformer-sharp",
         {
-            resolve: `gatsby-source-filesystem`,
+            resolve: "gatsby-source-filesystem",
             options: {
-                name: `images`,
+                name: "images",
                 path: `${__dirname}/src/images`,
             },
         },
-        `gatsby-plugin-sharp`,
+        "gatsby-plugin-sharp",
         {
-            resolve: `gatsby-plugin-manifest`,
+            resolve: "gatsby-plugin-manifest",
             options: {
-                name: `Dodo Tracker (Animal Crossing: New Horizons)`,
-                short_name: `Dodo Tracker`,
-                start_url: `/`,
-                background_color: `#1591d1`,
-                theme_color: `#1591d1`,
-                display: `minimal-ui`,
-                icon: `src/images/favicon.png`,
+                name: "Dodo Tracker (Animal Crossing: New Horizons)",
+                short_name: "Dodo Tracker",
+                start_url: "/",
+                background_color: "#1591d1",
+                theme_color: "#1591d1",
+                display: "minimal-ui",
+                icon: "src/images/favicon.png",
                 icons: [
                     {
                         src: "/favicons/android-chrome-192x192.png",
@@ -50,6 +52,6 @@ module.exports = {
         },
         // this (optional) plugin enables Progressive Web App + Offline functionality
         // To learn more, visit: https://gatsby.dev/offline
-        // `gatsby-plugin-offline`,
+        // "gatsby-plugin-offline",
     ],
 };

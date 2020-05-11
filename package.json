@@ -26,6 +26,7 @@
     "@material-ui/pickers": "^3.2.10",
     "@material-ui/styles": "^4.9.13",
     "date-fns": "^2.13.0",
+    "gatsby-plugin-cname": "^1.0.0",
     "gatsby-plugin-material-ui": "^2.1.8",
     "gh-pages": "^2.2.0",
     "prettier": "2.0.5",
