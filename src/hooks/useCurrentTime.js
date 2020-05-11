@@ -3,7 +3,7 @@ import { format } from "date-fns";
 
 const DEFAULT_TEMPLATE = "MMM d, yyyy hh:mm a";
 
-export default function useCurrentTime(islandOffset) {
+export default function useCurrentTime() {
     const [currentSystemTimestamp, setCurTimestamp] = React.useState(
         Date.now()
     );
@@ -18,22 +18,12 @@ export default function useCurrentTime(islandOffset) {
         return () => {
             window.clearTimeout(updateTimeout);
         };
-    }, [islandOffset]);
-    const currentIslandTimestamp =
-        typeof islandOffset === "number"
-            ? currentSystemTimestamp + islandOffset
-            : null;
+    }, []);
     const getPrettySystemTime = (template = DEFAULT_TEMPLATE) => {
         return format(currentSystemTimestamp, template);
     };
-    const getPrettyIslandTime = (template = DEFAULT_TEMPLATE) => {
-        if (typeof currentIslandTimestamp !== "number") return "";
-        return format(currentIslandTimestamp, template);
-    };
     return {
         currentSystemTimestamp,
-        currentIslandTimestamp,
         getPrettySystemTime,
-        getPrettyIslandTime,
     };
 }

@@ -10,7 +10,7 @@ import LockIcon from "@material-ui/icons/Lock";
 import PeopleIcon from "@material-ui/icons/People";
 import MoodIcon from "@material-ui/icons/Mood";
 import PetsIcon from "@material-ui/icons/Pets";
-import GridOnIcon from "@material-ui/icons/GridOn";
+import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 import FlightIcon from "@material-ui/icons/Flight";
 import LaunchIcon from "@material-ui/icons/Launch";
 import WcIcon from "@material-ui/icons/Wc";
@@ -100,7 +100,7 @@ export default function DataNav({ hideIndex }) {
                 <ListItemText
                     primary={
                         <>
-                            <GridOnIcon className={classes.textIcon} /> Raw Data{" "}
+                            <InsertDriveFileIcon className={classes.textIcon} /> Raw Data{" "}
                             <LaunchIcon className={classes.textIcon} />
                         </>
                     }

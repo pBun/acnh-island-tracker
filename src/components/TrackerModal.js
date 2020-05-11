@@ -1,7 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import Link from "@material-ui/core/Link";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -10,7 +9,6 @@ import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 
-import SessionContext from "../context/currentSession";
 import AppContext from "../context/app";
 
 import ChatStyleHeadline from "../components/ChatStyleHeadline";
@@ -34,7 +32,6 @@ export default function FormModal({
 }) {
     const classes = useStyles();
     const { allowDataShare, setAllowDataShare } = React.useContext(AppContext);
-    const { currentIslandTimestamp } = React.useContext(SessionContext);
     const [selectedVillager, setSelectedVillager] = React.useState(null);
     return (
         <Dialog
@@ -46,20 +43,9 @@ export default function FormModal({
                 Track Villager
             </ChatStyleHeadline>
             <DialogContent>
-                {!currentIslandTimestamp && (
-                    <DialogContentText>
-                        We noticed that you haven't updated the{" "}
-                        <Link
-                            variant="body1"
-                            color="primary"
-                            component="button"
-                            onClick={() => handleClockSettings()}
-                        >
-                            clock settings
-                        </Link>
-                        . Please do this to ensure accurate data tracking.
-                    </DialogContentText>
-                )}
+                <DialogContentText>
+
+                </DialogContentText>
                 <VilagerCombobox
                     value={selectedVillager}
                     onChange={(e, newVal) => setSelectedVillager(newVal)}

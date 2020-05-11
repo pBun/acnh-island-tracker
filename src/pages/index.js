@@ -5,8 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import ScheduleIcon from "@material-ui/icons/Schedule";
-import AddIcon from "@material-ui/icons/Add";
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
 
 import Page from "../components/page";
@@ -69,23 +68,11 @@ export default function IndexPage() {
             <List component="div" dense={true} className={classes.list}>
                 <ListItem>
                     <ListItemText
-                        primary="1. Set your clock"
+                        primary="1. Track each villager you see"
                         secondary={
                             <>
                                 By clicking{" "}
-                                <ScheduleIcon className={classes.inlineIcon} />{" "}
-                                (Clock Settings) in the bottom navbar.
-                            </>
-                        }
-                    />
-                </ListItem>
-                <ListItem>
-                    <ListItemText
-                        primary="2. Track each villager you see"
-                        secondary={
-                            <>
-                                By clicking{" "}
-                                <AddIcon
+                                <PersonAddIcon
                                     className={classes.inlinePrimaryIcon}
                                 />{" "}
                                 (Track Villager) in the bottom navbar.
@@ -95,7 +82,7 @@ export default function IndexPage() {
                 </ListItem>
                 <ListItem>
                     <ListItemText
-                        primary="3. Analyze your data"
+                        primary="2. Analyze your data"
                         secondary={
                             <>
                                 By clicking{" "}

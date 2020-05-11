@@ -12,17 +12,10 @@ const LOCAL_STORAGE_KEY = "islandTrackerSession";
 const getInitialSession = () => ({
     id: Math.random().toString(36).substr(2, 12),
     timestamp: Date.now(),
-    islandOffset: null,
     sightings: [],
 });
 function reducer(state, action) {
     switch (action.type) {
-        case "setIslandOffset":
-            const { islandOffset } = action.payload;
-            return {
-                ...state,
-                islandOffset,
-            };
         case "trackVillager":
             return {
                 ...state,
@@ -45,7 +38,6 @@ const initialState = {
     setIslandOffset: opts => {},
     trackVillager: opts => {},
     resetSessionData: () => {},
-    getPrettyIslandTime: () => {},
     getPrettySystemTime: () => {},
 };
 const SessionContext = React.createContext(initialState);
@@ -61,9 +53,7 @@ export const SessionProvider = ({ children }) => {
     const {
         currentSystemTimestamp,
         getPrettySystemTime,
-        currentIslandTimestamp,
-        getPrettyIslandTime,
-    } = useCurrentTime(state.islandOffset);
+    } = useCurrentTime();
     React.useEffect(() => {
         window &&
             window.localStorage.setItem(
@@ -77,16 +67,6 @@ export const SessionProvider = ({ children }) => {
                 session: state,
                 currentSystemTimestamp,
                 getPrettySystemTime,
-                currentIslandTimestamp,
-                getPrettyIslandTime,
-                setIslandOffset: ({ islandOffset }) => {
-                    dispatch({
-                        type: "setIslandOffset",
-                        payload: {
-                            islandOffset,
-                        },
-                    });
-                },
                 resetSessionData: () => {
                     dispatch({ type: "reset" });
                 },
@@ -109,7 +89,6 @@ export const SessionProvider = ({ children }) => {
                         setLoading(true);
                         shareSighting({
                             id: state.id,
-                            islandOffset: state.islandOffset,
                             timestamp,
                             villager,
                         })

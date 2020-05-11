@@ -6,21 +6,12 @@ export const DATA_SHARE_URL =
 const DATA_UPLOAD_URL =
     "https://script.google.com/macros/s/AKfycbw_4jsHZE4PkIePUPbzPAlzzcXEeWibBltRUzeLu0zpztsVAEg/exec";
 
-export function shareSighting({ id, villager, timestamp, islandOffset }) {
+export function shareSighting({ id, villager, timestamp }) {
     return new Promise((resolve, reject) => {
         const qs = queryString.stringify({
             timestamp: encodeURIComponent(
                 format(timestamp, "MM/dd/yyyy hh:mm:ss")
             ),
-            island_timestamp:
-                typeof islandOffset === "number"
-                    ? encodeURIComponent(
-                          format(
-                              timestamp + islandOffset,
-                              "MM/dd/yyyy hh:mm:ss"
-                          )
-                      )
-                    : null,
             villager: encodeURIComponent(villager),
             session_id: encodeURIComponent(id),
         });

@@ -5,7 +5,6 @@ const LOCAL_STORAGE_KEY = "islandTrackerApp";
 
 const getInitialState = () => ({
     loading: false,
-    clockModalOpen: false,
     trackerModalOpen: false,
     allowDataShare: false,
 });
@@ -15,11 +14,6 @@ function reducer(state, action) {
             return {
                 ...state,
                 loading: action.payload,
-            };
-        case "setClockModalState":
-            return {
-                ...state,
-                clockModalOpen: action.payload,
             };
         case "setTrackerModalState":
             return {
@@ -40,7 +34,6 @@ function reducer(state, action) {
 const initialContext = {
     state: getInitialState(),
     setLoading: () => {},
-    setClockModalState: () => {},
     setTrackerModalState: () => {},
     setAllowDataShare: approval => {},
 };

@@ -8,12 +8,8 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Fab from "@material-ui/core/Fab";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import Snackbar from "@material-ui/core/Snackbar";
-import AddIcon from "@material-ui/icons/Add";
-import ScheduleIcon from "@material-ui/icons/Schedule";
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
 import HomeIcon from "@material-ui/icons/Home";
 import Tooltip from "@material-ui/core/Tooltip";
@@ -21,7 +17,6 @@ import Tooltip from "@material-ui/core/Tooltip";
 import SessionContext from "../context/currentSession";
 import AppContext from "../context/app";
 
-import ClockOverrideModal from "../components/ClockOverrideModal";
 import TrackerModal from "../components/TrackerModal";
 
 const ButtonTooltip = withStyles(theme => ({
@@ -73,15 +68,12 @@ export default function BottomAppBar({ children }) {
     const classes = useStyles();
     const {
         loading,
-        clockModalOpen,
         trackerModalOpen,
         setClockModalState,
         setTrackerModalState,
     } = React.useContext(AppContext);
     const {
         trackVillager,
-        setIslandOffset,
-        getPrettyIslandTime,
     } = React.useContext(SessionContext);
     const [snackMessage, setSnackMessage] = React.useState("");
     return (
@@ -94,48 +86,6 @@ export default function BottomAppBar({ children }) {
             </Container>
             <AppBar position="fixed" color="primary" className={classes.appBar}>
                 <Toolbar>
-                    <ButtonTooltip title="Clock Settings" placement="top">
-                        <IconButton
-                            edge="start"
-                            onClick={() => setClockModalState(true)}
-                            color="inherit"
-                            className={classes.iconButton}
-                        >
-                            <ScheduleIcon />
-                        </IconButton>
-                    </ButtonTooltip>
-                    <List component="div" className={classes.islandTime}>
-                        <ListItem
-                            dense={true}
-                            disableGutters={true}
-                            className={classes.clock}
-                        >
-                            <ListItemText
-                                primary={getPrettyIslandTime("h:mm a")}
-                                secondary={getPrettyIslandTime("EEE. MMM d")}
-                                primaryTypographyProps={{
-                                    color: "inherit",
-                                }}
-                                secondaryTypographyProps={{
-                                    color: "inherit",
-                                    className: classes.dateLabel,
-                                }}
-                            />
-                        </ListItem>
-                    </List>
-                    <ClockOverrideModal
-                        open={clockModalOpen}
-                        handleConfirm={islandOffset => {
-                            setClockModalState(false);
-                            setIslandOffset({ islandOffset });
-                            setSnackMessage(
-                                "Success! Your clock has been updated"
-                            );
-                        }}
-                        handleCancel={() => {
-                            setClockModalState(false);
-                        }}
-                    />
                     <ButtonTooltip title="Track Villager" placement="top">
                         <Fab
                             color="secondary"
@@ -144,7 +94,7 @@ export default function BottomAppBar({ children }) {
                             onClick={() => setTrackerModalState(true)}
                             disabled={loading}
                         >
-                            <AddIcon />
+                            <PersonAddIcon />
                         </Fab>
                     </ButtonTooltip>
                     <TrackerModal
