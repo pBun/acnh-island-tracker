@@ -5,15 +5,14 @@ const initialState = {
     loading: false,
     clockModalOpen: false,
     trackerModalOpen: false,
-    siteMenuOpen: false,
+    allowDataShare: false,
     startLoading: () => {},
     stopLoading: () => {},
-    openSiteMenu: () => {},
-    closeSiteMenu: () => {},
     openClockModal: () => {},
     closeClockModal: () => {},
     openTrackerModal: () => {},
     closeTrackerModal: () => {},
+    setAllowDataShare: (approval) => {},
 };
 
 const AppContext = createContext(initialState);
@@ -24,7 +23,7 @@ export const AppProvider = ({ children }) => {
     const [trackerModalOpen, setTrackerModalOpen] = React.useState(
         initialState.trackerModalOpen
     );
-    const [siteMenuOpen, setSiteMenuOpen] = React.useState(
+    const [allowDataShare, setAllowDataShare] = React.useState(
         initialState.siteMenuOpen
     );
     const [loading, setLoading] = React.useState(initialState.loading);
@@ -34,15 +33,14 @@ export const AppProvider = ({ children }) => {
                 loading,
                 clockModalOpen,
                 trackerModalOpen,
-                siteMenuOpen,
+                allowDataShare,
                 startLoading: () => setLoading(true),
                 stopLoading: () => setLoading(false),
-                openSiteMenu: () => setSiteMenuOpen(true),
-                closeSiteMenu: () => setSiteMenuOpen(false),
                 openClockModal: () => setClockModalOpen(true),
                 closeClockModal: () => setClockModalOpen(false),
                 openTrackerModal: () => setTrackerModalOpen(true),
                 closeTrackerModal: () => setTrackerModalOpen(false),
+                setAllowDataShare: (approval) => setAllowDataShare(approval),
             }}
         >
             {children}

@@ -1,13 +1,11 @@
 import React, { createContext, useReducer, useEffect } from "react";
-import queryString from "query-string";
-import { format } from "date-fns";
 import PropTypes from "prop-types";
+
+import { shareSighting } from "../util/dataShare";
 
 import AppContext from "./app";
 
 const LOCAL_STORAGE_KEY = "islandTrackerSession";
-const SHEET_URL =
-    "https://script.google.com/macros/s/AKfycbw_4jsHZE4PkIePUPbzPAlzzcXEeWibBltRUzeLu0zpztsVAEg/exec";
 
 const getInitialSession = () => ({
     id: Math.random().toString(36).substr(2, 12),
@@ -15,7 +13,6 @@ const getInitialSession = () => ({
     islandOffset: null,
     sightings: [],
 });
-
 function reducer(state, action) {
     switch (action.type) {
         case "setIslandOffset":
@@ -49,7 +46,11 @@ const initialState = {
 };
 const SessionContext = createContext(initialState);
 export const SessionProvider = ({ children }) => {
-    const { startLoading, stopLoading } = React.useContext(AppContext);
+    const {
+        allowDataShare,
+        startLoading,
+        stopLoading,
+    } = React.useContext(AppContext);
     const localStateString =
         window && window.localStorage.getItem(LOCAL_STORAGE_KEY);
     const localState = localStateString && JSON.parse(localStateString);
@@ -81,32 +82,8 @@ export const SessionProvider = ({ children }) => {
                 },
                 trackVillager: ({ villager }) => {
                     return new Promise((resolve, reject) => {
-                        startLoading();
                         const timestamp = Date.now();
-                        const qs = queryString.stringify({
-                            timestamp: encodeURIComponent(
-                                format(timestamp, "MM/dd/yyyy hh:mm:ss")
-                            ),
-                            island_timestamp: encodeURIComponent(
-                                format(
-                                    timestamp + state.islandOffset,
-                                    "MM/dd/yyyy hh:mm:ss"
-                                )
-                            ),
-                            villager: encodeURIComponent(villager),
-                            session_id: encodeURIComponent(state.id),
-                        });
-                        var request = new XMLHttpRequest();
-                        request.open("GET", `${SHEET_URL}?${qs}`, true);
-                        request.setRequestHeader(
-                            "Content-Type",
-                            "application/x-www-form-urlencoded; charset=UTF-8"
-                        );
-                        request.onload = function () {
-                            if (this.status < 200 || this.status > 400) {
-                                stopLoading();
-                                return reject();
-                            }
+                        const updateState = () => {
                             dispatch({
                                 type: "trackVillager",
                                 payload: {
@@ -114,14 +91,26 @@ export const SessionProvider = ({ children }) => {
                                     villager,
                                 },
                             });
-                            resolve();
-                            stopLoading();
                         };
-                        request.onerror = function () {
+                        if (!allowDataShare) {
+                            updateState();
+                            return resolve();
+                        }
+                        startLoading();
+                        shareSighting({
+                            id: state.id,
+                            islandOffset: state.islandOffset,
+                            timestamp,
+                            villager,
+                        }).catch(() => {
                             stopLoading();
-                            reject();
-                        };
-                        request.send();
+                            return reject();
+                        })
+                        .then(() => {
+                            updateState();
+                            stopLoading();
+                            return resolve();
+                        });
                     });
                 },
             }}

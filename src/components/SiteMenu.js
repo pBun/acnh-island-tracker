@@ -12,7 +12,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Snackbar from "@material-ui/core/Snackbar";
-import AddIcon from "@material-ui/icons/Add";
+import FlightIcon from "@material-ui/icons/Flight";
 import ScheduleIcon from "@material-ui/icons/Schedule";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
 import HomeIcon from "@material-ui/icons/Home";
@@ -51,6 +51,15 @@ const useStyles = makeStyles(theme => ({
         right: 0,
         margin: "0 auto",
     },
+    iconButton: {
+
+    },
+    dateLabel: {
+        opacity: 0.6,
+    },
+    islandTime: {
+        marginLeft: theme.spacing(1),
+    },
 }));
 
 export default function BottomAppBar({ children }) {
@@ -77,14 +86,19 @@ export default function BottomAppBar({ children }) {
             <AppBar position="fixed" color="primary" className={classes.appBar}>
                 <Toolbar>
                     <IconButton
-                        edge="end"
+                        edge="start"
                         onClick={() => openClockModal()}
                         color="inherit"
+                        className={classes.iconButton}
                     >
                         <ScheduleIcon />
                     </IconButton>
-                    <List component="div">
-                        <ListItem dense={true} className={classes.clock}>
+                    <List component="div" className={classes.islandTime}>
+                        <ListItem
+                            dense={true}
+                            disableGutters={true}
+                            className={classes.clock}
+                        >
                             <ListItemText
                                 primary={<IslandTime template="h:mm a" />}
                                 secondary={<IslandTime template="EEE. MMM d" />}
@@ -93,7 +107,7 @@ export default function BottomAppBar({ children }) {
                                 }}
                                 secondaryTypographyProps={{
                                     color: "inherit",
-                                    style: { opacity: 0.6 },
+                                    className: classes.dateLabel,
                                 }}
                             />
                         </ListItem>
@@ -118,7 +132,7 @@ export default function BottomAppBar({ children }) {
                         onClick={() => openTrackerModal()}
                         disabled={loading}
                     >
-                        <AddIcon />
+                        <FlightIcon />
                     </Fab>
                     <VillagerModal
                         open={trackerModalOpen}
@@ -132,7 +146,7 @@ export default function BottomAppBar({ children }) {
                                 .catch(err => {
                                     setSnackMessage("Ajax error =(");
                                 })
-                                .then(() => {
+                                .then(() => () => {
                                     closeTrackerModal();
                                     setSnackMessage(
                                         `${villager.name} tracked successfully!`
@@ -144,7 +158,12 @@ export default function BottomAppBar({ children }) {
                         }}
                     />
                     <div className={classes.grow} />
-                    <IconButton component={Link} to="/data/" color="inherit">
+                    <IconButton
+                        component={Link}
+                        to="/data/"
+                        color="inherit"
+                        className={classes.iconButton}
+                    >
                         <EqualizerIcon />
                     </IconButton>
                     <IconButton
@@ -152,6 +171,7 @@ export default function BottomAppBar({ children }) {
                         component={Link}
                         to="/"
                         color="inherit"
+                        className={classes.iconButton}
                     >
                         <HomeIcon />
                     </IconButton>

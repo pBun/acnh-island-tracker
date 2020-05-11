@@ -8,7 +8,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Avatar from "@material-ui/core/Avatar";
 import ScheduleIcon from "@material-ui/icons/Schedule";
-import AddIcon from "@material-ui/icons/Add";
+import FlightIcon from "@material-ui/icons/Flight";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
 
 import Page from "../components/page";
@@ -83,7 +83,7 @@ export default function IndexPage() {
                         primary="Track each villager you see"
                         secondary={
                             <>
-                                By clicking <AddIcon fontSize="small" /> in the
+                                By clicking <FlightIcon fontSize="small" /> in the
                                 bottom navbar.
                             </>
                         }

@@ -1,8 +1,20 @@
 import React from "react";
-import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import ListItemText from "@material-ui/core/ListItemText";
+import Checkbox from "@material-ui/core/Checkbox";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
 
-import ResetSession from "../../components/ResetSession";
+import { DATA_SHARE_URL } from "../../util/dataShare";
+
+import AppContext from "../../context/app";
+import SessionContext from "../../context/currentSession";
+
 import Page from "../../components/page";
 
 const useStyles = makeStyles(theme => ({
@@ -12,25 +24,107 @@ const useStyles = makeStyles(theme => ({
     resetContainer: {
         padding: theme.spacing(1, 2, 2),
     },
+    button: {
+        color: theme.palette.error.main,
+    },
 }));
 
 const SessionPage = () => {
     const classes = useStyles();
+    const { allowDataShare, setAllowDataShare } = React.useContext(AppContext);
+    const { resetSession } = React.useContext(SessionContext);
     return (
         <Page title="Data Privacy" variant="text">
-            <Typography variant="body1" className={classes.text}>
-                This control deletes all data from your browser. Please reach
-                out to me on{" "}
-                <a href="https://twitter.com/peebun">Twitter (@peebun)</a> if
-                you'd like me to delete your data collected on the{" "}
-                <a href="https://docs.google.com/spreadsheets/d/1p542EQ85gdgLJfjZcI3SSmTdsnZKNi6KKjjjSdGkl7Q/edit?usp=sharing">
-                    Google Sheet
-                </a>
-                .
-            </Typography>
-            <div className={classes.resetContainer}>
-                <ResetSession />
-            </div>
+            <List
+                className={classes.root}
+            >
+                <ListItem>
+                    <ListItemText
+                        id="switch-list-label-data-share"
+                        primary="Allow Data Share"
+                        secondary={(
+                            <>
+                                Support the community by sending villager sighting data to
+                                {" "}
+                                <a
+                                    href="https://docs.google.com/spreadsheets/d/1p542EQ85gdgLJfjZcI3SSmTdsnZKNi6KKjjjSdGkl7Q/edit?usp=sharing"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{ color: "inherit" }}
+                                >
+                                    our spreadsheet
+                                </a>
+                                .
+                            </>
+                        )}
+                    />
+                    <ListItemSecondaryAction>
+                        <Checkbox
+                            edge="end"
+                            color="primary"
+                            onChange={(e) => { setAllowDataShare(e.target.checked) }}
+                            checked={allowDataShare}
+                            inputProps={{
+                                "aria-labelledby": "switch-list-label-data-share",
+                            }}
+                        />
+                    </ListItemSecondaryAction>
+                </ListItem>
+                <ListItem>
+                    <ListItemText
+                        id="switch-list-label-delete-all"
+                        primary="Reset Session"
+                        secondary={(
+                            <>
+                                Delete all session data stored in your browser. Note that this does not delete data stored in
+                                {" "}
+                                <a
+                                    href="https://docs.google.com/spreadsheets/d/1p542EQ85gdgLJfjZcI3SSmTdsnZKNi6KKjjjSdGkl7Q/edit?usp=sharing"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{ color: "inherit" }}
+                                >
+                                    our spreadsheet
+                                </a>
+                                . Please reach out to
+                                {" "}
+                                <a
+                                    href="https://twitter.com/peebun"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{ color: "inherit" }}
+                                >
+                                    me
+                                </a>
+                                {" "}
+                                if you'd like me to delete this data.
+                            </>
+                        )}
+                    />
+                    <ListItemSecondaryAction>
+                        <IconButton
+                            edge="end"
+                            className={classes.button}
+                            variant="contained"
+                            // color="primary"
+                            startIcon={<DeleteIcon />}
+                            onClick={() => {
+                                if (
+                                    window &&
+                                    window.confirm(
+                                        "Are you sure you want to delete your local session data? This cannot be undone."
+                                    )
+                                ) {
+                                    resetSession();
+                                }
+                            }}
+                            aria-label="delete browser session data"
+                        >
+                            <DeleteIcon />
+                        </IconButton>
+                    </ListItemSecondaryAction>
+                </ListItem>
+            </List>
         </Page>
     );
 };
