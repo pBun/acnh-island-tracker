@@ -1,6 +1,5 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Divider from "@material-ui/core/Divider";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
 import Dialog from "@material-ui/core/Dialog";
@@ -35,7 +34,7 @@ export default function FormModal({
 }) {
     const classes = useStyles();
     const { allowDataShare, setAllowDataShare } = React.useContext(AppContext);
-    const { currentIslandTimestamp, getPrettyIslandTime } = React.useContext(SessionContext);
+    const { currentIslandTimestamp } = React.useContext(SessionContext);
     const [selectedVillager, setSelectedVillager] = React.useState(null);
     return (
         <Dialog
