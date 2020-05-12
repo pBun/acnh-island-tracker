@@ -54,15 +54,12 @@ export default function IndexPage() {
     return (
         <Page title={site.siteMetadata.title}>
             <Typography variant="body1" component="p" className={classes.intro}>
-                Hi, this is a tool for tracking and comparing villager spawns on
-                mystery islands and the campsite within the game Animal
-                Crossing: New Horizon. Raymond for everyone!
+                Hi, I made Dodo Tracker so you can keep track of your villager sightings at the
+                campsite and on mystery islands. We've learned a ton about spawns this past week and
+                will be adding a calculator shortly so you can see the likelihood that you will
+                encounter each villager. Soon we will all have Raymond!
             </Typography>
-            <Typography
-                variant="h6"
-                component="h2"
-                className={classes.listTitle}
-            >
+            <Typography variant="h6" component="h2" className={classes.listTitle}>
                 Getting started
             </Typography>
             <List component="div" dense={true} className={classes.list}>
@@ -71,25 +68,19 @@ export default function IndexPage() {
                         primary="1. Add your current island residents"
                         secondary={
                             <>
-                                By clicking{" "}
-                                <HomeIcon
-                                    className={classes.inlineIcon}
-                                />{" "}
-                                (My Island Residents) in the bottom navbar.
+                                By clicking <HomeIcon className={classes.inlineIcon} /> (My Island
+                                Residents).
                             </>
                         }
                     />
                 </ListItem>
                 <ListItem>
                     <ListItemText
-                        primary="2. Track each villager you see"
+                        primary="2. Track each villager you see at the campsite or on mystery islands"
                         secondary={
                             <>
-                                By clicking{" "}
-                                <PersonAddIcon
-                                    className={classes.inlinePrimaryIcon}
-                                />{" "}
-                                (Track Villager) in the bottom navbar.
+                                By clicking <PersonAddIcon className={classes.inlinePrimaryIcon} />{" "}
+                                (Track Villager).
                             </>
                         }
                     />
@@ -99,9 +90,8 @@ export default function IndexPage() {
                         primary="3. Analyze your data"
                         secondary={
                             <>
-                                By clicking{" "}
-                                <EqualizerIcon className={classes.inlineIcon} />{" "}
-                                (My Data) in the bottom navbar.
+                                By clicking <EqualizerIcon className={classes.inlineIcon} /> (My
+                                Data).
                             </>
                         }
                     />
