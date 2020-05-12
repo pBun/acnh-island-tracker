@@ -20,22 +20,34 @@ const useStyles = makeStyles(theme => ({
     textIcon: {
         fontSize: "0.8em",
     },
+    list: {
+        paddingTop: theme.spacing(1),
+        paddingBottom: theme.spacing(4),
+    },
+    listItem: {
+        // paddingLeft: theme.spacing(7),
+        // paddingRight: theme.spacing(7),
+    },
+    listSubheader: {
+        paddingLeft: theme.spacing(5),
+        paddingRight: theme.spacing(5),
+    },
 }));
 
 export default function DataNav({ hideIndex }) {
     const classes = useStyles();
     return (
-        <List component="div">
+        <List component="div" className={classes.list}>
             {!hideIndex && (
                 <>
-                    <ListItem button component={Link} to={"/data/"}>
+                    <ListItem className={classes.listItem} button component={Link} to={"/data/"}>
                         <ListItemText primary={<Typography variant="h6">Data</Typography>} />
                     </ListItem>
                     <Divider />
                 </>
             )}
-            <ListSubheader>Mystery Islands</ListSubheader>
-            <ListItem button component={Link} to={"/data/mystery-islands/tracked/"}>
+            <ListSubheader className={classes.listSubheader}>Mystery Islands</ListSubheader>
+            <ListItem className={classes.listItem} button component={Link} to={"/data/mystery-islands/tracked/"}>
                 <ListItemText
                     primary={
                         <>
@@ -45,7 +57,7 @@ export default function DataNav({ hideIndex }) {
                     secondary="Your tracked villagers"
                 />
             </ListItem>
-            <ListItem button component={Link} to="/data/mystery-islands/by-villager/">
+            <ListItem className={classes.listItem} button component={Link} to="/data/mystery-islands/by-villager/">
                 <ListItemText
                     primary={
                         <>
@@ -55,7 +67,7 @@ export default function DataNav({ hideIndex }) {
                     secondary="Your tracked villagers grouped by name"
                 />
             </ListItem>
-            <ListItem button component={Link} to="/data/mystery-islands/by-species/">
+            <ListItem className={classes.listItem} button component={Link} to="/data/mystery-islands/by-species/">
                 <ListItemText
                     primary={
                         <>
@@ -65,7 +77,7 @@ export default function DataNav({ hideIndex }) {
                     secondary="Your tracked villagers grouped by species"
                 />
             </ListItem>
-            <ListItem button component={Link} to="/data/mystery-islands/by-personality">
+            <ListItem className={classes.listItem} button component={Link} to="/data/mystery-islands/by-personality">
                 <ListItemText
                     primary={
                         <>
@@ -75,7 +87,7 @@ export default function DataNav({ hideIndex }) {
                     secondary="Your tracked villagers grouped by personality"
                 />
             </ListItem>
-            <ListItem button component={Link} to="/data/mystery-islands/by-gender">
+            <ListItem className={classes.listItem} button component={Link} to="/data/mystery-islands/by-gender">
                 <ListItemText
                     primary={
                         <>
@@ -85,8 +97,8 @@ export default function DataNav({ hideIndex }) {
                     secondary="Your tracked villagers grouped by gender"
                 />
             </ListItem>
-            <ListSubheader>Campsite</ListSubheader>
-            <ListItem button component={Link} to={"/data/campsite/tracked/"}>
+            <ListSubheader className={classes.listSubheader}>Campsite</ListSubheader>
+            <ListItem className={classes.listItem} button component={Link} to={"/data/campsite/tracked/"}>
                 <ListItemText
                     primary={
                         <>
@@ -96,7 +108,7 @@ export default function DataNav({ hideIndex }) {
                     secondary="Your tracked campsite villagers"
                 />
             </ListItem>
-            <ListSubheader>Other</ListSubheader>
+            <ListSubheader className={classes.listSubheader}>Other</ListSubheader>
             <ListItem
                 button
                 component="a"
@@ -114,7 +126,7 @@ export default function DataNav({ hideIndex }) {
                     secondary="See everyone's tracked villager data in Google Sheets"
                 />
             </ListItem>
-            <ListItem button component={Link} to={"/data/privacy/"}>
+            <ListItem className={classes.listItem} button component={Link} to={"/data/privacy/"}>
                 <ListItemText
                     primary={
                         <>
