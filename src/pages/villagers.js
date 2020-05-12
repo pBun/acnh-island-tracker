@@ -36,6 +36,11 @@ const useStyles = makeStyles(theme => ({
     controlsWrapper: {
         padding: theme.spacing(2, 4, 1),
     },
+    pagination: {
+        "& .MuiTablePagination-toolbar": {
+            padding: 0,
+        },
+    },
 }));
 
 function TablePaginationActions(props) {
@@ -168,6 +173,7 @@ export default function VillagersPage() {
                 ))}
             </List>
             <TablePagination
+                className={classes.pagination}
                 component="div"
                 rowsPerPageOptions={[10, 25, 50, { label: "All", value: -1 }]}
                 count={searchResults.length}
