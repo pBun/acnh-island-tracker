@@ -4,7 +4,7 @@ import DataNav from "../../components/DataNav";
 
 export default function IndexPage() {
     return (
-        <Page title="Data">
+        <Page title="My Data">
             <DataNav hideIndex={true} />
         </Page>
     );

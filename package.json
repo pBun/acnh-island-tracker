@@ -1,7 +1,7 @@
 {
   "name": "acnh-island-tracker",
   "private": true,
-  "description": "An app for tracking villager spawns on mystery islands and the campsite",
+  "description": "A tool to track and analyze villager spawn rates at the campsite and on mystery islands for the game Animal Crossing: New Horizons",
   "version": "1.0.0",
   "author": "Dustin Boersma",
   "dependencies": {

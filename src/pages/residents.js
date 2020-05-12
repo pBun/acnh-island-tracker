@@ -134,7 +134,7 @@ export default function ResidentsPage() {
     const pastResidents = session.residents.filter(r => !!r.moveOutTimestamp);
     const numEmptyPlots = NUM_CUR_RESIDENTS - currentResidents.length;
     return (
-        <Page title="Your Residents">
+        <Page title="My Residents">
             <form
                 onSubmit={(e) => {
                     e.preventDefault();
