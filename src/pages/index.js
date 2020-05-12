@@ -54,12 +54,12 @@ export default function IndexPage() {
     return (
         <Page title={site.siteMetadata.title}>
             <Typography variant="body1" component="p" className={classes.intro}>
-                Hi! Dodo Tracker is a tool to track and analyze villager spawn rates at the campsite
-                and on mystery islands for the game Animal Crossing: New Horizons. There have been a
-                ton of learnings about spawn rates recently and I will be adding a calculator
-                shortly so you can see the likelihood that you will encounter each villager based on
-                your current residents and past sightings. I encourage you to dig into{" "}
-                <a
+                Hi! Dodo Tracker is a tool for tracking and analyzing villager spawn rates at the campsite
+                and on mystery islands for the game Animal Crossing: New Horizons.
+            </Typography>
+            <Typography variant="body1" component="p" className={classes.intro}>
+                There have been a
+                ton of learnings about spawn rates recently and I encourage you to dig into <a
                     href="https://docs.google.com/document/d/1c8rsKWWtwsOo_JOxwO-lVRx2MUhc-bcdZg1mhXgtRPg/edit"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -73,8 +73,8 @@ export default function IndexPage() {
                     rel="noopener noreferrer"
                 >
                     ctar17's doc on mystery islands
-                </a>
-                if you're curious about the details.
+                </a> for details. I will be adding a calculator soon with estimated likelihoods of an encoutering each villager based on
+                your sighting and resident data. Until then I encourage you to continue tracking those villagers!
             </Typography>
             <Typography variant="h6" component="h2" className={classes.listTitle}>
                 Getting started

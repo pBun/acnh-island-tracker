@@ -57,7 +57,43 @@ const SessionPage = ({ title, children, variant }) => {
                 >
                     me
                 </a>{" "}
-                if you'd like to chat. Also, a special thanks to{" "}
+                if you'd like to chat. Also, a special thanks to filthykasual for{" "}
+                <a
+                    href="https://imgur.com/a/3NnyBTM"
+                    className={classes.noteLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    the villager icons
+                </a>
+                , drjay for his{" "}
+                <a
+                    href="https://docs.google.com/document/d/1c8rsKWWtwsOo_JOxwO-lVRx2MUhc-bcdZg1mhXgtRPg/edit"
+                    className={classes.noteLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    doc on campsites
+                </a>
+                , ctar17 for her{" "}
+                <a
+                    href="https://docs.google.com/document/d/16yHQzdYx4VznhnKSGZdtaKi_Yo8NpDwCYK8dmpR481s/edit"
+                    className={classes.noteLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    doc on mystery islands
+                </a>
+                , Kai for his{" "}
+                <a
+                    href="https://docs.google.com/spreadsheets/d/1KO4eXwAFIXpFEXyPQ2Oe-v-QbbDWO4MD-g7EU0GK-8Y/edit#gid=248995972"
+                    className={classes.noteLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    calculator sheet
+                </a>,
+                and{" "}
                 <a
                     href="https://twitter.com/MauF0x"
                     className={classes.noteLink}
@@ -66,16 +102,7 @@ const SessionPage = ({ title, children, variant }) => {
                 >
                     Mau
                 </a>{" "}
-                for helping with statistics, and filthykasual for{" "}
-                <a
-                    href="https://imgur.com/a/3NnyBTM"
-                    className={classes.noteLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    the sick villager icons
-                </a>
-                .
+                for helping with statistics.
             </Typography>
         </Layout>
     );
