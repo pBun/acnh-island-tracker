@@ -24,7 +24,7 @@ export default function VillagerListItem(props) {
     } = useVillagerCalc();
     const { villager, timestamp, ...otherProps } = props;
     const secondaryTextItems = [
-        `Island: ${getMysteryIslandRate(villager.name)}%`,
+        `NMT: ${getMysteryIslandRate(villager.name)}%`,
         // `Campsite: ${getCampsiteRate(villager.name)}%`,
     ];
     if (timestamp) {
