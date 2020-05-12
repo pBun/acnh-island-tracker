@@ -101,8 +101,7 @@ const SessionPage = ({ title, children, variant }) => {
                     rel="noopener noreferrer"
                 >
                     Mau
-                </a>{" "}
-                for helping with statistics.
+                </a>.
             </Typography>
         </Layout>
     );
