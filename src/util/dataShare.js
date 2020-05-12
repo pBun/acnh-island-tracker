@@ -35,12 +35,12 @@ export function shareSighting({
         );
         request.onload = function () {
             if (this.status < 200 || this.status > 400) {
-                return reject();
+                return reject(`Error ${this.status}: unable to send to spreadsheet`);
             }
             resolve();
         };
         request.onerror = function () {
-            reject();
+            reject('Unable to send to spreadsheet. Please check your connection and try again.');
         };
         request.send();
     });

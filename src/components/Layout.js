@@ -114,7 +114,7 @@ export default function BottomAppBar({ children }) {
                             setTrackerModalState(false);
                             trackVillager({ villager: villager.name, location })
                                 .catch(err => {
-                                    setSnackMessage("Ajax error =(");
+                                    setSnackMessage(err);
                                 })
                                 .then(() => {
                                     setSnackMessage(`${villager.name} tracked successfully!`);
