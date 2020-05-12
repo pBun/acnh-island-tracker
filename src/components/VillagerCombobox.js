@@ -17,7 +17,13 @@ export default function TrackVillager(props) {
             groupBy={option => option.species}
             getOptionSelected={(option, value) => option.id === value.id}
             renderInput={params => (
-                <TextField {...params} label="Villager" variant="outlined" error={!!props.error} helperText={props.error} />
+                <TextField
+                    {...params}
+                    label="Villager"
+                    variant="outlined"
+                    error={!!props.error}
+                    helperText={props.error}
+                />
             )}
             {...otherProps}
         />

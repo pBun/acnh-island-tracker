@@ -4,9 +4,7 @@ import { format } from "date-fns";
 const DEFAULT_TEMPLATE = "MMM d, yyyy hh:mm a";
 
 export default function useCurrentTime() {
-    const [currentSystemTimestamp, setCurTimestamp] = React.useState(
-        Date.now()
-    );
+    const [currentSystemTimestamp, setCurTimestamp] = React.useState(Date.now());
     React.useEffect(() => {
         if (!window) return;
         let updateTimeout;

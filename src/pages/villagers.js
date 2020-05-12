@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import matchSorter from 'match-sorter'
+import matchSorter from "match-sorter";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
@@ -71,44 +71,28 @@ function TablePaginationActions(props) {
                 disabled={page === 0}
                 aria-label="first page"
             >
-                {theme.direction === "rtl" ? (
-                    <LastPageIcon />
-                ) : (
-                    <FirstPageIcon />
-                )}
+                {theme.direction === "rtl" ? <LastPageIcon /> : <FirstPageIcon />}
             </IconButton>
             <IconButton
                 onClick={handleBackButtonClick}
                 disabled={page === 0}
                 aria-label="previous page"
             >
-                {theme.direction === "rtl" ? (
-                    <KeyboardArrowRight />
-                ) : (
-                    <KeyboardArrowLeft />
-                )}
+                {theme.direction === "rtl" ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
             </IconButton>
             <IconButton
                 onClick={handleNextButtonClick}
                 disabled={page >= Math.ceil(count / rowsPerPage) - 1}
                 aria-label="next page"
             >
-                {theme.direction === "rtl" ? (
-                    <KeyboardArrowLeft />
-                ) : (
-                    <KeyboardArrowRight />
-                )}
+                {theme.direction === "rtl" ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
             </IconButton>
             <IconButton
                 onClick={handleLastPageButtonClick}
                 disabled={page >= Math.ceil(count / rowsPerPage) - 1}
                 aria-label="last page"
             >
-                {theme.direction === "rtl" ? (
-                    <FirstPageIcon />
-                ) : (
-                    <LastPageIcon />
-                )}
+                {theme.direction === "rtl" ? <FirstPageIcon /> : <LastPageIcon />}
             </IconButton>
         </div>
     );
@@ -119,26 +103,20 @@ export default function VillagersPage() {
     const { allVillagers } = useVillagers();
     const [page, setPage] = React.useState(0);
     const [villagersPerPage, setVillagersPerPage] = React.useState(10);
-    const [searchTerms, setSearchTerms] = React.useState('');
-    const searchResults = matchSorter(
-        allVillagers,
-        searchTerms,
-        {keys: [
-            'name',
-            'species',
-            'personality',
-            (item) => `${item.personality} ${item.species}`,
-            (item) => `${item.species} ${item.personality}`,
-            'gender',
-        ]},
-    );
+    const [searchTerms, setSearchTerms] = React.useState("");
+    const searchResults = matchSorter(allVillagers, searchTerms, {
+        keys: [
+            "name",
+            "species",
+            "personality",
+            item => `${item.personality} ${item.species}`,
+            item => `${item.species} ${item.personality}`,
+            "gender",
+        ],
+    });
     const startIndex = Math.max(page * villagersPerPage, 0);
-    const endIndex = startIndex + (villagersPerPage >= 0
-        ? villagersPerPage : searchResults.length);
-    const villagersToRender = searchResults.slice(
-        startIndex,
-        endIndex,
-    );
+    const endIndex = startIndex + (villagersPerPage >= 0 ? villagersPerPage : searchResults.length);
+    const villagersToRender = searchResults.slice(startIndex, endIndex);
     return (
         <Page title={`All Villagers (${searchResults.length})`}>
             <div className={classes.controlsWrapper}>
@@ -149,7 +127,7 @@ export default function VillagersPage() {
                     type="search"
                     variant="outlined"
                     value={searchTerms}
-                    onChange={(e) => setSearchTerms(e.target.value)}
+                    onChange={e => setSearchTerms(e.target.value)}
                 />
             </div>
             <List className={classes.list}>
@@ -186,7 +164,7 @@ export default function VillagersPage() {
                 onChangePage={(event, newPage) => {
                     setPage(newPage);
                 }}
-                onChangeRowsPerPage={(event) => {
+                onChangeRowsPerPage={event => {
                     setVillagersPerPage(parseInt(event.target.value, 10));
                     setPage(0);
                 }}

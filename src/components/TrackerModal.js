@@ -51,20 +51,13 @@ export default function FormModal({
     } = React.useContext(AppContext);
     const [selectedVillager, setSelectedVillager] = React.useState(null);
     return (
-        <Dialog
-            open={open}
-            onClose={handleCancel}
-            aria-labelledby="form-dialog-title"
-        >
+        <Dialog open={open} onClose={handleCancel} aria-labelledby="form-dialog-title">
             <ChatStyleHeadline id="form-dialog-title" component="h2">
                 Track Villager
             </ChatStyleHeadline>
             <DialogContent>
                 <FormControl component="fieldset">
-                    <FormLabel
-                        component="legend"
-                        className={classes.radioGroupLabel}
-                    >
+                    <FormLabel component="legend" className={classes.radioGroupLabel}>
                         Location
                     </FormLabel>
                     <RadioGroup
@@ -105,9 +98,7 @@ export default function FormModal({
                         control={
                             <Checkbox
                                 checked={allowDataShare}
-                                onChange={e =>
-                                    setAllowDataShare(e.target.checked)
-                                }
+                                onChange={e => setAllowDataShare(e.target.checked)}
                                 name="allowDataShare"
                                 size="small"
                                 color="primary"
@@ -115,8 +106,7 @@ export default function FormModal({
                         }
                         label={
                             <span className={classes.checkboxLabel}>
-                                Support the community by sending your villager
-                                sightings to{" "}
+                                Support the community by sending your villager sightings to{" "}
                                 <a
                                     href="https://docs.google.com/spreadsheets/d/1p542EQ85gdgLJfjZcI3SSmTdsnZKNi6KKjjjSdGkl7Q/edit?usp=sharing"
                                     target="_blank"

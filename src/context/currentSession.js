@@ -46,9 +46,7 @@ function reducer(state, action) {
         case "deleteResident":
             return {
                 ...state,
-                residents: [
-                    ...state.residents.filter(r => r.id !== action.payload),
-                ],
+                residents: [...state.residents.filter(r => r.id !== action.payload)],
             };
         case "reset":
             return getInitialSession();
@@ -66,8 +64,7 @@ const initialState = {
 const SessionContext = React.createContext(initialState);
 export const SessionProvider = ({ children }) => {
     const { allowDataShare, setLoading } = React.useContext(AppContext);
-    const localStateString =
-        window && window.localStorage.getItem(LOCAL_STORAGE_KEY);
+    const localStateString = window && window.localStorage.getItem(LOCAL_STORAGE_KEY);
     const localState = localStateString && JSON.parse(localStateString);
     const initialSession = getInitialSession();
     const [state, dispatch] = React.useReducer(reducer, {
@@ -76,11 +73,7 @@ export const SessionProvider = ({ children }) => {
     });
     const { currentSystemTimestamp, getPrettySystemTime } = useCurrentTime();
     React.useEffect(() => {
-        window &&
-            window.localStorage.setItem(
-                LOCAL_STORAGE_KEY,
-                JSON.stringify(state)
-            );
+        window && window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(state));
     }, [state]);
     return (
         <SessionContext.Provider
@@ -94,20 +87,11 @@ export const SessionProvider = ({ children }) => {
                 addResident: resident => {
                     return new Promise((resolve, reject) => {
                         if (state.residents.length >= 10) {
-                            return reject(
-                                "You already have the max number of residents."
-                            );
+                            return reject("You already have the max number of residents.");
                         }
-                        const residentToUpdate = state.residents.find(
-                            r => r.id === resident.id
-                        );
-                        if (
-                            residentToUpdate &&
-                            !residentToUpdate.moveOutTimestamp
-                        ) {
-                            return reject(
-                                "That villager already lives on your island."
-                            );
+                        const residentToUpdate = state.residents.find(r => r.id === resident.id);
+                        if (residentToUpdate && !residentToUpdate.moveOutTimestamp) {
+                            return reject("That villager already lives on your island.");
                         }
                         dispatch({
                             type: "updateResident",
@@ -123,13 +107,9 @@ export const SessionProvider = ({ children }) => {
                 },
                 removeResident: resident => {
                     return new Promise((resolve, reject) => {
-                        const residentToRemove = state.residents.find(
-                            r => r.id === resident.id
-                        );
+                        const residentToRemove = state.residents.find(r => r.id === resident.id);
                         if (!residentToRemove) {
-                            return reject(
-                                "That villager does not currently live on your island."
-                            );
+                            return reject("That villager does not currently live on your island.");
                         }
                         dispatch({
                             type: "updateResident",
@@ -143,13 +123,9 @@ export const SessionProvider = ({ children }) => {
                 },
                 nukeResident: resident => {
                     return new Promise((resolve, reject) => {
-                        const residentToRemove = state.residents.find(
-                            r => r.id === resident.id
-                        );
+                        const residentToRemove = state.residents.find(r => r.id === resident.id);
                         if (!residentToRemove) {
-                            return reject(
-                                "That villager has never lived on your island."
-                            );
+                            return reject("That villager has never lived on your island.");
                         }
                         dispatch({
                             type: "deleteResident",
@@ -161,12 +137,8 @@ export const SessionProvider = ({ children }) => {
                 trackVillager: ({ villager, location }) => {
                     return new Promise((resolve, reject) => {
                         const timestamp = Date.now();
-                        const currentResidents = state.residents.filter(
-                            r => !r.moveOutTimestamp
-                        );
-                        const pastResidents = state.residents.filter(
-                            r => r.moveOutTimestamp
-                        );
+                        const currentResidents = state.residents.filter(r => !r.moveOutTimestamp);
+                        const pastResidents = state.residents.filter(r => r.moveOutTimestamp);
                         console.log(state.residents, currentResidents, pastResidents);
                         const updateState = () => {
                             dispatch({
@@ -214,10 +186,7 @@ SessionProvider.defaultProps = {
 };
 
 SessionProvider.propTypes = {
-    children: PropTypes.oneOfType([
-        PropTypes.arrayOf(PropTypes.node),
-        PropTypes.node,
-    ]),
+    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
 };
 
 export default SessionContext;

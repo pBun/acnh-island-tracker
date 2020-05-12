@@ -70,9 +70,7 @@ export default function TrackedVillagersList(props) {
             {sortedSightings.length ? (
                 Object.keys(sightingsGroupedByDate).map(date => (
                     <React.Fragment key={date}>
-                        <ListSubheader className={classes.listSubheader}>
-                            {date}
-                        </ListSubheader>
+                        <ListSubheader className={classes.listSubheader}>{date}</ListSubheader>
                         {sightingsGroupedByDate[date].map(data => (
                             <TrackedVillagerListItem
                                 key={data.timestamp}

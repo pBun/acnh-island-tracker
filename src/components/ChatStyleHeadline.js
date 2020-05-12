@@ -23,12 +23,7 @@ const useStyles = makeStyles(theme => ({
 const ChatStyleHeadline = props => {
     const classes = useStyles();
     return (
-        <Typography
-            className={classes.title}
-            variant="h6"
-            component="h1"
-            {...props}
-        >
+        <Typography className={classes.title} variant="h6" component="h1" {...props}>
             {props.children}
         </Typography>
     );

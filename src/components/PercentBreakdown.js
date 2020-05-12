@@ -100,9 +100,7 @@ function EnhancedTableHead(props) {
                 {[
                     {
                         id: "category",
-                        label:
-                            villagerPropName.charAt(0).toUpperCase() +
-                            villagerPropName.slice(1),
+                        label: villagerPropName.charAt(0).toUpperCase() + villagerPropName.slice(1),
                     },
                     { id: "count", label: "Seen (Total%)" },
                 ].map(headCell => (
@@ -120,9 +118,7 @@ function EnhancedTableHead(props) {
                             {headCell.label}
                             {orderBy === headCell.id ? (
                                 <span className={classes.visuallyHidden}>
-                                    {order === "desc"
-                                        ? "sorted descending"
-                                        : "sorted ascending"}
+                                    {order === "desc" ? "sorted descending" : "sorted ascending"}
                                 </span>
                             ) : null}
                         </TableSortLabel>
@@ -169,23 +165,13 @@ function Row(props) {
                 </TableCell>
             </TableRow>
             <TableRow>
-                <TableCell
-                    style={{ paddingBottom: 0, paddingTop: 0 }}
-                    colSpan={3}
-                >
+                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={3}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box margin={1}>
-                            <Typography
-                                variant="h6"
-                                gutterBottom
-                                component="div"
-                            >
+                            <Typography variant="h6" gutterBottom component="div">
                                 {`${row.name} Sighting History`}
                             </Typography>
-                            <Table
-                                size="small"
-                                aria-label={`${row.name} history`}
-                            >
+                            <Table size="small" aria-label={`${row.name} history`}>
                                 <TableHead>
                                     <TableRow>
                                         <TableCell>Villager</TableCell>
@@ -196,20 +182,12 @@ function Row(props) {
                                 <TableBody>
                                     {row.history.map(historyRow => (
                                         <TableRow key={historyRow.timestamp}>
+                                            <TableCell>{historyRow.villager}</TableCell>
                                             <TableCell>
-                                                {historyRow.villager}
+                                                {format(historyRow.timestamp, "hh:mm a")}
                                             </TableCell>
                                             <TableCell>
-                                                {format(
-                                                    historyRow.timestamp,
-                                                    "hh:mm a"
-                                                )}
-                                            </TableCell>
-                                            <TableCell>
-                                                {format(
-                                                    historyRow.timestamp,
-                                                    "MMM d, yyyy"
-                                                )}
+                                                {format(historyRow.timestamp, "MMM d, yyyy")}
                                             </TableCell>
                                         </TableRow>
                                     ))}
@@ -281,15 +259,12 @@ function PercentBreakdownTable({ villagerPropName }) {
     const rows = Object.keys(data).map(prop => ({
         name: prop,
         count: data[prop].length,
-        percent: Math.round(
-            (data[prop].length / Math.max(1, session.sightings.length)) * 100
-        ),
+        percent: Math.round((data[prop].length / Math.max(1, session.sightings.length)) * 100),
         history: data[prop],
     }));
     const emptyRows =
         rows.length / rowsPerPage > 1
-            ? rowsPerPage -
-              Math.min(rowsPerPage, rows.length - page * rowsPerPage)
+            ? rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage)
             : 0;
     const rowsPerPageOptions = [ROWS_PER_PAGE[0]];
     ROWS_PER_PAGE.forEach(rc => {
@@ -303,10 +278,7 @@ function PercentBreakdownTable({ villagerPropName }) {
     }
     return (
         <TableContainer className={classes.root}>
-            <Table
-                size="small"
-                aria-label={`breakdown of villagers by ${villagerPropName}`}
-            >
+            <Table size="small" aria-label={`breakdown of villagers by ${villagerPropName}`}>
                 <EnhancedTableHead
                     villagerPropName={villagerPropName}
                     classes={classes}
@@ -316,10 +288,7 @@ function PercentBreakdownTable({ villagerPropName }) {
                 />
                 <TableBody>
                     {stableSort(rows, getComparator(order, orderBy))
-                        .slice(
-                            page * rowsPerPage,
-                            page * rowsPerPage + rowsPerPage
-                        )
+                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                         .map((row, index) => (
                             <Row key={row.name} row={row} />
                         ))}

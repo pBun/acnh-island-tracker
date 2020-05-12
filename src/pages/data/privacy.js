@@ -29,11 +29,7 @@ const useStyles = makeStyles(theme => ({
 
 const DataSettingsPage = () => {
     const classes = useStyles();
-    const {
-        allowDataShare,
-        setAllowDataShare,
-        resetAppData,
-    } = React.useContext(AppContext);
+    const { allowDataShare, setAllowDataShare, resetAppData } = React.useContext(AppContext);
     const { resetSessionData } = React.useContext(SessionContext);
     return (
         <Page title="Data Settings" variant="text">
@@ -44,8 +40,7 @@ const DataSettingsPage = () => {
                         primary="Allow Data Share"
                         secondary={
                             <>
-                                Support the community by sending villager
-                                sighting data to{" "}
+                                Support the community by sending villager sighting data to{" "}
                                 <a
                                     href={DATA_SHARE_URL}
                                     target="_blank"
@@ -66,8 +61,7 @@ const DataSettingsPage = () => {
                             }}
                             checked={allowDataShare}
                             inputProps={{
-                                "aria-labelledby":
-                                    "switch-list-label-data-share",
+                                "aria-labelledby": "switch-list-label-data-share",
                             }}
                         />
                     </ListItemSecondaryAction>
@@ -78,9 +72,8 @@ const DataSettingsPage = () => {
                         primary="Reset Session"
                         secondary={
                             <>
-                                Delete all session and app data stored in your
-                                browser. Note that this does not delete data
-                                stored in{" "}
+                                Delete all session and app data stored in your browser. Note that
+                                this does not delete data stored in{" "}
                                 <a
                                     href={DATA_SHARE_URL}
                                     target="_blank"

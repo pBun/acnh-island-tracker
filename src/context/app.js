@@ -46,24 +46,16 @@ const initialContext = {
 };
 const AppContext = React.createContext(initialContext);
 export const AppProvider = ({ children }) => {
-    const localStateString =
-        window && window.localStorage.getItem(LOCAL_STORAGE_KEY);
+    const localStateString = window && window.localStorage.getItem(LOCAL_STORAGE_KEY);
     const localState = localStateString && JSON.parse(localStateString);
-    const [state, dispatch] = React.useReducer(
-        reducer,
-        localState || getInitialState()
-    );
+    const [state, dispatch] = React.useReducer(reducer, localState || getInitialState());
     React.useEffect(() => {
         if (!window) return;
         // only store the data share var
         const stateToStore = getInitialState();
         stateToStore.allowDataShare = state.allowDataShare;
         stateToStore.trackingPreference = state.trackingPreference;
-        window &&
-            window.localStorage.setItem(
-                LOCAL_STORAGE_KEY,
-                JSON.stringify(stateToStore)
-            );
+        window && window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(stateToStore));
     }, [state]);
     return (
         <AppContext.Provider
@@ -108,10 +100,7 @@ AppProvider.defaultProps = {
 };
 
 AppProvider.propTypes = {
-    children: PropTypes.oneOfType([
-        PropTypes.arrayOf(PropTypes.node),
-        PropTypes.node,
-    ]),
+    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
 };
 
 export default AppContext;

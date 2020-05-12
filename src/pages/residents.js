@@ -11,8 +11,8 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
 
 import useVillagers from "../hooks/useVillagers";
 import SessionContext from "../context/currentSession";
@@ -85,18 +85,14 @@ const ResidentListItem = props => {
                 primary={villager.name}
                 secondary={`${villager.personality} ${villager.species}`}
             />
-            <ListItemSecondaryAction>
-                {secondaryAction}
-            </ListItemSecondaryAction>
+            <ListItemSecondaryAction>{secondaryAction}</ListItemSecondaryAction>
         </ListItem>
     );
 };
 const EmptySlotListItem = props => {
     const classes = useEmptySlotStyles();
     return (
-        <ListItem
-            {...props}
-        >
+        <ListItem {...props}>
             <ListItemAvatar>
                 <Avatar className={classes.avatar} alt="Empty" />
             </ListItemAvatar>
@@ -128,7 +124,7 @@ export default function ResidentsPage() {
     const { session, addResident, removeResident, nukeResident } = React.useContext(SessionContext);
     const { allVillagers } = useVillagers();
     const [selectedVillager, setSelectedVillager] = React.useState(null);
-    const [error, setError] = React.useState('');
+    const [error, setError] = React.useState("");
 
     const currentResidents = session.residents.filter(r => !r.moveOutTimestamp);
     const pastResidents = session.residents.filter(r => !!r.moveOutTimestamp);
@@ -136,7 +132,7 @@ export default function ResidentsPage() {
     return (
         <Page title="My Residents">
             <form
-                onSubmit={(e) => {
+                onSubmit={e => {
                     e.preventDefault();
                     if (!selectedVillager) return;
                     addResident(selectedVillager)
@@ -151,7 +147,7 @@ export default function ResidentsPage() {
                         value={selectedVillager}
                         onChange={(e, newVal) => {
                             setSelectedVillager(newVal);
-                            setError('');
+                            setError("");
                         }}
                         className={classes.combobox}
                         error={error}
@@ -160,7 +156,7 @@ export default function ResidentsPage() {
                         className={classes.submitButton}
                         type="submit"
                         color="primary"
-                        startIcon={(<PersonAddIcon />)}
+                        startIcon={<PersonAddIcon />}
                     >
                         Add resident
                     </Button>
@@ -178,7 +174,7 @@ export default function ResidentsPage() {
                             className={classes.listItem}
                             villager={villager}
                             timestamp={resident.moveInTimestamp}
-                            secondaryAction={(
+                            secondaryAction={
                                 <ButtonTooltip title="Farewell" placement="top">
                                     <IconButton
                                         className={classes.removeButton}
@@ -191,15 +187,12 @@ export default function ResidentsPage() {
                                         <ExitToAppIcon />
                                     </IconButton>
                                 </ButtonTooltip>
-                            )}
+                            }
                         />
                     );
                 })}
-                {Array.from(new Array(numEmptyPlots).keys()).map((i) => (
-                    <EmptySlotListItem
-                        key={`empty_${i}`}
-                        className={classes.listItem}
-                    />
+                {Array.from(new Array(numEmptyPlots).keys()).map(i => (
+                    <EmptySlotListItem key={`empty_${i}`} className={classes.listItem} />
                 ))}
                 {pastResidents.filter(r => !!r.moveOutTimestamp).length ? (
                     <>
@@ -214,7 +207,7 @@ export default function ResidentsPage() {
                                     className={classes.listItem}
                                     villager={villager}
                                     timstamp={resident.moveOutTimestamp}
-                                    secondaryAction={(
+                                    secondaryAction={
                                         <ButtonTooltip title="Delete memories" placement="top">
                                             <IconButton
                                                 className={classes.deleteButton}
@@ -230,12 +223,14 @@ export default function ResidentsPage() {
                                                 <DeleteIcon />
                                             </IconButton>
                                         </ButtonTooltip>
-                                    )}
+                                    }
                                 />
                             );
                         })}
                     </>
-                ) : ''}
+                ) : (
+                    ""
+                )}
             </List>
         </Page>
     );

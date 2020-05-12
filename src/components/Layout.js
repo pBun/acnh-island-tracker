@@ -14,7 +14,7 @@ import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
 import HomeIcon from "@material-ui/icons/Home";
 import Tooltip from "@material-ui/core/Tooltip";
-import SearchIcon from '@material-ui/icons/Search';
+import SearchIcon from "@material-ui/icons/Search";
 
 import SessionContext from "../context/currentSession";
 import AppContext from "../context/app";
@@ -83,18 +83,15 @@ export default function BottomAppBar({ children }) {
     return (
         <>
             <CssBaseline />
-            {loading && (
-                <LinearProgress
-                    color="secondary"
-                    className={classes.progressBar}
-                />
-            )}
+            {loading && <LinearProgress color="secondary" className={classes.progressBar} />}
             <Container className={classes.container} maxWidth="sm">
                 {children}
             </Container>
             <AppBar position="fixed" color="primary" className={classes.appBar}>
                 <Toolbar>
-                    <Button color="inherit" component={Link} to="/">Dodo Tracker</Button>
+                    <Button color="inherit" component={Link} to="/">
+                        Dodo Tracker
+                    </Button>
                     <ButtonTooltip title="Track Villager" placement="top">
                         <Fab
                             color="secondary"
@@ -119,9 +116,7 @@ export default function BottomAppBar({ children }) {
                                     setSnackMessage("Ajax error =(");
                                 })
                                 .then(() => () => {
-                                    setSnackMessage(
-                                        `${villager.name} tracked successfully!`
-                                    );
+                                    setSnackMessage(`${villager.name} tracked successfully!`);
                                 });
                         }}
                         handleCancel={() => {

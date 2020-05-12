@@ -47,11 +47,7 @@ const SessionPage = ({ title, children, variant }) => {
                 <ChatStyleHeadline component="h1">{title}</ChatStyleHeadline>
                 {children}
             </Paper>
-            <Typography
-                variant="body2"
-                component="span"
-                className={classes.note}
-            >
+            <Typography variant="body2" component="span" className={classes.note}>
                 Reach out to{" "}
                 <a
                     href="https://twitter.com/peebun"

@@ -7,18 +7,25 @@ const DATA_UPLOAD_URL =
     "https://script.google.com/macros/s/AKfycbw_4jsHZE4PkIePUPbzPAlzzcXEeWibBltRUzeLu0zpztsVAEg/exec";
 
 function flattenResidentList(residents) {
-    return residents
-        ? residents.map(r => r.name).join(',')
-        : '';
+    return residents ? residents.map(r => r.name).join(",") : "";
 }
 
-export function shareSighting({ id, villager, timestamp, location, currentResidents, pastResidents }) {
+export function shareSighting({
+    id,
+    villager,
+    timestamp,
+    location,
+    currentResidents,
+    pastResidents,
+}) {
     return new Promise((resolve, reject) => {
-        console.log(currentResidents, flattenResidentList(currentResidents), flattenResidentList(pastResidents));
+        console.log(
+            currentResidents,
+            flattenResidentList(currentResidents),
+            flattenResidentList(pastResidents)
+        );
         const qs = queryString.stringify({
-            timestamp: encodeURIComponent(
-                format(timestamp, "MM/dd/yyyy hh:mm:ss")
-            ),
+            timestamp: encodeURIComponent(format(timestamp, "MM/dd/yyyy hh:mm:ss")),
             villager: encodeURIComponent(villager),
             session_id: encodeURIComponent(id),
             spawn_type: encodeURIComponent(location || "mystery-island"),
