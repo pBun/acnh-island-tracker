@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 
 import { shareSighting } from "../util/dataShare";
 
-import useCurrentTime from "../hooks/useCurrentTime";
-
 import AppContext from "../context/AppContext";
 
 const LOCAL_STORAGE_KEY = "islandTrackerSession";
@@ -56,10 +54,11 @@ function reducer(state, action) {
 }
 const initialState = {
     session: getInitialSession(),
+    addResident: resident => {},
+    removeResident: resident => {},
+    nukeResident: resident => {},
     trackVillager: opts => {},
     resetSessionData: () => {},
-    currentSystemTimestamp: null,
-    getPrettySystemTime: () => {},
 };
 const SessionContext = React.createContext(initialState);
 export const SessionProvider = ({ children }) => {
@@ -71,7 +70,6 @@ export const SessionProvider = ({ children }) => {
         ...initialSession,
         ...localState,
     });
-    const { currentSystemTimestamp, getPrettySystemTime } = useCurrentTime();
     React.useEffect(() => {
         window && window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(state));
     }, [state]);
@@ -79,8 +77,6 @@ export const SessionProvider = ({ children }) => {
         <SessionContext.Provider
             value={{
                 session: state,
-                currentSystemTimestamp,
-                getPrettySystemTime,
                 resetSessionData: () => {
                     dispatch({ type: "reset" });
                 },
