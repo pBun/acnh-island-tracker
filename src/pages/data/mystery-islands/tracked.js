@@ -4,7 +4,7 @@ import React from "react";
 import SessionContext from "../../../context/currentSession";
 
 import Page from "../../../components/Page";
-import TrackedVillagers from "../../../components/TrackedVillagers";
+import TrackedVillagersList from "../../../components/TrackedVillagersList";
 
 // const useStyles = makeStyles(theme => ({
 //
@@ -22,7 +22,7 @@ export default function TrackedMysteryIslandVillagersPage() {
     }`;
     return (
         <Page title={pageTitle}>
-            <TrackedVillagers sightings={filteredSightings} />
+            <TrackedVillagersList sightings={filteredSightings} />
         </Page>
     );
 }

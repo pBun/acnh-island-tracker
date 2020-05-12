@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const SessionPage = () => {
+const DataSettingsPage = () => {
     const classes = useStyles();
     const {
         allowDataShare,
@@ -36,7 +36,7 @@ const SessionPage = () => {
     } = React.useContext(AppContext);
     const { resetSessionData } = React.useContext(SessionContext);
     return (
-        <Page title="Data Privacy" variant="text">
+        <Page title="Data Settings" variant="text">
             <List className={classes.root}>
                 <ListItem>
                     <ListItemText
@@ -60,7 +60,6 @@ const SessionPage = () => {
                     />
                     <ListItemSecondaryAction>
                         <Checkbox
-                            edge="end"
                             color="primary"
                             onChange={e => {
                                 setAllowDataShare(e.target.checked);
@@ -105,7 +104,6 @@ const SessionPage = () => {
                     />
                     <ListItemSecondaryAction>
                         <IconButton
-                            edge="end"
                             className={classes.button}
                             variant="contained"
                             onClick={() => {
@@ -130,4 +128,4 @@ const SessionPage = () => {
     );
 };
 
-export default SessionPage;
+export default DataSettingsPage;

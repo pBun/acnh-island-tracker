@@ -6,6 +6,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
+import HomeIcon from "@material-ui/icons/Home";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
 
 import Page from "../components/Page";
@@ -55,7 +56,7 @@ export default function IndexPage() {
             <Typography variant="body1" component="p" className={classes.intro}>
                 Hi, this is a tool for tracking and comparing villager spawns on
                 mystery islands and the campsite within the game Animal
-                Crossing: New Horizon. Raymond for everyone!.
+                Crossing: New Horizon. Raymond for everyone!
             </Typography>
             <Typography
                 variant="h6"
@@ -67,7 +68,21 @@ export default function IndexPage() {
             <List component="div" dense={true} className={classes.list}>
                 <ListItem>
                     <ListItemText
-                        primary="1. Track each villager you see"
+                        primary="1. Add your current island residents"
+                        secondary={
+                            <>
+                                By clicking{" "}
+                                <HomeIcon
+                                    className={classes.inlineIcon}
+                                />{" "}
+                                (My Island Residents) in the bottom navbar.
+                            </>
+                        }
+                    />
+                </ListItem>
+                <ListItem>
+                    <ListItemText
+                        primary="2. Track each villager you see"
                         secondary={
                             <>
                                 By clicking{" "}
@@ -81,12 +96,12 @@ export default function IndexPage() {
                 </ListItem>
                 <ListItem>
                     <ListItemText
-                        primary="2. Analyze your data"
+                        primary="3. Analyze your data"
                         secondary={
                             <>
                                 By clicking{" "}
                                 <EqualizerIcon className={classes.inlineIcon} />{" "}
-                                (Data) in the bottom navbar.
+                                (My Data) in the bottom navbar.
                             </>
                         }
                     />

@@ -3,6 +3,7 @@ import { Link } from "gatsby";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Container from "@material-ui/core/Container";
+import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -13,6 +14,8 @@ import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
 import HomeIcon from "@material-ui/icons/Home";
 import Tooltip from "@material-ui/core/Tooltip";
+import PeopleIcon from '@material-ui/icons/People';
+import SearchIcon from '@material-ui/icons/Search';
 
 import SessionContext from "../context/currentSession";
 import AppContext from "../context/app";
@@ -87,12 +90,12 @@ export default function BottomAppBar({ children }) {
                     className={classes.progressBar}
                 />
             )}
-
             <Container className={classes.container} maxWidth="sm">
                 {children}
             </Container>
             <AppBar position="fixed" color="primary" className={classes.appBar}>
                 <Toolbar>
+                    <Button color="inherit" component={Link} to="/">Dodo Tracker</Button>
                     <ButtonTooltip title="Track Villager" placement="top">
                         <Fab
                             color="secondary"
@@ -127,7 +130,17 @@ export default function BottomAppBar({ children }) {
                         }}
                     />
                     <div className={classes.grow} />
-                    <ButtonTooltip title="Data" placement="top">
+                    <ButtonTooltip title="My Island Residents" placement="top">
+                        <IconButton
+                            component={Link}
+                            to="/residents/"
+                            color="inherit"
+                            className={classes.iconButton}
+                        >
+                            <HomeIcon />
+                        </IconButton>
+                    </ButtonTooltip>
+                    <ButtonTooltip title="My Data" placement="top">
                         <IconButton
                             component={Link}
                             to="/data/"
@@ -137,15 +150,14 @@ export default function BottomAppBar({ children }) {
                             <EqualizerIcon />
                         </IconButton>
                     </ButtonTooltip>
-                    <ButtonTooltip title="Home" placement="top">
+                    <ButtonTooltip title="Browse Villagers" placement="top">
                         <IconButton
-                            edge="end"
                             component={Link}
-                            to="/"
+                            to="/villagers/"
                             color="inherit"
                             className={classes.iconButton}
                         >
-                            <HomeIcon />
+                            <SearchIcon />
                         </IconButton>
                     </ButtonTooltip>
                 </Toolbar>

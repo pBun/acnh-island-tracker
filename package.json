@@ -29,6 +29,7 @@
     "gatsby-plugin-cname": "^1.0.0",
     "gatsby-plugin-material-ui": "^2.1.8",
     "gh-pages": "^2.2.0",
+    "match-sorter": "^4.1.0",
     "prettier": "2.0.5",
     "query-string": "^6.12.1"
   },
