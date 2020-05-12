@@ -67,7 +67,7 @@ const useEmptySlotStyles = makeStyles(theme => ({
 }));
 
 const ResidentListItem = props => {
-    const classes = useStyles();
+    // const classes = useStyles();
     const { villager, secondaryAction, ...otherProps } = props;
     return (
         <ListItem
