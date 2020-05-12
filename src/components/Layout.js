@@ -18,6 +18,7 @@ import SearchIcon from "@material-ui/icons/Search";
 
 import SessionContext from "../context/SessionContext";
 import AppContext from "../context/AppContext";
+import LoadingContext from "../context/LoadingContext";
 
 import TrackerModal from "../components/TrackerModal";
 
@@ -73,11 +74,11 @@ const useStyles = makeStyles(theme => ({
 export default function BottomAppBar({ children }) {
     const classes = useStyles();
     const {
-        loading,
         trackerModalOpen,
         setClockModalState,
         setTrackerModalState,
     } = React.useContext(AppContext);
+    const { loading } = React.useContext(LoadingContext);
     const { trackVillager } = React.useContext(SessionContext);
     const [snackMessage, setSnackMessage] = React.useState("");
     return (
@@ -115,7 +116,7 @@ export default function BottomAppBar({ children }) {
                                 .catch(err => {
                                     setSnackMessage("Ajax error =(");
                                 })
-                                .then(() => () => {
+                                .then(() => {
                                     setSnackMessage(`${villager.name} tracked successfully!`);
                                 });
                         }}

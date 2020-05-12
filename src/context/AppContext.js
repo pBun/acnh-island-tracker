@@ -4,18 +4,12 @@ import PropTypes from "prop-types";
 const LOCAL_STORAGE_KEY = "islandTrackerApp";
 
 const getInitialState = () => ({
-    loading: false,
     trackerModalOpen: false,
     allowDataShare: true,
     trackingPreference: "mystery-island",
 });
 function reducer(state, action) {
     switch (action.type) {
-        case "setLoading":
-            return {
-                ...state,
-                loading: action.payload,
-            };
         case "setTrackerModalState":
             return {
                 ...state,
@@ -39,7 +33,6 @@ function reducer(state, action) {
 }
 const initialContext = {
     state: getInitialState(),
-    setLoading: () => {},
     setTrackerModalState: () => {},
     setAllowDataShare: approval => {},
     setTrackingPreference: preference => {},
@@ -61,9 +54,6 @@ export const AppProvider = ({ children }) => {
         <AppContext.Provider
             value={{
                 ...state,
-                setLoading: loadingState => {
-                    dispatch({ type: "setLoading", payload: loadingState });
-                },
                 setClockModalState: modalState => {
                     dispatch({
                         type: "setClockModalState",

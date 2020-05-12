@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { shareSighting } from "../util/dataShare";
 
 import AppContext from "../context/AppContext";
+import LoadingContext from "../context/LoadingContext";
 
 const LOCAL_STORAGE_KEY = "islandTrackerSession";
 
@@ -53,7 +54,9 @@ function reducer(state, action) {
     }
 }
 const initialState = {
-    session: getInitialSession(),
+    ...getInitialSession(),
+    currentResidents: [],
+    pastResidents: [],
     getCurrentResidents: () => {},
     getPastResidents: () => {},
     addResident: resident => {},
@@ -64,7 +67,8 @@ const initialState = {
 };
 const SessionContext = React.createContext(initialState);
 export const SessionProvider = ({ children }) => {
-    const { allowDataShare, setLoading } = React.useContext(AppContext);
+    const { allowDataShare } = React.useContext(AppContext);
+    const { setLoading } = React.useContext(LoadingContext);
     const localStateString = window && window.localStorage.getItem(LOCAL_STORAGE_KEY);
     const localState = localStateString && JSON.parse(localStateString);
     const initialSession = getInitialSession();
