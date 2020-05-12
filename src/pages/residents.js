@@ -139,7 +139,7 @@ export default function ResidentsPage() {
                 onSubmit={(e) => {
                     e.preventDefault();
                     if (!selectedVillager) return;
-                    addResident(selectedVillager.id)
+                    addResident(selectedVillager)
                         .catch(err => setError(err))
                         .then(() => {
                             setSelectedVillager(null);
@@ -184,7 +184,7 @@ export default function ResidentsPage() {
                                         className={classes.removeButton}
                                         variant="contained"
                                         onClick={() => {
-                                            removeResident(villager.id);
+                                            removeResident(villager);
                                         }}
                                         aria-label="remove villager from island"
                                     >
@@ -222,7 +222,7 @@ export default function ResidentsPage() {
                                                 onClick={() => {
                                                     const confirmMessage = `Are you sure you want to remove all history of ${villager.name} from your island? This cannot be undone.`;
                                                     if (window && window.confirm(confirmMessage)) {
-                                                        nukeResident(villager.id);
+                                                        nukeResident(villager);
                                                     }
                                                 }}
                                                 aria-label="delete all history of resident"

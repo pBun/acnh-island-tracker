@@ -30,7 +30,7 @@ function reducer(state, action) {
                 ],
             };
         case "updateResident":
-            const existingResident = state.residents.find(r => r.id);
+            const existingResident = state.residents.find(r => r.id === action.payload.id);
             return {
                 ...state,
                 residents: [
@@ -91,19 +91,29 @@ export const SessionProvider = ({ children }) => {
                 resetSessionData: () => {
                     dispatch({ type: "reset" });
                 },
-                addResident: residentId => {
+                addResident: resident => {
                     return new Promise((resolve, reject) => {
                         if (state.residents.length >= 10) {
-                            return reject("You already have the max number of residents.");
+                            return reject(
+                                "You already have the max number of residents."
+                            );
                         }
-                        const residentToUpdate = state.residents.find(r => r.id === residentId);
-                        if (residentToUpdate && !residentToUpdate.moveOutTimestamp) {
-                            return reject("That villager already lives on your island.");
+                        const residentToUpdate = state.residents.find(
+                            r => r.id === resident.id
+                        );
+                        if (
+                            residentToUpdate &&
+                            !residentToUpdate.moveOutTimestamp
+                        ) {
+                            return reject(
+                                "That villager already lives on your island."
+                            );
                         }
                         dispatch({
                             type: "updateResident",
                             payload: {
-                                id: residentId,
+                                id: resident.id,
+                                name: resident.name,
                                 moveInTimestamp: Date.now(),
                                 moveOutTimestamp: null,
                             },
@@ -111,35 +121,39 @@ export const SessionProvider = ({ children }) => {
                         return resolve();
                     });
                 },
-                removeResident: residentId => {
+                removeResident: resident => {
                     return new Promise((resolve, reject) => {
                         const residentToRemove = state.residents.find(
-                            resident => resident.id === residentId
+                            r => r.id === resident.id
                         );
                         if (!residentToRemove) {
-                            return reject("That villager does not currently live on your island.");
+                            return reject(
+                                "That villager does not currently live on your island."
+                            );
                         }
                         dispatch({
                             type: "updateResident",
                             payload: {
-                                id: residentId,
+                                id: resident.id,
                                 moveOutTimestamp: Date.now(),
                             },
                         });
                         return resolve();
                     });
                 },
-                nukeResident: residentId => {
+                nukeResident: resident => {
                     return new Promise((resolve, reject) => {
                         const residentToRemove = state.residents.find(
-                            resident => resident.id === residentId
+                            r => r.id === resident.id
                         );
                         if (!residentToRemove) {
-                            return reject("That villager has never lived on your island.");
+                            return reject(
+                                "That villager has never lived on your island."
+                            );
                         }
                         dispatch({
                             type: "deleteResident",
-                            payload: residentId,
+                            payload: resident.id,
                         });
                         return resolve();
                     });
@@ -147,6 +161,13 @@ export const SessionProvider = ({ children }) => {
                 trackVillager: ({ villager, location }) => {
                     return new Promise((resolve, reject) => {
                         const timestamp = Date.now();
+                        const currentResidents = state.residents.filter(
+                            r => !r.moveOutTimestamp
+                        );
+                        const pastResidents = state.residents.filter(
+                            r => r.moveOutTimestamp
+                        );
+                        console.log(state.residents, currentResidents, pastResidents);
                         const updateState = () => {
                             dispatch({
                                 type: "trackVillager",
@@ -167,6 +188,8 @@ export const SessionProvider = ({ children }) => {
                             timestamp,
                             villager,
                             location,
+                            currentResidents,
+                            pastResidents,
                         })
                             .catch(() => {
                                 setLoading(false);

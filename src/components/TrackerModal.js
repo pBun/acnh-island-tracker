@@ -90,6 +90,7 @@ export default function FormModal({
                 </FormControl>
                 <DialogContentText></DialogContentText>
                 <VilagerCombobox
+                    id="villager-to-track"
                     value={selectedVillager}
                     onChange={(e, newVal) => setSelectedVillager(newVal)}
                     className={classes.combobox}
