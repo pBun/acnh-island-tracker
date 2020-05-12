@@ -178,7 +178,10 @@ export default function ResidentsPage() {
                                         className={classes.removeButton}
                                         variant="contained"
                                         onClick={() => {
-                                            removeResident(villager);
+                                            const confirmMessage = `Are you sure you want to remove ${villager.name} from your island?`;
+                                            if (window && window.confirm(confirmMessage)) {
+                                                removeResident(villager);
+                                            }
                                         }}
                                         aria-label="remove villager from island"
                                     >
