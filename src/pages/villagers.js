@@ -123,7 +123,7 @@ export default function VillagersPage() {
                 <TextField
                     className={classes.formControl}
                     id="villager-search"
-                    label="Search"
+                    label="Name, species, personality"
                     type="search"
                     variant="outlined"
                     value={searchTerms}
