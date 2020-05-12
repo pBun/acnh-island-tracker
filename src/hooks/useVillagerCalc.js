@@ -1,10 +1,8 @@
-// import React from "react";
 import { groupBy } from "../util/list";
 import useVillagers from "../hooks/useVillagers";
-// import SessionContext from "../context/SessionContext";
 
-export default function useVillagerCalc() {
-    // const { session } = React.useContext(SessionContext);
+export default function useVillagerCalc(props) {
+    // const { currentResidents, pastResidents } = props || {};
     const { allVillagers, getVillager } = useVillagers();
     const availableSpecies = groupBy(allVillagers, 'species');
     const availablePersonalities = groupBy(allVillagers, 'personality');

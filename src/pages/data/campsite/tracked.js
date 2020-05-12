@@ -12,9 +12,9 @@ import TrackedVillagersList from "../../../components/TrackedVillagersList";
 
 export default function TrackedCampsiteVillagersPage() {
     // const classes = useStyles();
-    const { session } = React.useContext(SessionContext);
+    const { sightings } = React.useContext(SessionContext);
 
-    const filteredSightings = session.sightings.filter(s => s.location === "campsite");
+    const filteredSightings = sightings.filter(s => s.location === "campsite");
     const pageTitle = `Tracked Campsite Villagers ${
         filteredSightings.length ? `(${filteredSightings.length})` : ""
     }`;

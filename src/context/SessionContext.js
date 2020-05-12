@@ -54,6 +54,8 @@ function reducer(state, action) {
 }
 const initialState = {
     session: getInitialSession(),
+    getCurrentResidents: () => {},
+    getPastResidents: () => {},
     addResident: resident => {},
     removeResident: resident => {},
     nukeResident: resident => {},
@@ -73,16 +75,20 @@ export const SessionProvider = ({ children }) => {
     React.useEffect(() => {
         window && window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(state));
     }, [state]);
+    const currentResidents = state.residents.filter(r => !r.moveOutTimestamp);
+    const pastResidents = state.residents.filter(r => r.moveOutTimestamp);
     return (
         <SessionContext.Provider
             value={{
-                session: state,
+                sightings: state.sightings,
+                currentResidents,
+                pastResidents,
                 resetSessionData: () => {
                     dispatch({ type: "reset" });
                 },
                 addResident: resident => {
                     return new Promise((resolve, reject) => {
-                        if (state.residents.filter(r => !r.moveOutTimestamp).length >= 10) {
+                        if (currentResidents.length >= 10) {
                             return reject("You already have the max number of residents.");
                         }
                         const residentToUpdate = state.residents.find(r => r.id === resident.id);
@@ -133,8 +139,6 @@ export const SessionProvider = ({ children }) => {
                 trackVillager: ({ villager, location }) => {
                     return new Promise((resolve, reject) => {
                         const timestamp = Date.now();
-                        const currentResidents = state.residents.filter(r => !r.moveOutTimestamp);
-                        const pastResidents = state.residents.filter(r => r.moveOutTimestamp);
                         const updateState = () => {
                             dispatch({
                                 type: "trackVillager",

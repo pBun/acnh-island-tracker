@@ -121,13 +121,11 @@ const ButtonTooltip = withStyles(theme => ({
 
 export default function ResidentsPage() {
     const classes = useStyles();
-    const { session, addResident, removeResident, nukeResident } = React.useContext(SessionContext);
+    const { currentResidents, pastResidents, addResident, removeResident, nukeResident } = React.useContext(SessionContext);
     const { allVillagers } = useVillagers();
     const [selectedVillager, setSelectedVillager] = React.useState(null);
     const [error, setError] = React.useState("");
 
-    const currentResidents = session.residents.filter(r => !r.moveOutTimestamp);
-    const pastResidents = session.residents.filter(r => !!r.moveOutTimestamp);
     const numEmptyPlots = NUM_CUR_RESIDENTS - currentResidents.length;
     return (
         <Page title="My Residents">
