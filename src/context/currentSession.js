@@ -86,7 +86,7 @@ export const SessionProvider = ({ children }) => {
                 },
                 addResident: resident => {
                     return new Promise((resolve, reject) => {
-                        if (state.residents.length >= 10) {
+                        if (state.residents.filter(r => !r.moveOutTimestamp).length >= 10) {
                             return reject("You already have the max number of residents.");
                         }
                         const residentToUpdate = state.residents.find(r => r.id === resident.id);
