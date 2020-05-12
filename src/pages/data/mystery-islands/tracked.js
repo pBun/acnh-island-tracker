@@ -1,7 +1,7 @@
 import React from "react";
 // import { makeStyles } from "@material-ui/core/styles";
 
-import SessionContext from "../../../context/currentSession";
+import SessionContext from "../../../context/SessionContext";
 
 import Page from "../../../components/Page";
 import TrackedVillagersList from "../../../components/TrackedVillagersList";

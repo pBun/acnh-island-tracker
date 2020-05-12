@@ -5,7 +5,7 @@ import { shareSighting } from "../util/dataShare";
 
 import useCurrentTime from "../hooks/useCurrentTime";
 
-import AppContext from "./app";
+import AppContext from "../context/AppContext";
 
 const LOCAL_STORAGE_KEY = "islandTrackerSession";
 
@@ -139,7 +139,6 @@ export const SessionProvider = ({ children }) => {
                         const timestamp = Date.now();
                         const currentResidents = state.residents.filter(r => !r.moveOutTimestamp);
                         const pastResidents = state.residents.filter(r => r.moveOutTimestamp);
-                        console.log(state.residents, currentResidents, pastResidents);
                         const updateState = () => {
                             dispatch({
                                 type: "trackVillager",

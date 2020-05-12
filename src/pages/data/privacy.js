@@ -10,8 +10,8 @@ import DeleteIcon from "@material-ui/icons/Delete";
 
 import { DATA_SHARE_URL } from "../../util/dataShare";
 
-import AppContext from "../../context/app";
-import SessionContext from "../../context/currentSession";
+import AppContext from "../../context/AppContext";
+import SessionContext from "../../context/SessionContext";
 
 import Page from "../../components/Page";
 

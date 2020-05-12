@@ -17,7 +17,7 @@ import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import { format } from "date-fns";
 
-import SessionContext from "../context/currentSession";
+import SessionContext from "../context/SessionContext";
 
 import { VILLAGERS } from "../util/villager";
 

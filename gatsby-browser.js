@@ -1,6 +1,6 @@
 import React from "react";
-import { SessionProvider } from "./src/context/currentSession";
-import { AppProvider } from "./src/context/app";
+import { SessionProvider } from "./src/context/SessionContext";
+import { AppProvider } from "./src/context/AppContext";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 

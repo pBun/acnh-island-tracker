@@ -16,8 +16,8 @@ import HomeIcon from "@material-ui/icons/Home";
 import Tooltip from "@material-ui/core/Tooltip";
 import SearchIcon from "@material-ui/icons/Search";
 
-import SessionContext from "../context/currentSession";
-import AppContext from "../context/app";
+import SessionContext from "../context/SessionContext";
+import AppContext from "../context/AppContext";
 
 import TrackerModal from "../components/TrackerModal";
 

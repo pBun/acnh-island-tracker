@@ -15,7 +15,7 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 
 import useVillagers from "../hooks/useVillagers";
-import SessionContext from "../context/currentSession";
+import SessionContext from "../context/SessionContext";
 import VilagerCombobox from "../components/VillagerCombobox";
 import Page from "../components/Page";
 

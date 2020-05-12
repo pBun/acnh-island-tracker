@@ -2,11 +2,7 @@ import React from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import matchSorter from "match-sorter";
 import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import ListItemText from "@material-ui/core/ListItemText";
 import TextField from "@material-ui/core/TextField";
-import Avatar from "@material-ui/core/Avatar";
 import TablePagination from "@material-ui/core/TablePagination";
 import IconButton from "@material-ui/core/IconButton";
 import FirstPageIcon from "@material-ui/icons/FirstPage";
@@ -16,6 +12,7 @@ import LastPageIcon from "@material-ui/icons/LastPage";
 
 import useVillagers from "../hooks/useVillagers";
 
+import VillagerListItem from "../components/VillagerListItem";
 import Page from "../components/Page";
 
 const useStyles = makeStyles(theme => ({
@@ -118,7 +115,7 @@ export default function VillagersPage() {
     const endIndex = startIndex + (villagersPerPage >= 0 ? villagersPerPage : searchResults.length);
     const villagersToRender = searchResults.slice(startIndex, endIndex);
     return (
-        <Page title={`All Villagers (${searchResults.length})`}>
+        <Page title={`Villagers (${searchResults.length})`}>
             <div className={classes.controlsWrapper}>
                 <TextField
                     className={classes.formControl}
@@ -132,22 +129,10 @@ export default function VillagersPage() {
             </div>
             <List className={classes.list}>
                 {villagersToRender.map(villager => (
-                    <ListItem
+                    <VillagerListItem
                         key={villager.id}
-                        button
-                        component="a"
-                        href={`https://nookipedia.com/wiki/${villager.name}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <ListItemAvatar>
-                            <Avatar alt={villager.name} src={villager.icon} />
-                        </ListItemAvatar>
-                        <ListItemText
-                            primary={villager.name}
-                            secondary={`${villager.personality} ${villager.species}`}
-                        />
-                    </ListItem>
+                        villager={villager}
+                    />
                 ))}
             </List>
             <TablePagination

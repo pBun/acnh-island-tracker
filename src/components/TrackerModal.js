@@ -12,7 +12,7 @@ import FormLabel from "@material-ui/core/FormLabel";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import Radio from "@material-ui/core/Radio";
 
-import AppContext from "../context/app";
+import AppContext from "../context/AppContext";
 
 import ChatStyleHeadline from "../components/ChatStyleHeadline";
 import VilagerCombobox from "../components/VillagerCombobox";

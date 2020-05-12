@@ -19,11 +19,6 @@ export function shareSighting({
     pastResidents,
 }) {
     return new Promise((resolve, reject) => {
-        console.log(
-            currentResidents,
-            flattenResidentList(currentResidents),
-            flattenResidentList(pastResidents)
-        );
         const qs = queryString.stringify({
             timestamp: encodeURIComponent(format(timestamp, "MM/dd/yyyy hh:mm:ss")),
             villager: encodeURIComponent(villager),
