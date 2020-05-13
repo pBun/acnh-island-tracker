@@ -1,2 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[8],{NrTz:function(e,n,r){"use strict";r.r(n);var t=r("q1tI"),a=r.n(t),o=r("1lFR"),u=r("uVCN");n.default=function(){return a.a.createElement(u.a,{title:"Grouped by Gender"},a.a.createElement(o.a,{villagerPropName:"gender"}))}}}]);
-//# sourceMappingURL=component---src-pages-data-mystery-islands-by-gender-js-794ad9dbf4983a3da13c.js.map

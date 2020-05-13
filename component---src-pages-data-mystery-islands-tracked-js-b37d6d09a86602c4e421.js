@@ -1,2 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[12],{"0vVV":function(t,n,e){"use strict";e.r(n),e.d(n,"default",(function(){return o}));var a=e("q1tI"),i=e.n(a),r=e("6DSA"),s=e("uVCN"),l=e("PUwh");function o(){var t=i.a.useContext(r.b).sightings.filter((function(t){return!t.location||"mystery-island"===t.location})),n="Tracked Mystery Island Villagers "+(t.length?"("+t.length+")":"");return i.a.createElement(s.a,{title:n},i.a.createElement(l.a,{sightings:t}))}}}]);
-//# sourceMappingURL=component---src-pages-data-mystery-islands-tracked-js-b37d6d09a86602c4e421.js.map

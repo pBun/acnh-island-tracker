@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[10],{SO4Q:function(e,t,a){"use strict";a.r(t);var n=a("q1tI"),r=a.n(n),o=a("1lFR"),i=a("uVCN");t.default=function(){return r.a.createElement(i.a,{title:"Grouped by Personality"},r.a.createElement(o.a,{villagerPropName:"personality"}))}}}]);
+//# sourceMappingURL=component---src-pages-data-mystery-islands-by-personality-js-1c4b0c8e5715c512785e.js.map
