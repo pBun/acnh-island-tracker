@@ -60,7 +60,7 @@ export default function IndexPage() {
     return (
         <Page title={site.siteMetadata.title}>
             <Typography variant="body1" component="p" className={classes.intro}>
-                Dodo Tracker is a tool for tracking and analyzing Animal Crossing: New Horizons villager spawn rates. We are able to calculate campsite visitor rates for each villager by analyzing past visits as well as your island's current and past residents. As for mystery islands we simply look at your current island residents. For details on this this check out
+                Dodo Tracker is a tool for tracking and analyzing Animal Crossing: New Horizons villager spawn rates. We are able to calculate campsite visitor frequency for each villager by analyzing past visits as well as your island's current and past residents. As for mystery islands we only need to look at current island residents. For details on this this check out
                 {" "}
                 <a
                     href="https://docs.google.com/document/d/1c8rsKWWtwsOo_JOxwO-lVRx2MUhc-bcdZg1mhXgtRPg/edit"
