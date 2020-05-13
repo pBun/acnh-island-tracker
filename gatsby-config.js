@@ -3,7 +3,7 @@ module.exports = {
         siteUrl: "https://dodotracker.com/",
         title: "Dodo Tracker",
         description:
-            "A tool to track and analyze villager spawn rates at the campsite and on mystery islands for the game Animal Crossing: New Horizons",
+            "Dodo Tracker is a tool to track and analyze villager spawn rates at the campsite and on mystery islands for the game Animal Crossing: New Horizons",
         author: "@peebun",
     },
     plugins: [

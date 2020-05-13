@@ -1,6 +1,15 @@
 import React from "react";
 import { Link } from "gatsby";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import ExpansionPanel from "@material-ui/core/ExpansionPanel";
+import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
+import FormControl from "@material-ui/core/FormControl";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormLabel from "@material-ui/core/FormLabel";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import Radio from "@material-ui/core/Radio";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
@@ -14,6 +23,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import useVillagers from "../hooks/useVillagers";
 import SessionContext from "../context/SessionContext";
@@ -37,7 +47,8 @@ const useStyles = makeStyles(theme => ({
     listSubheader: {
         paddingLeft: theme.spacing(5),
         paddingRight: theme.spacing(5),
-        backgroundColor: theme.palette.background.paper,
+        color: theme.palette.text.secondary,
+        fontWeight: 500,
     },
     removeButton: {
         color: theme.palette.primary.main,
@@ -47,12 +58,45 @@ const useStyles = makeStyles(theme => ({
     },
     combobox: {
         width: "100%",
+        marginTop: theme.spacing(3),
     },
     controlsContainer: {
-        padding: theme.spacing(4, 5, 2),
+        padding: theme.spacing(0, 5, 2),
     },
     submitButton: {
-        marginTop: theme.spacing(2),
+        margin: theme.spacing(1, 0, 1),
+        padding: theme.spacing(0.667, 3.5),
+    },
+    radioControl: {
+        width: "100%",
+    },
+    radioGroupLabel: {
+        marginBottom: theme.spacing(1),
+        fontSize: "0.9rem",
+        position: "absolute",
+        overflow: "hidden",
+        textIndent: "-1000px",
+    },
+    radioGroup: {
+        flexDirection: "row",
+    },
+    radioLabel: {
+        "& .MuiFormControlLabel-label": {
+            ...theme.typography.body2,
+        },
+    },
+    secondaryAction: {
+        right: theme.spacing(4),
+    },
+    form: {
+        paddingTop: theme.spacing(4),
+        paddingBottom: theme.spacing(0),
+    },
+    nestedControls: {
+        padding: theme.spacing(0.5, 0, 0),
+        display: "flex",
+        justifyContent: "flex-end",
+        alignItems: "center",
     },
 }));
 const useEmptySlotStyles = makeStyles(theme => ({
@@ -68,15 +112,10 @@ const useEmptySlotStyles = makeStyles(theme => ({
 }));
 
 const ResidentListItem = props => {
-    // const classes = useStyles();
+    const classes = useStyles();
     const { villager, secondaryAction, ...otherProps } = props;
     return (
-        <ListItem
-            button
-            component={Link}
-            to={`/villagers/${villager.id}/`}
-            {...otherProps}
-        >
+        <ListItem button component={Link} to={`/villagers/${villager.id}/`} {...otherProps}>
             <ListItemAvatar>
                 <Avatar alt={villager.name} src={villager.icon} />
             </ListItemAvatar>
@@ -84,7 +123,9 @@ const ResidentListItem = props => {
                 primary={villager.name}
                 secondary={`${villager.personality} ${villager.species}`}
             />
-            <ListItemSecondaryAction>{secondaryAction}</ListItemSecondaryAction>
+            <ListItemSecondaryAction className={classes.secondaryAction}>
+                {secondaryAction}
+            </ListItemSecondaryAction>
         </ListItem>
     );
 };
@@ -120,25 +161,37 @@ const ButtonTooltip = withStyles(theme => ({
 
 export default function ResidentsPage() {
     const classes = useStyles();
-    const { currentResidents, pastResidents, addResident, removeResident, nukeResident } = React.useContext(SessionContext);
+    const {
+        currentResidents,
+        pastResidents,
+        addResident,
+        addPastResident,
+        removeResident,
+        nukeResident,
+    } = React.useContext(SessionContext);
     const { allVillagers } = useVillagers();
     const [selectedVillager, setSelectedVillager] = React.useState(null);
+    const [typeOfResident, setTypeOfResident] = React.useState("current");
     const [error, setError] = React.useState("");
 
     const numEmptyPlots = NUM_CUR_RESIDENTS - currentResidents.length;
     return (
         <Page title="My Residents">
             <form
+                className={classes.form}
                 onSubmit={e => {
                     e.preventDefault();
                     if (!selectedVillager) return;
-                    addResident(selectedVillager)
+                    addResident(selectedVillager, typeOfResident)
                         .catch(err => setError(err))
                         .then(() => {
                             setSelectedVillager(null);
                         });
                 }}
             >
+                <Typography variant="body2" component="h2" className={classes.listSubheader}>
+                    Add resident
+                </Typography>
                 <div className={classes.controlsContainer}>
                     <VilagerCombobox
                         value={selectedVillager}
@@ -149,18 +202,48 @@ export default function ResidentsPage() {
                         className={classes.combobox}
                         error={error}
                     />
-                    <Button
-                        className={classes.submitButton}
-                        type="submit"
-                        color="primary"
-                        startIcon={<PersonAddIcon />}
-                    >
-                        Add resident
-                    </Button>
+                    <div className={classes.nestedControls}>
+                        <FormControl component="fieldset" className={classes.radioControl}>
+                            <FormLabel component="legend" className={classes.radioGroupLabel}>
+                                Type of resident
+                            </FormLabel>
+                            <RadioGroup
+                                className={classes.radioGroup}
+                                aria-label="type of resident"
+                                name="tracking-location"
+                                value={typeOfResident}
+                                onChange={e => setTypeOfResident(e.target.value)}
+                                defaultValue="current"
+                            >
+                                <FormControlLabel
+                                    className={classes.radioLabel}
+                                    value="current"
+                                    control={<Radio color="primary" />}
+                                    label="Current resident"
+                                />
+                                <FormControlLabel
+                                    className={classes.radioLabel}
+                                    value="past"
+                                    control={<Radio color="primary" />}
+                                    label="Past resident"
+                                />
+                            </RadioGroup>
+                        </FormControl>
+                        <Button
+                            className={classes.submitButton}
+                            type="submit"
+                            color="primary"
+                            variant="contained"
+                            startIcon={<PersonAddIcon />}
+                            disableElevation
+                        >
+                            Add
+                        </Button>
+                    </div>
                 </div>
             </form>
             <List className={classes.list}>
-                <ListSubheader className={classes.listSubheader}>
+                <ListSubheader className={classes.listSubheader} variant="h5">
                     Current Residents ({currentResidents.length} / {NUM_CUR_RESIDENTS})
                 </ListSubheader>
                 {currentResidents.map(resident => {
@@ -172,7 +255,7 @@ export default function ResidentsPage() {
                             villager={villager}
                             timestamp={resident.moveInTimestamp}
                             secondaryAction={
-                                <ButtonTooltip title="Farewell" placement="top">
+                                <ButtonTooltip title="Move out" placement="top">
                                     <IconButton
                                         className={classes.removeButton}
                                         variant="contained"

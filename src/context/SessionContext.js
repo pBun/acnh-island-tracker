@@ -90,22 +90,28 @@ export const SessionProvider = ({ children }) => {
                 resetSessionData: () => {
                     dispatch({ type: "reset" });
                 },
-                addResident: resident => {
+                addResident: (resident, type="current") => {
                     return new Promise((resolve, reject) => {
-                        if (currentResidents.length >= 10) {
+                        if (type === "current" && currentResidents.length >= 10) {
                             return reject("You already have the max number of residents.");
                         }
-                        const residentToUpdate = state.residents.find(r => r.id === resident.id);
-                        if (residentToUpdate && !residentToUpdate.moveOutTimestamp) {
+                        const existingResident = state.residents.find(r => r.id === resident.id);
+                        if (type === "current" && existingResident && !existingResident.moveOutTimestamp) {
                             return reject("That villager already lives on your island.");
+                        }
+                        if (type === "past" && existingResident && !existingResident.moveOutTimestamp) {
+                            return reject("That villager currently lives on your island. Use the 'move out' button to add them to the list of past residents.");
+                        }
+                        if (type === "past" && existingResident && existingResident.moveOutTimestamp) {
+                            return reject("That villager already exists in your list of past residents.");
                         }
                         dispatch({
                             type: "updateResident",
                             payload: {
                                 id: resident.id,
                                 name: resident.name,
-                                moveInTimestamp: Date.now(),
-                                moveOutTimestamp: null,
+                                moveInTimestamp: type === "current" ? Date.now() : null,
+                                moveOutTimestamp: type === "past" ? Date.now() : null,
                             },
                         });
                         return resolve();
