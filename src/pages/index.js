@@ -110,7 +110,7 @@ export default function IndexPage() {
                         primary="3. Analyze your data and villagers"
                         secondary={
                             <>
-                                By clicking <SearchIcon className={classes.inlineIcon} /> (Villagers) <EqualizerIcon className={classes.inlineIcon} /> (My
+                                By clicking <SearchIcon className={classes.inlineIcon} /> (Villagers) or <EqualizerIcon className={classes.inlineIcon} /> (My
                                 Data).
                             </>
                         }
