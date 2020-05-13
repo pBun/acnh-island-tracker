@@ -36,7 +36,8 @@ const useStyles = makeStyles(theme => ({
         textAlign: 'left',
     },
     table: {
-        margin: theme.spacing(2, 0, 2),
+        marginTop: theme.spacing(2),
+        marginBottom: theme.spacing(2),
     },
     extra: {
         position: 'absolute',
