@@ -1,2 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[6],{x66c:function(t,e,n){"use strict";n.r(e),n.d(e,"default",(function(){return u}));var a=n("q1tI"),i=n.n(a),r=n("6DSA"),c=n("uVCN"),s=n("PUwh");function u(){var t=i.a.useContext(r.b).sightings.filter((function(t){return"campsite"===t.location})),e="Tracked Campsite Villagers "+(t.length?"("+t.length+")":"");return i.a.createElement(c.a,{title:e},i.a.createElement(s.a,{sightings:t}))}}}]);
-//# sourceMappingURL=component---src-pages-data-campsite-tracked-js-ba6c320f739382f15464.js.map
