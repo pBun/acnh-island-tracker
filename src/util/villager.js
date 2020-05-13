@@ -1,19 +1,7 @@
-import villagerData from "../data/villagers.json";
+import villagerData from "../data/villagers";
 import { groupBy } from "../util/list";
 
-export const VILLAGERS =
-    villagerData &&
-    villagerData.feed &&
-    villagerData.feed.entry &&
-    villagerData.feed.entry.map(v => {
-        return {
-            id: v.gsx$villager.$t.replace(/[^a-zA-Z0-9-_]/g, "").toLowerCase(),
-            name: v.gsx$villager.$t,
-            species: v.gsx$species.$t,
-            gender: v.gsx$gender.$t,
-            personality: v.gsx$personality.$t,
-        };
-    });
+export const VILLAGERS = villagerData;
 
 export const VILLAGERS_BY_SPECIES = groupBy(VILLAGERS, 'species');
 export const AVAILABLE_SPECIES = Object.keys(VILLAGERS_BY_SPECIES);
@@ -45,7 +33,7 @@ export function getMissingResidentPersonalities(currentResidents) {
 
 export function getMysteryIslandChance(villagerName, currentResidents=[]) {
     // 0% if already a resident
-    if (currentResidents.indexOf(villagerName) > -1) return 0;
+    if (currentResidents.find(r => r.name === villagerName)) return 0;
 
     // 0% if villager doesn't exist in our master list
     const villager = VILLAGERS.find(v => v.name === villagerName);
@@ -59,7 +47,15 @@ export function getMysteryIslandChance(villagerName, currentResidents=[]) {
 }
 
 export function getCampsiteChance(villagerName, currentResidents=[], pastResidents=[], sightings=[]) {
+    // 0% if already a resident
+    if (currentResidents.indexOf(villagerName) > -1) return 0;
+
+
     const villager = VILLAGERS.find(v => v.name === villagerName);
+
+    // 0% if first pass and already encountered
+    const encounters = getDistinctEncounters(currentResidents, pastResidents, sightings);
+    if (encounters.find(e => e.name === villagerName)) return 0;
 
     // FIRST ROLL * SECOND ROLL = chance to see a specific villager at a campsite
 
@@ -81,7 +77,6 @@ export function getCampsiteChance(villagerName, currentResidents=[], pastResiden
     // SECOND ROLL:
     // if every villger has been encountered: 1 / numberOfPersonalityPool
     // else: 1 / (numberOfPersonalityPool - numberOfPersonalityPoolEncountered)
-    const encounters = getDistinctEncounters(currentResidents, pastResidents, sightings);
     const encountersByPersonality = groupBy(encounters, 'personality')[villager.personality];
     const firstCycleDone = encounters.length === VILLAGERS.length;
     const personalityPoolEncountered = !firstCycleDone && encountersByPersonality ? encountersByPersonality.length : 0;
