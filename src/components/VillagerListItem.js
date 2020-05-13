@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "gatsby";
 import { format } from "date-fns";
 import { makeStyles } from "@material-ui/core/styles";
 import ListItem from "@material-ui/core/ListItem";
@@ -14,6 +15,7 @@ import {
     getMysteryIslandChance,
     getCampsiteChance,
 } from "../util/villager";
+import { percentToString } from "../util/text";
 
 import VillagerName from "../components/VillagerName";
 
@@ -29,31 +31,51 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-function chanceToString(fraction, base=1000) {
-    return `${(Math.round(fraction * 10000) / 100).toFixed(2)}%`;
-}
-
 export default function VillagerListItem(props) {
     const {
         villager,
         timestamp,
+        type,
         currentResidents,
         pastResidents,
         sightings,
         ...otherProps
     } = props;
     const classes = useStyles();
-    const baseMysteryIslandString = chanceToString(villager.baseIslandChance);
-    const myMysteryIslandString = chanceToString(getMysteryIslandChance(villager.name, currentResidents));
-    const baseCampsiteString = chanceToString(villager.baseIslandChance);
-    const myCampsiteString = chanceToString(getCampsiteChance(villager.name, currentResidents, pastResidents, sightings));
+    const baseMysteryIslandString = percentToString(villager.baseIslandChance);
+    const myMysteryIslandString = percentToString(getMysteryIslandChance(villager.name, currentResidents));
+    const baseCampsiteString = percentToString(villager.baseIslandChance);
+    const myCampsiteString = percentToString(getCampsiteChance(villager.name, currentResidents, pastResidents, sightings));
+    const secondary = [];
+    if (timestamp) secondary.push(format(timestamp, "h:mm a"));
+    console.log(type);
+    if (!type || type !== 'campsite') {
+        secondary.push((
+            <Tooltip arrow title={`Base chance: ${baseMysteryIslandString}`} placement="top">
+                <span>
+                    <NmtIcon className={classes.inlineIcon} />
+                    {" "}
+                    {myMysteryIslandString}
+                </span>
+            </Tooltip>
+        ));
+    }
+    if (!type || type === 'campsite') {
+        secondary.push((
+            <Tooltip arrow title={`Base chance: ${baseCampsiteString}`} placement="top">
+                <span>
+                    <CampsiteIcon className={classes.inlineIcon} />
+                    {" "}
+                    {myCampsiteString}
+                </span>
+            </Tooltip>
+        ));
+    }
     return (
         <ListItem
             button
-            component="a"
-            href={`https://nookipedia.com/wiki/${villager.name}`}
-            target="_blank"
-            rel="noopener noreferrer"
+            component={Link}
+            to={`/villagers/${villager.id}/`}
             {...otherProps}
         >
             <ListItemAvatar>
@@ -61,26 +83,12 @@ export default function VillagerListItem(props) {
             </ListItemAvatar>
             <ListItemText
                 primary={(<VillagerName villager={villager} />)}
-                secondary={(
-                    <>
-                        {timestamp ? `${format(timestamp, "h:mm a")} | ` : ''}
-                        <Tooltip arrow title={`Base chance: ${baseMysteryIslandString}`} placement="top">
-                            <span>
-                                <NmtIcon className={classes.inlineIcon} />
-                                {" "}
-                                {myMysteryIslandString}
-                            </span>
-                        </Tooltip>
-                        {" | "}
-                        <Tooltip arrow title={`Base chance: ${baseCampsiteString}`} placement="top">
-                            <span>
-                                <CampsiteIcon className={classes.inlineIcon} />
-                                {" "}
-                                {myCampsiteString}
-                            </span>
-                        </Tooltip>
-                    </>
-                )}
+                secondary={secondary.map((item, index) => (
+                    <React.Fragment key={index}>
+                        { item }
+                        {index < secondary.length - 1 ? " | " : ""}
+                    </React.Fragment>
+                ))}
                 secondaryTypographyProps={{className: classes.listItemSecondary}}
             />
         </ListItem>

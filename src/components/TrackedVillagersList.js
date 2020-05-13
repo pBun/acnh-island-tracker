@@ -35,7 +35,7 @@ export default function TrackedVillagersList(props) {
     const formattedSightings = sortedSightings.map((sighting, index) => {
         const villager = getVillager(sighting.villager);
         return {
-            timestamp: sighting.timestamp,
+            ...sighting,
             date: format(sighting.timestamp, "MMM d, yyyy"),
             villager,
         };
@@ -52,6 +52,7 @@ export default function TrackedVillagersList(props) {
                                 key={data.timestamp}
                                 villager={data.villager}
                                 timestamp={data.timestamp}
+                                type={data.location}
                                 currentResidents={currentResidents}
                                 pastResidents={pastResidents}
                                 sightings={sightings}
