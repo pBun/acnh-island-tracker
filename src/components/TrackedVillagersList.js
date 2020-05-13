@@ -22,7 +22,12 @@ const useStyles = makeStyles(theme => ({
 
 export default function TrackedVillagersList(props) {
     const classes = useStyles();
-    const { sightings, ...otherProps } = props;
+    const {
+        sightings,
+        currentResidents,
+        pastResidents,
+        ...otherProps
+    } = props;
 
     const { getVillager } = useVillagers();
 

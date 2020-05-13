@@ -12,7 +12,7 @@ import TrackedVillagersList from "../../../components/TrackedVillagersList";
 
 export default function TrackedCampsiteVillagersPage() {
     // const classes = useStyles();
-    const { sightings } = React.useContext(SessionContext);
+    const { sightings, currentResidents, pastResidents, } = React.useContext(SessionContext);
 
     const filteredSightings = sightings.filter(s => s.location === "campsite");
     const pageTitle = `Tracked Campsite Villagers ${
@@ -20,7 +20,11 @@ export default function TrackedCampsiteVillagersPage() {
     }`;
     return (
         <Page title={pageTitle}>
-            <TrackedVillagersList sightings={filteredSightings} />
+            <TrackedVillagersList
+                sightings={filteredSightings}
+                currentResidents={currentResidents}
+                pastResidents={pastResidents}
+            />
         </Page>
     );
 }

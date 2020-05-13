@@ -11,7 +11,7 @@ import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
 
 import useVillagers from "../hooks/useVillagers";
-
+import SessionContext from "../context/SessionContext";
 import VillagerListItem from "../components/VillagerListItem";
 import Page from "../components/Page";
 
@@ -97,6 +97,7 @@ function TablePaginationActions(props) {
 
 export default function VillagersPage() {
     const classes = useStyles();
+    const { currentResidents, pastResidents } = React.useContext(SessionContext);
     const { allVillagers } = useVillagers();
     const [page, setPage] = React.useState(0);
     const [villagersPerPage, setVillagersPerPage] = React.useState(10);
@@ -132,6 +133,8 @@ export default function VillagersPage() {
                     <VillagerListItem
                         key={villager.id}
                         villager={villager}
+                        currentResidents={currentResidents}
+                        pastResidents={pastResidents}
                     />
                 ))}
             </List>

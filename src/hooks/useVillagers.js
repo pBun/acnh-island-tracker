@@ -1,18 +1,13 @@
 import useVillagerIcons from "../hooks/useVillagerIcons";
 
-import { VILLAGERS } from "../util/villager";
+import { VILLAGERS_WITH_CHANCE } from "../util/villager";
 
 export default function useVillagers() {
     const villagerIcons = useVillagerIcons();
-    const allVillagers = VILLAGERS.map(villager => {
-        const id = villager.name.replace(/[^a-zA-Z0-9-_]/g, "").toLowerCase();
+    const allVillagers = VILLAGERS_WITH_CHANCE.map(villager => {
         return {
-            name: villager.name,
-            personality: villager.personality,
-            species: villager.species,
-            gender: villager.gender,
-            icon: villagerIcons[id],
-            id,
+            ...villager,
+            icon: villagerIcons[villager.id],
         };
     });
     const getVillager = villagerName => {

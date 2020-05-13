@@ -23,6 +23,9 @@ import LoadingContext from "../context/LoadingContext";
 import TrackerModal from "../components/TrackerModal";
 
 const ButtonTooltip = withStyles(theme => ({
+    arrow: {
+        color: theme.palette.secondary.main,
+    },
     tooltip: {
         backgroundColor: theme.palette.secondary.main,
         color: theme.palette.secondary.contrastText,
@@ -93,7 +96,7 @@ export default function BottomAppBar({ children }) {
                     <Button color="inherit" component={Link} to="/">
                         Dodo Tracker
                     </Button>
-                    <ButtonTooltip title="Track Villager" placement="top">
+                    <ButtonTooltip arrow title="Track Villager" placement="top">
                         <Fab
                             color="secondary"
                             aria-label="add"
@@ -125,7 +128,7 @@ export default function BottomAppBar({ children }) {
                         }}
                     />
                     <div className={classes.grow} />
-                    <ButtonTooltip title="My Island Residents" placement="top">
+                    <ButtonTooltip arrow title="My Island Residents" placement="top">
                         <IconButton
                             component={Link}
                             to="/residents/"
@@ -135,7 +138,7 @@ export default function BottomAppBar({ children }) {
                             <HomeIcon />
                         </IconButton>
                     </ButtonTooltip>
-                    <ButtonTooltip title="My Data" placement="top">
+                    <ButtonTooltip arrow title="My Data" placement="top">
                         <IconButton
                             component={Link}
                             to="/data/"
@@ -145,7 +148,7 @@ export default function BottomAppBar({ children }) {
                             <EqualizerIcon />
                         </IconButton>
                     </ButtonTooltip>
-                    <ButtonTooltip title="Browse Villagers" placement="top">
+                    <ButtonTooltip arrow title="Browse Villagers" placement="top">
                         <IconButton
                             component={Link}
                             to="/villagers/"

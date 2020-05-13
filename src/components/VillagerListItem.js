@@ -5,8 +5,13 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ListItemText from "@material-ui/core/ListItemText";
 import Avatar from "@material-ui/core/Avatar";
+import Tooltip from "@material-ui/core/Tooltip";
 
-import useVillagerCalc from "../hooks/useVillagerCalc";
+import {
+    getMysteryIslandChance,
+    // getCampsiteChance,
+} from "../util/villager";
+
 import VillagerName from "../components/VillagerName";
 
 const useStyles = makeStyles(theme => ({
@@ -16,20 +21,23 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
+function chanceToString(fraction, base=1000) {
+    return `${(Math.round(fraction * 10000) / 100).toFixed(2)}%`;
+}
+
 export default function VillagerListItem(props) {
-    const classes = useStyles();
     const {
-        getMysteryIslandRate,
-        // getCampsiteRate,
-    } = useVillagerCalc();
-    const { villager, timestamp, ...otherProps } = props;
-    const secondaryTextItems = [
-        `NMT: ${getMysteryIslandRate(villager.name)}%`,
-        // `Campsite: ${getCampsiteRate(villager.name)}%`,
-    ];
-    if (timestamp) {
-        secondaryTextItems.unshift(format(timestamp, "h:mm a"));
-    }
+        villager,
+        timestamp,
+        currentResidents,
+        pastResidents,
+        ...otherProps
+    } = props;
+    const classes = useStyles();
+    const baseMysteryIslandString = chanceToString(villager.baseIslandChance);
+    const myMysteryIslandString = chanceToString(getMysteryIslandChance(villager.name, currentResidents));
+    // const baseCampsiteString = chanceToString(villager.baseIslandChance);
+    // const myCampsiteString = chanceToString(getCampsiteChance(villager.name, currentResidents, pastResidents));
     return (
         <ListItem
             button
@@ -44,7 +52,18 @@ export default function VillagerListItem(props) {
             </ListItemAvatar>
             <ListItemText
                 primary={(<VillagerName villager={villager} />)}
-                secondary={secondaryTextItems.join(' | ')}
+                secondary={(
+                    <>
+                        {timestamp ? `${format(timestamp, "h:mm a")} | ` : ''}
+                        <Tooltip arrow title={`Base Chance: ${baseMysteryIslandString}`} placement="top">
+                            <span>{`NMT: ${myMysteryIslandString}`}</span>
+                        </Tooltip>
+                        {/*{" | "}
+                        <Tooltip arrow title={`Base Chance: ${baseCampsiteString}`} placement="top">
+                            <span>{`Campsite: ${myCampsiteString}`}</span>
+                        </Tooltip>*/}
+                    </>
+                )}
                 secondaryTypographyProps={{className: classes.listItemSecondary}}
             />
         </ListItem>
