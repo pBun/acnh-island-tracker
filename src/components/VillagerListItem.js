@@ -48,7 +48,6 @@ export default function VillagerListItem(props) {
     const myCampsiteString = percentToString(getCampsiteChance(villager.name, currentResidents, pastResidents, sightings));
     const secondary = [];
     if (timestamp) secondary.push(format(timestamp, "h:mm a"));
-    console.log(type);
     if (!type || type !== 'campsite') {
         secondary.push((
             <Tooltip arrow title={`Base chance: ${baseMysteryIslandString}`} placement="top">
