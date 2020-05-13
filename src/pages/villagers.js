@@ -125,7 +125,10 @@ export default function VillagersPage() {
                     type="search"
                     variant="outlined"
                     value={searchTerms}
-                    onChange={e => setSearchTerms(e.target.value)}
+                    onChange={e => {
+                        setSearchTerms(e.target.value);
+                        setPage(0);
+                    }}
                 />
             </div>
             <List className={classes.list}>
