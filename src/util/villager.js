@@ -50,12 +50,12 @@ export function getCampsiteChance(villagerName, currentResidents=[], pastResiden
     // 0% if already a resident
     if (currentResidents.indexOf(villagerName) > -1) return 0;
 
-
     const villager = VILLAGERS.find(v => v.name === villagerName);
 
     // 0% if first pass and already encountered
     const encounters = getDistinctEncounters(currentResidents, pastResidents, sightings);
-    if (encounters.find(e => e.name === villagerName)) return 0;
+    const isFirstCycle = encounters.length <= VILLAGERS.length;
+    if (!isFirstCycle && encounters.find(e => e.name === villagerName)) return 0;
 
     // FIRST ROLL * SECOND ROLL = chance to see a specific villager at a campsite
 
@@ -78,8 +78,7 @@ export function getCampsiteChance(villagerName, currentResidents=[], pastResiden
     // if every villger has been encountered: 1 / numberOfPersonalityPool
     // else: 1 / (numberOfPersonalityPool - numberOfPersonalityPoolEncountered)
     const encountersByPersonality = groupBy(encounters, 'personality')[villager.personality];
-    const firstCycleDone = encounters.length === VILLAGERS.length;
-    const personalityPoolEncountered = !firstCycleDone && encountersByPersonality ? encountersByPersonality.length : 0;
+    const personalityPoolEncountered = isFirstCycle && encountersByPersonality ? encountersByPersonality.length : 0;
     const personalityPool = VILLAGERS_BY_PERSONALITY[villager.personality].length;
     const secondRoll = 1 / (personalityPool - personalityPoolEncountered);
 
