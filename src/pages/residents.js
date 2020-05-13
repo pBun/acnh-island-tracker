@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "gatsby";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -72,10 +73,8 @@ const ResidentListItem = props => {
     return (
         <ListItem
             button
-            component="a"
-            href={`https://nookipedia.com/wiki/${villager.name}`}
-            target="_blank"
-            rel="noopener noreferrer"
+            component={Link}
+            to={`/villagers/${villager.id}/`}
             {...otherProps}
         >
             <ListItemAvatar>

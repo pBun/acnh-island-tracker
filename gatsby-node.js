@@ -4,4 +4,19 @@
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
 
-// You can delete this file if you're not using it
+const path = require("path");
+const VILLAGERS = require("./src/data/villagers");
+
+exports.createPages = async ({ actions }) => {
+    const { createPage } = actions;
+    VILLAGERS.forEach(villager => {
+        createPage({
+            path: `/villagers/${villager.id}/`,
+            matchPath: `/villagers/${villager.id}/`,
+            component: path.resolve('src/components/VillagerDetailsPage.js'),
+            context: {
+                villager,
+            },
+        });
+    });
+}
