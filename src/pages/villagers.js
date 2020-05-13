@@ -97,7 +97,7 @@ function TablePaginationActions(props) {
 
 export default function VillagersPage() {
     const classes = useStyles();
-    const { currentResidents, pastResidents } = React.useContext(SessionContext);
+    const { currentResidents, pastResidents, sightings } = React.useContext(SessionContext);
     const { allVillagers } = useVillagers();
     const [page, setPage] = React.useState(0);
     const [villagersPerPage, setVillagersPerPage] = React.useState(10);
@@ -135,6 +135,7 @@ export default function VillagersPage() {
                         villager={villager}
                         currentResidents={currentResidents}
                         pastResidents={pastResidents}
+                        sightings={sightings}
                     />
                 ))}
             </List>

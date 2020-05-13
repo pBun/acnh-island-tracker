@@ -39,13 +39,14 @@ export default function VillagerListItem(props) {
         timestamp,
         currentResidents,
         pastResidents,
+        sightings,
         ...otherProps
     } = props;
     const classes = useStyles();
     const baseMysteryIslandString = chanceToString(villager.baseIslandChance);
     const myMysteryIslandString = chanceToString(getMysteryIslandChance(villager.name, currentResidents));
     const baseCampsiteString = chanceToString(villager.baseIslandChance);
-    const myCampsiteString = chanceToString(getCampsiteChance(villager.name, currentResidents, pastResidents));
+    const myCampsiteString = chanceToString(getCampsiteChance(villager.name, currentResidents, pastResidents, sightings));
     return (
         <ListItem
             button
@@ -63,7 +64,7 @@ export default function VillagerListItem(props) {
                 secondary={(
                     <>
                         {timestamp ? `${format(timestamp, "h:mm a")} | ` : ''}
-                        <Tooltip arrow title={`Base Chance: ${baseMysteryIslandString}`} placement="top">
+                        <Tooltip arrow title={`Base chance: ${baseMysteryIslandString}`} placement="top">
                             <span>
                                 <NmtIcon className={classes.inlineIcon} />
                                 {" "}
@@ -71,7 +72,7 @@ export default function VillagerListItem(props) {
                             </span>
                         </Tooltip>
                         {" | "}
-                        <Tooltip arrow title={`Base Chance: ${baseCampsiteString}`} placement="top">
+                        <Tooltip arrow title={`Base chance: ${baseCampsiteString}`} placement="top">
                             <span>
                                 <CampsiteIcon className={classes.inlineIcon} />
                                 {" "}

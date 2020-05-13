@@ -52,6 +52,9 @@ export default function TrackedVillagersList(props) {
                                 key={data.timestamp}
                                 villager={data.villager}
                                 timestamp={data.timestamp}
+                                currentResidents={currentResidents}
+                                pastResidents={pastResidents}
+                                sightings={sightings}
                             />
                         ))}
                     </React.Fragment>
