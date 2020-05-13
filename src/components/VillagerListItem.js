@@ -7,9 +7,12 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Avatar from "@material-ui/core/Avatar";
 import Tooltip from "@material-ui/core/Tooltip";
 
+import NmtIcon from "../components/icons/Nmt";
+import CampsiteIcon from "../components/icons/Campsite";
+
 import {
     getMysteryIslandChance,
-    // getCampsiteChance,
+    getCampsiteChance,
 } from "../util/villager";
 
 import VillagerName from "../components/VillagerName";
@@ -18,6 +21,11 @@ const useStyles = makeStyles(theme => ({
     listItemSecondary: {
         color: theme.palette.text.secondary,
         ...theme.typography.caption,
+    },
+    inlineIcon: {
+        verticalAlign: "middle",
+        width: "0.8em",
+        marginTop: "-0.1em",
     },
 }));
 
@@ -36,8 +44,8 @@ export default function VillagerListItem(props) {
     const classes = useStyles();
     const baseMysteryIslandString = chanceToString(villager.baseIslandChance);
     const myMysteryIslandString = chanceToString(getMysteryIslandChance(villager.name, currentResidents));
-    // const baseCampsiteString = chanceToString(villager.baseIslandChance);
-    // const myCampsiteString = chanceToString(getCampsiteChance(villager.name, currentResidents, pastResidents));
+    const baseCampsiteString = chanceToString(villager.baseIslandChance);
+    const myCampsiteString = chanceToString(getCampsiteChance(villager.name, currentResidents, pastResidents));
     return (
         <ListItem
             button
@@ -56,12 +64,20 @@ export default function VillagerListItem(props) {
                     <>
                         {timestamp ? `${format(timestamp, "h:mm a")} | ` : ''}
                         <Tooltip arrow title={`Base Chance: ${baseMysteryIslandString}`} placement="top">
-                            <span>{`NMT: ${myMysteryIslandString}`}</span>
+                            <span>
+                                <NmtIcon className={classes.inlineIcon} />
+                                {" "}
+                                {myMysteryIslandString}
+                            </span>
                         </Tooltip>
-                        {/*{" | "}
+                        {" | "}
                         <Tooltip arrow title={`Base Chance: ${baseCampsiteString}`} placement="top">
-                            <span>{`Campsite: ${myCampsiteString}`}</span>
-                        </Tooltip>*/}
+                            <span>
+                                <CampsiteIcon className={classes.inlineIcon} />
+                                {" "}
+                                {myCampsiteString}
+                            </span>
+                        </Tooltip>
                     </>
                 )}
                 secondaryTypographyProps={{className: classes.listItemSecondary}}
