@@ -191,7 +191,11 @@ export default function VillagerDetailsPage(props) {
                         <Typography variant="h5">
                             Recent Activity
                         </Typography>
-                        <TrackedVillagersList sightings={filteredSightings} />
+                        <TrackedVillagersList
+                            sightings={filteredSightings}
+                            currentResidents={currentResidents}
+                            pastResidents={pastResidents}
+                        />
                     </>
                 ) : ''}
             </div>

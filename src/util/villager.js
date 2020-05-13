@@ -48,14 +48,14 @@ export function getMysteryIslandChance(villagerName, currentResidents=[]) {
 
 export function getCampsiteChance(villagerName, currentResidents=[], pastResidents=[], sightings=[]) {
     // 0% if already a resident
-    if (currentResidents.indexOf(villagerName) > -1) return 0;
-
-    const villager = VILLAGERS.find(v => v.name === villagerName);
+    if (currentResidents.find(r => r.name === villagerName)) return 0;
 
     // 0% if first pass and already encountered
-    const encounters = getDistinctEncounters(currentResidents, pastResidents, sightings);
+    const encounters = getDistinctEncounters(currentResidents, pastResidents, sightings.filter(s => s.location === 'campsite'));
     const isFirstCycle = encounters.length <= VILLAGERS.length;
-    if (!isFirstCycle && encounters.find(e => e.name === villagerName)) return 0;
+    if (isFirstCycle && encounters.find(e => e.name === villagerName)) return 0;
+
+    const villager = VILLAGERS.find(v => v.name === villagerName);
 
     // FIRST ROLL * SECOND ROLL = chance to see a specific villager at a campsite
 
