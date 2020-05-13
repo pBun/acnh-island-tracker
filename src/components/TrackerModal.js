@@ -77,7 +77,7 @@ export default function FormModal({
                             className={classes.radioLabel}
                             value="campsite"
                             control={<Radio color="primary" />}
-                            label="Campsite"
+                            label="Campsite Visit"
                         />
                     </RadioGroup>
                 </FormControl>
