@@ -50,7 +50,7 @@ export default function VillagerListItem(props) {
     if (timestamp) secondary.push(format(timestamp, "h:mm a"));
     if (!type || type !== 'campsite') {
         secondary.push((
-            <Tooltip arrow title={`Base chance: ${baseMysteryIslandString}`} placement="top">
+            <Tooltip arrow title={`Your spawn rate: ${myMysteryIslandString} | Base spawn rate: ${baseMysteryIslandString}`} placement="top">
                 <span>
                     <NmtIcon className={classes.inlineIcon} />
                     {" "}
@@ -61,7 +61,7 @@ export default function VillagerListItem(props) {
     }
     if (!type || type === 'campsite') {
         secondary.push((
-            <Tooltip arrow title={`Base chance: ${baseCampsiteString}`} placement="top">
+            <Tooltip arrow title={`Your spawn rate: ${myCampsiteString} | Base spawn rate: ${baseCampsiteString}`} placement="top">
                 <span>
                     <CampsiteIcon className={classes.inlineIcon} />
                     {" "}

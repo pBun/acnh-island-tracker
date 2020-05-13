@@ -8,6 +8,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import HomeIcon from "@material-ui/icons/Home";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
+import SearchIcon from "@material-ui/icons/Search";
 
 import Page from "../components/Page";
 
@@ -106,10 +107,10 @@ export default function IndexPage() {
                 </ListItem>
                 <ListItem>
                     <ListItemText
-                        primary="3. Analyze your data"
+                        primary="3. Analyze your data and villagers"
                         secondary={
                             <>
-                                By clicking <EqualizerIcon className={classes.inlineIcon} /> (My
+                                By clicking <SearchIcon className={classes.inlineIcon} /> (Villagers) <EqualizerIcon className={classes.inlineIcon} /> (My
                                 Data).
                             </>
                         }
