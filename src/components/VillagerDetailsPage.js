@@ -152,13 +152,13 @@ export default function VillagerDetailsPage(props) {
                         </Typography>
                     </Grid>
                     <Grid item xs={6} className={classes.label}>
-                        Visit chance (base):
+                        Spawn rate (base):
                     </Grid>
                     <Grid item xs={6} className={classes.value}>
                         {percentToString(villager.baseCampsiteChance)}
                     </Grid>
                     <Grid item xs={6} className={classes.label}>
-                        Visit chance (my island):
+                        Spawn rate (my island):
                     </Grid>
                     <Grid item xs={6} className={classes.value}>
                         {percentToString(getCampsiteChance(villager.name, currentResidents, pastResidents, sightings))}
@@ -173,13 +173,13 @@ export default function VillagerDetailsPage(props) {
                         </Typography>
                     </Grid>
                     <Grid item xs={6} className={classes.label}>
-                        Appearance chance (base):
+                        Spawn rate (base):
                     </Grid>
                     <Grid item xs={6} className={classes.value}>
                         {percentToString(villager.baseIslandChance)}
                     </Grid>
                     <Grid item xs={6} className={classes.label}>
-                        Appearance chance (my island):
+                        Spawn rate (my island):
                     </Grid>
                     <Grid item xs={6} className={classes.value}>
                         {percentToString(getMysteryIslandChance(villager.name, currentResidents))}
