@@ -11,6 +11,7 @@ import EqualizerIcon from "@material-ui/icons/Equalizer";
 import SearchIcon from "@material-ui/icons/Search";
 
 import Page from "../components/Page";
+import SEO from "../components/SEO";
 
 const useStyles = makeStyles(theme => ({
     intro: {
@@ -56,9 +57,10 @@ export default function IndexPage(props) {
         `
     );
     return (
-        <Page pathname={props.location.pathname} title={site.siteMetadata.title}>
+        <Page title={site.siteMetadata.title}>
+            <SEO pathname={props.location.pathname} />
             <Typography variant="body2" component="p" className={classes.intro}>
-                Dodo Tracker is a tool for tracking and analyzing Animal Crossing: New Horizons villager spawn rates. We are able to calculate campsite visitor frequency for each villager by analyzing past visits as well as your island's current and past residents. As for mystery islands we only need to look at current island residents. For details on this this check out
+                Dodo Tracker is a tool for tracking and analyzing Animal Crossing: New Horizons villager encounter rates. We are able to calculate campsite visitor frequency for each villager by analyzing past visits as well as your island's current and past residents. As for mystery islands we only need to look at current island residents. For details on this this check out
                 {" "}
                 <a
                     href="https://docs.google.com/document/d/1c8rsKWWtwsOo_JOxwO-lVRx2MUhc-bcdZg1mhXgtRPg/edit"
@@ -97,7 +99,7 @@ export default function IndexPage(props) {
                         secondary={
                             <>
                                 By clicking <PersonAddIcon className={classes.inlinePrimaryIcon} />{" "}
-                                (Track Villager Spawn).
+                                (Track Encounter).
                             </>
                         }
                     />
@@ -107,7 +109,7 @@ export default function IndexPage(props) {
                         primary="3. Analyze your data and villagers"
                         secondary={
                             <>
-                                By clicking <SearchIcon className={classes.inlineIcon} /> (Browse Villagers) or <EqualizerIcon className={classes.inlineIcon} /> (My Tracked
+                                By clicking <SearchIcon className={classes.inlineIcon} /> (Browse Villagers) or <EqualizerIcon className={classes.inlineIcon} /> (My
                                 Data).
                             </>
                         }

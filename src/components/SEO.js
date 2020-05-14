@@ -26,7 +26,7 @@ function SEO(props) {
             }
         `
     );
-    const metaTitle = `${title} | ${site.siteMetadata.title}`;
+    const metaTitle = title ? `${title} | ${site.siteMetadata.title}` : site.siteMetadata.title;
     const metaDescription = description || site.siteMetadata.description;
     const metaUrl = `${site.siteMetadata.siteUrl}${pathname}`;
     return (
@@ -83,13 +83,14 @@ SEO.defaultProps = {
     lang: "en",
     meta: [],
     description: '',
+    title: '',
 };
 
 SEO.propTypes = {
     description: PropTypes.string,
     lang: PropTypes.string,
     meta: PropTypes.arrayOf(PropTypes.object),
-    title: PropTypes.string.isRequired,
+    title: PropTypes.string,
     pathname: PropTypes.string.isRequired,
 };
 

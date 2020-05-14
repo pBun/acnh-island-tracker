@@ -25,6 +25,7 @@ import useVillagers from "../hooks/useVillagers";
 import SessionContext from "../context/SessionContext";
 import VilagerCombobox from "../components/VillagerCombobox";
 import Page from "../components/Page";
+import SEO from "../components/SEO";
 
 const NUM_CUR_RESIDENTS = 10;
 
@@ -168,8 +169,10 @@ export default function ResidentsPage(props) {
     const [error, setError] = React.useState("");
 
     const numEmptyPlots = NUM_CUR_RESIDENTS - currentResidents.length;
+    const pageTitle = "My Residents";
     return (
-        <Page pathname={props.location.pathname} title="My Residents">
+        <Page title={pageTitle}>
+            <SEO title={pageTitle} pathname={props.location.pathname} />
             <form
                 className={classes.form}
                 onSubmit={e => {
@@ -183,7 +186,7 @@ export default function ResidentsPage(props) {
                 }}
             >
                 <Typography variant="body2" component="h2" className={classes.formTitle}>
-                    Add resident
+                    Add Resident
                 </Typography>
                 <div className={classes.controlsContainer}>
                     <VilagerCombobox

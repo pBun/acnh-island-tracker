@@ -15,6 +15,7 @@ import useVillagers from "../hooks/useVillagers";
 import SessionContext from "../context/SessionContext";
 import VillagerListItem from "../components/VillagerListItem";
 import Page from "../components/Page";
+import SEO from "../components/SEO";
 
 const useStyles = makeStyles(theme => ({
     list: {
@@ -133,8 +134,11 @@ export default function VillagersPage(props) {
     const startIndex = Math.max(page * villagersPerPage, 0);
     const endIndex = startIndex + (villagersPerPage >= 0 ? villagersPerPage : searchResults.length);
     const villagersToRender = searchResults.slice(startIndex, endIndex);
+    const pageTitle = "Browse Villagers";
+    const pageLabel = `${pageTitle} (${searchResults.length})`;
     return (
-        <Page pathname={props.location.pathname} title={`Browse Villagers (${searchResults.length})`}>
+        <Page title={pageLabel}>
+            <SEO title={pageTitle} pathname={props.location.pathname} />
             <div className={classes.controlsWrapper}>
                 <TextField
                     className={classes.formControl}

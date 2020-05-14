@@ -54,12 +54,12 @@ export default function FormModal({
     return (
         <Dialog open={open} onClose={handleCancel} aria-labelledby="form-dialog-title">
             <ChatStyleHeadline id="form-dialog-title" component="h2">
-                Track Villager Spawn
+                Track Encounter
             </ChatStyleHeadline>
             <DialogContent>
                 <FormControl component="fieldset">
                     <FormLabel component="legend" className={classes.radioGroupLabel}>
-                        Villager Spawn Location
+                        Encounter Location
                     </FormLabel>
                     <RadioGroup
                         aria-label="tracking location"
@@ -72,13 +72,13 @@ export default function FormModal({
                             className={classes.radioLabel}
                             value="mystery-island"
                             control={<Radio color="primary" size="small" />}
-                            label={<Typography variant="body2">Mystery Island Spawn</Typography>}
+                            label={<Typography variant="body2">Mystery Island Encounter</Typography>}
                         />
                         <FormControlLabel
                             className={classes.radioLabel}
                             value="campsite"
                             control={<Radio color="primary" size="small" />}
-                            label={<Typography variant="body2">Campsite Spawn</Typography>}
+                            label={<Typography variant="body2">Campsite Encounter</Typography>}
                         />
                     </RadioGroup>
                 </FormControl>

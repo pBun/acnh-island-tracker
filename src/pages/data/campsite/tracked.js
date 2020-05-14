@@ -4,6 +4,7 @@ import React from "react";
 import SessionContext from "../../../context/SessionContext";
 
 import Page from "../../../components/Page";
+import SEO from "../../../components/SEO";
 import TrackedVillagersList from "../../../components/TrackedVillagersList";
 
 // const useStyles = makeStyles(theme => ({
@@ -15,11 +16,12 @@ export default function TrackedCampsiteVillagersPage(props) {
     const { sightings, currentResidents, pastResidents, } = React.useContext(SessionContext);
 
     const filteredSightings = sightings.filter(s => s.location === "campsite");
-    const pageTitle = `Tracked Campsite Villagers ${
+    const pageTitle = `My Campsite Encounters ${
         filteredSightings.length ? `(${filteredSightings.length})` : ""
     }`;
     return (
-        <Page pathname={props.location.pathname} title={pageTitle}>
+        <Page title={pageTitle}>
+            <SEO title={pageTitle} pathname={props.location.pathname} />
             <TrackedVillagersList
                 sightings={filteredSightings}
                 currentResidents={currentResidents}

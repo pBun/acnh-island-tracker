@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Divider from "@material-ui/core/Divider";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
@@ -12,21 +13,27 @@ import PersonIcon from "@material-ui/icons/Person";
 import MoodIcon from "@material-ui/icons/Mood";
 import PetsIcon from "@material-ui/icons/Pets";
 import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
-import PeopleIcon from "@material-ui/icons/People";
 import LaunchIcon from "@material-ui/icons/Launch";
-import WcIcon from "@material-ui/icons/Wc";
+
+import CampsiteIcon from "../components/icons/Campsite";
+import NmtIcon from "../components/icons/Nmt";
 
 const useStyles = makeStyles(theme => ({
     textIcon: {
         fontSize: "0.8em",
+        verticalAlign: "middle",
+    },
+    listItemIcon: {
+        fontSize: theme.spacing(4),
+        marginRight: theme.spacing(1),
     },
     list: {
         paddingTop: theme.spacing(1),
         paddingBottom: theme.spacing(4),
     },
-    listItem: {
-        // paddingLeft: theme.spacing(7),
-        // paddingRight: theme.spacing(7),
+    listItemTextPrimary: {
+        display: "flex",
+        alignItems: "center",
     },
     listSubheader: {
         paddingLeft: theme.spacing(5),
@@ -40,74 +47,62 @@ export default function DataNav({ hideIndex }) {
         <List component="div" className={classes.list}>
             {!hideIndex && (
                 <>
-                    <ListItem className={classes.listItem} button component={Link} to={"/data/"}>
+                    <ListItem button component={Link} to={"/data/"}>
                         <ListItemText primary={<Typography variant="h6">Data</Typography>} />
                     </ListItem>
                     <Divider />
                 </>
             )}
-            <ListSubheader className={classes.listSubheader}>Mystery Islands</ListSubheader>
-            <ListItem className={classes.listItem} button component={Link} to={"/data/mystery-islands/tracked/"}>
+
+            <ListSubheader className={classes.listSubheader}>Recently Tracked Encounters</ListSubheader>
+            <ListItem button component={Link} to={"/data/mystery-islands/tracked/"}>
+                <ListItemIcon>
+                    <NmtIcon />
+                </ListItemIcon>
                 <ListItemText
-                    primary={
-                        <>
-                            <PeopleIcon className={classes.textIcon} /> Tracked Villagers
-                        </>
-                    }
-                    secondary="Your tracked villagers"
+                    primary="Mystery Islands"
+                    secondary="All Encounters"
                 />
             </ListItem>
-            <ListItem className={classes.listItem} button component={Link} to="/data/mystery-islands/by-villager/">
+            <ListItem button component={Link} to={"/data/campsite/tracked/"}>
+                <ListItemIcon>
+                    <CampsiteIcon />
+                </ListItemIcon>
                 <ListItemText
-                    primary={
-                        <>
-                            <PersonIcon className={classes.textIcon} /> Grouped by Villager
-                        </>
-                    }
-                    secondary="Your tracked villagers grouped by name"
+                    primary="Campsite Visitors"
+                    secondary="All Encounters"
                 />
             </ListItem>
-            <ListItem className={classes.listItem} button component={Link} to="/data/mystery-islands/by-species/">
+
+            <ListSubheader className={classes.listSubheader}>Aggregate Data</ListSubheader>
+            <ListItem button component={Link} to="/data/mystery-islands/by-villager/">
+                <ListItemIcon>
+                    <PersonIcon />
+                </ListItemIcon>
                 <ListItemText
-                    primary={
-                        <>
-                            <PetsIcon className={classes.textIcon} /> Grouped by Species
-                        </>
-                    }
-                    secondary="Your tracked villagers grouped by species"
+                    secondary="Mystery Island Encounters"
+                    primary="Grouped by Villager"
                 />
             </ListItem>
-            <ListItem className={classes.listItem} button component={Link} to="/data/mystery-islands/by-personality">
+            <ListItem button component={Link} to="/data/mystery-islands/by-species/">
+                <ListItemIcon>
+                    <PetsIcon />
+                </ListItemIcon>
                 <ListItemText
-                    primary={
-                        <>
-                            <MoodIcon className={classes.textIcon} /> Grouped by Personality
-                        </>
-                    }
-                    secondary="Your tracked villagers grouped by personality"
+                    secondary="Mystery Island Encounters"
+                    primary="Grouped by Species"
                 />
             </ListItem>
-            <ListItem className={classes.listItem} button component={Link} to="/data/mystery-islands/by-gender">
+            <ListItem button component={Link} to="/data/mystery-islands/by-personality">
+                <ListItemIcon>
+                    <MoodIcon />
+                </ListItemIcon>
                 <ListItemText
-                    primary={
-                        <>
-                            <WcIcon className={classes.textIcon} /> Grouped by Gender
-                        </>
-                    }
-                    secondary="Your tracked villagers grouped by gender"
+                    secondary="Mystery Island Encounters"
+                    primary="Grouped by Personality"
                 />
             </ListItem>
-            <ListSubheader className={classes.listSubheader}>Campsite</ListSubheader>
-            <ListItem className={classes.listItem} button component={Link} to={"/data/campsite/tracked/"}>
-                <ListItemText
-                    primary={
-                        <>
-                            <PeopleIcon className={classes.textIcon} /> Tracked Villagers
-                        </>
-                    }
-                    secondary="Your tracked campsite villagers"
-                />
-            </ListItem>
+
             <ListSubheader className={classes.listSubheader}>Other</ListSubheader>
             <ListItem
                 button
@@ -116,23 +111,28 @@ export default function DataNav({ hideIndex }) {
                 target="_blank"
                 rel="noopener noreferrer"
             >
+                <ListItemIcon>
+                    <InsertDriveFileIcon />
+                </ListItemIcon>
                 <ListItemText
                     primary={
                         <>
-                            <InsertDriveFileIcon className={classes.textIcon} /> Raw Data{" "}
-                            <LaunchIcon className={classes.textIcon} />
+                            {" "}
+                            <span className={classes.listItemText}>
+                                Raw Data{" "}
+                                <LaunchIcon className={classes.textIcon} />
+                            </span>
                         </>
                     }
                     secondary="See everyone's tracked villager data in Google Sheets"
                 />
             </ListItem>
-            <ListItem className={classes.listItem} button component={Link} to={"/data/privacy/"}>
+            <ListItem button component={Link} to={"/data/privacy/"}>
+                <ListItemIcon>
+                    <LockIcon />
+                </ListItemIcon>
                 <ListItemText
-                    primary={
-                        <>
-                            <LockIcon className={classes.textIcon} /> Privacy Settings
-                        </>
-                    }
+                    primary="Privacy Settings"
                 />
             </ListItem>
         </List>

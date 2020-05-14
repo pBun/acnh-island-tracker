@@ -14,6 +14,7 @@ import AppContext from "../../context/AppContext";
 import SessionContext from "../../context/SessionContext";
 
 import Page from "../../components/Page";
+import SEO from "../../components/SEO";
 
 const useStyles = makeStyles(theme => ({
     text: {
@@ -31,8 +32,10 @@ function PrivacyPage(props) {
     const classes = useStyles();
     const { allowDataShare, setAllowDataShare, resetAppData } = React.useContext(AppContext);
     const { resetSessionData } = React.useContext(SessionContext);
+    const pageTitle = "Data Privacy";
     return (
-        <Page pathname={props.location.pathname} title="Data Settings" variant="text">
+        <Page title={pageTitle}>
+            <SEO title={pageTitle} pathname={props.location.pathname} />
             <List className={classes.root}>
                 <ListItem>
                     <ListItemText

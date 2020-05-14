@@ -2,7 +2,6 @@ import React from "react";
 import { Paper, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-import SEO from "../components/SEO";
 import Layout from "../components/Layout";
 import ChatStyleHeadline from "../components/ChatStyleHeadline";
 
@@ -38,11 +37,10 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const Page = ({ pathname, title, children, variant }) => {
+const Page = ({ title, children, variant }) => {
     const classes = useStyles();
     return (
         <Layout>
-            <SEO title={title} pathname={pathname} />
             <Paper elevation={0} className={classes.container}>
                 <ChatStyleHeadline component="h1">{title}</ChatStyleHeadline>
                 {children}
