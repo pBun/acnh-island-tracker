@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "gatsby";
+import { Link, useStaticQuery, graphql } from "gatsby";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
@@ -62,6 +62,17 @@ const ButtonTooltip = withStyles(theme => ({
 
 export default function VillagerDetailsPage(props) {
     const classes = useStyles();
+    const { site } = useStaticQuery(
+        graphql`
+            query {
+                site {
+                    siteMetadata {
+                        siteUrl
+                    }
+                }
+            }
+        `
+    );
     const { currentResidents, pastResidents, sightings } = React.useContext(SessionContext);
     const { allVillagers } = useVillagers();
     const villagerId = props.pageContext && props.pageContext.villager
@@ -81,7 +92,7 @@ export default function VillagerDetailsPage(props) {
                 pathname={props.location.pathname}
                 meta={{
                     name: "og:image",
-                    content: villager.icon,
+                    content: `${site.siteMetadata.siteUrl}${villager.icon}`,
                 }}
             />
             <div className={classes.container}>
