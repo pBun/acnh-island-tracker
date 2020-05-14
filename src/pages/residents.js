@@ -243,74 +243,80 @@ export default function ResidentsPage(props) {
                 <ListSubheader className={classes.listSubheader} variant="h5">
                     Current Residents ({currentResidents.length} / {NUM_CUR_RESIDENTS})
                 </ListSubheader>
-                {currentResidents.map(resident => {
-                    const villager = allVillagers.find(v => v.id === resident.id);
-                    return (
-                        <ResidentListItem
-                            key={villager.id}
-                            className={classes.listItem}
-                            villager={villager}
-                            timestamp={resident.moveInTimestamp}
-                            secondaryAction={
-                                <ButtonTooltip title="Move out" placement="top">
-                                    <IconButton
-                                        className={classes.removeButton}
-                                        variant="contained"
-                                        onClick={() => {
-                                            const confirmMessage = `Are you sure you want to remove ${villager.name} from your island?`;
-                                            if (window && window.confirm(confirmMessage)) {
-                                                removeResident(villager);
-                                            }
-                                        }}
-                                        aria-label="remove villager from island"
-                                    >
-                                        <ExitToAppIcon />
-                                    </IconButton>
-                                </ButtonTooltip>
-                            }
-                        />
-                    );
-                })}
-                {Array.from(new Array(numEmptyPlots).keys()).map(i => (
-                    <EmptySlotListItem key={`empty_${i}`} className={classes.listItem} />
-                ))}
-                {pastResidents.filter(r => !!r.moveOutTimestamp).length ? (
-                    <>
-                        <ListSubheader className={classes.listSubheader}>
-                            {`Past Residents (${pastResidents.length})`}
-                        </ListSubheader>
-                        {pastResidents.map(resident => {
-                            const villager = allVillagers.find(v => v.id === resident.id);
-                            return (
-                                <ResidentListItem
-                                    key={villager.id}
-                                    className={classes.listItem}
-                                    villager={villager}
-                                    timstamp={resident.moveOutTimestamp}
-                                    secondaryAction={
-                                        <ButtonTooltip title="Delete memories" placement="top">
-                                            <IconButton
-                                                className={classes.deleteButton}
-                                                variant="contained"
-                                                onClick={() => {
-                                                    const confirmMessage = `Are you sure you want to remove all history of ${villager.name} from your island? This cannot be undone.`;
-                                                    if (window && window.confirm(confirmMessage)) {
-                                                        nukeResident(villager);
-                                                    }
-                                                }}
-                                                aria-label="delete all history of resident"
-                                            >
-                                                <DeleteIcon />
-                                            </IconButton>
-                                        </ButtonTooltip>
-                                    }
-                                />
-                            );
-                        })}
-                    </>
-                ) : (
-                    ""
-                )}
+                <div>
+                    {currentResidents.map(resident => {
+                        const villager = allVillagers.find(v => v.id === resident.id);
+                        return (
+                            <ResidentListItem
+                                key={`${villager.id}_currentResident`}
+                                className={classes.listItem}
+                                villager={villager}
+                                timestamp={resident.moveInTimestamp}
+                                secondaryAction={
+                                    <ButtonTooltip title="Move out" placement="top">
+                                        <IconButton
+                                            className={classes.removeButton}
+                                            variant="contained"
+                                            onClick={() => {
+                                                const confirmMessage = `Are you sure you want to remove ${villager.name} from your island?`;
+                                                if (window && window.confirm(confirmMessage)) {
+                                                    removeResident(villager);
+                                                }
+                                            }}
+                                            aria-label="remove villager from island"
+                                        >
+                                            <ExitToAppIcon />
+                                        </IconButton>
+                                    </ButtonTooltip>
+                                }
+                            />
+                        );
+                    })}
+                </div>
+                <div>
+                    {Array.from(new Array(numEmptyPlots).keys()).map(i => (
+                        <EmptySlotListItem key={`empty_${i}`} className={classes.listItem} />
+                    ))}
+                </div>
+                <div>
+                    {pastResidents.length ? (
+                        <>
+                            <ListSubheader className={classes.listSubheader}>
+                                {`Past Residents (${pastResidents.length})`}
+                            </ListSubheader>
+                            {pastResidents.map(resident => {
+                                const villager = allVillagers.find(v => v.id === resident.id);
+                                return (
+                                    <ResidentListItem
+                                        key={`${villager.id}_pastResident`}
+                                        className={classes.listItem}
+                                        villager={villager}
+                                        timstamp={resident.moveOutTimestamp}
+                                        secondaryAction={
+                                            <ButtonTooltip title="Delete memories" placement="top">
+                                                <IconButton
+                                                    className={classes.deleteButton}
+                                                    variant="contained"
+                                                    onClick={() => {
+                                                        const confirmMessage = `Are you sure you want to remove all history of ${villager.name} from your island? This cannot be undone.`;
+                                                        if (window && window.confirm(confirmMessage)) {
+                                                            nukeResident(villager);
+                                                        }
+                                                    }}
+                                                    aria-label="delete all history of resident"
+                                                >
+                                                    <DeleteIcon />
+                                                </IconButton>
+                                            </ButtonTooltip>
+                                        }
+                                    />
+                                );
+                            })}
+                        </>
+                    ) : (
+                        ""
+                    )}
+                </div>
             </List>
         </Page>
     );
