@@ -91,8 +91,14 @@ export const VILLAGERS_WITH_CHANCE = VILLAGERS.map(v => ({
     baseCampsiteChance: getCampsiteChance(v.name),
 }));
 
+export const VILLAGERS_MINIMAL = VILLAGERS.map(v => ({
+    id: v.id,
+    name: v.name,
+}));
+
 export default {
     VILLAGERS,
+    VILLAGERS_MINIMAL,
     VILLAGERS_WITH_CHANCE,
     VILLAGERS_BY_SPECIES,
     VILLAGERS_BY_PERSONALITY,
