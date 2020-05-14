@@ -277,7 +277,7 @@ export default function ResidentsPage(props) {
                 {pastResidents.filter(r => !!r.moveOutTimestamp).length ? (
                     <>
                         <ListSubheader className={classes.listSubheader}>
-                            Past Residents
+                            {`Past Residents (${pastResidents.length})`}
                         </ListSubheader>
                         {pastResidents.map(resident => {
                             const villager = allVillagers.find(v => v.id === resident.id);
