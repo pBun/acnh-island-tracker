@@ -9,6 +9,7 @@ import FirstPageIcon from "@material-ui/icons/FirstPage";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
+import SearchIcon from "@material-ui/icons/Search";
 
 import useVillagers from "../hooks/useVillagers";
 import SessionContext from "../context/SessionContext";
@@ -26,12 +27,29 @@ const useStyles = makeStyles(theme => ({
         flexShrink: 0,
         marginLeft: theme.spacing(2.5),
     },
-    formControl: {
-        margin: theme.spacing(1),
-        width: "100%",
-    },
     controlsWrapper: {
-        padding: theme.spacing(2, 4, 1),
+        margin: theme.spacing(2, 5, 1),
+        position: "relative",
+    },
+    formControl: {
+        width: "100%",
+        margin: 0,
+        "& .MuiInputLabel-outlined": {
+            transform: `translate(48px, 20px) scale(1)`,
+        },
+        "& .MuiInputLabel-outlined.MuiInputLabel-shrink": {
+            transform: `translate(14px, -6px) scale(0.75)`,
+        },
+    },
+    searchInput: {
+        paddingLeft: theme.spacing(6),
+    },
+    searchIcon: {
+        position: "absolute",
+        left: theme.spacing(2),
+        top: "50%",
+        transform: "translateY(-50%)",
+        color: theme.palette.text.hint,
     },
     pagination: {
         "& .MuiTablePagination-toolbar": {
@@ -116,20 +134,23 @@ export default function VillagersPage() {
     const endIndex = startIndex + (villagersPerPage >= 0 ? villagersPerPage : searchResults.length);
     const villagersToRender = searchResults.slice(startIndex, endIndex);
     return (
-        <Page title={`Villagers (${searchResults.length})`}>
+        <Page title={`Browse Villagers (${searchResults.length})`}>
             <div className={classes.controlsWrapper}>
                 <TextField
                     className={classes.formControl}
+                    fullWidth={true}
                     id="villager-search"
                     label="Name, species, personality"
                     type="search"
                     variant="outlined"
                     value={searchTerms}
+                    inputProps={{ className: classes.searchInput }}
                     onChange={e => {
                         setSearchTerms(e.target.value);
                         setPage(0);
                     }}
                 />
+                <SearchIcon className={classes.searchIcon} />
             </div>
             <List className={classes.list}>
                 {villagersToRender.map(villager => (

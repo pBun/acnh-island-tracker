@@ -4,7 +4,7 @@ import DataNav from "../../components/DataNav";
 
 export default function IndexPage() {
     return (
-        <Page title="My Data">
+        <Page title="My Tracked Spawn Data">
             <DataNav hideIndex={true} />
         </Page>
     );

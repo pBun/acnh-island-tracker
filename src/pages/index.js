@@ -14,16 +14,13 @@ import Page from "../components/Page";
 
 const useStyles = makeStyles(theme => ({
     intro: {
-        margin: theme.spacing(4, 5, 4),
+        margin: theme.spacing(3, 5, 4),
     },
     subTitle: {
         margin: theme.spacing(3, 5, 0),
     },
     note: {
         margin: theme.spacing(2, 5, 0),
-    },
-    list: {
-
     },
     inlineIcon: {
         verticalAlign: "middle",
@@ -40,7 +37,7 @@ const useStyles = makeStyles(theme => ({
         padding: "0.2em",
     },
     containerPadding: {
-        paddingBottom: theme.spacing(5),
+        paddingBottom: theme.spacing(4),
     },
 }));
 
@@ -60,7 +57,7 @@ export default function IndexPage() {
     );
     return (
         <Page title={site.siteMetadata.title}>
-            <Typography variant="body1" component="p" className={classes.intro}>
+            <Typography variant="body2" component="p" className={classes.intro}>
                 Dodo Tracker is a tool for tracking and analyzing Animal Crossing: New Horizons villager spawn rates. We are able to calculate campsite visitor frequency for each villager by analyzing past visits as well as your island's current and past residents. As for mystery islands we only need to look at current island residents. For details on this this check out
                 {" "}
                 <a
@@ -82,7 +79,7 @@ export default function IndexPage() {
             <Typography variant="h6" component="h2" className={classes.subTitle}>
                 Getting started
             </Typography>
-            <List component="div" dense={true} className={classes.list}>
+            <List component="div" dense={true}>
                 <ListItem>
                     <ListItemText
                         primary="1. Add your current island residents"
@@ -100,7 +97,7 @@ export default function IndexPage() {
                         secondary={
                             <>
                                 By clicking <PersonAddIcon className={classes.inlinePrimaryIcon} />{" "}
-                                (Track Villager).
+                                (Track Villager Spawn).
                             </>
                         }
                     />
@@ -110,7 +107,7 @@ export default function IndexPage() {
                         primary="3. Analyze your data and villagers"
                         secondary={
                             <>
-                                By clicking <SearchIcon className={classes.inlineIcon} /> (Villagers) or <EqualizerIcon className={classes.inlineIcon} /> (My
+                                By clicking <SearchIcon className={classes.inlineIcon} /> (Browse Villagers) or <EqualizerIcon className={classes.inlineIcon} /> (My Tracked
                                 Data).
                             </>
                         }

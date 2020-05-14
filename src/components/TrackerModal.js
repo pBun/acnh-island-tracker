@@ -1,10 +1,10 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -25,8 +25,9 @@ const useStyles = makeStyles(theme => ({
         marginTop: theme.spacing(3),
     },
     radioGroupLabel: {
-        marginBottom: theme.spacing(1),
-        fontSize: "0.9rem",
+        position: "absolute",
+        overflow: "hidden",
+        textIndent: "-1000px",
     },
     radioLabel: {
         "& .MuiFormControlLabel-label": {
@@ -53,12 +54,12 @@ export default function FormModal({
     return (
         <Dialog open={open} onClose={handleCancel} aria-labelledby="form-dialog-title">
             <ChatStyleHeadline id="form-dialog-title" component="h2">
-                Track Villager
+                Track Villager Spawn
             </ChatStyleHeadline>
             <DialogContent>
                 <FormControl component="fieldset">
                     <FormLabel component="legend" className={classes.radioGroupLabel}>
-                        Location
+                        Villager Spawn Location
                     </FormLabel>
                     <RadioGroup
                         aria-label="tracking location"
@@ -70,18 +71,17 @@ export default function FormModal({
                         <FormControlLabel
                             className={classes.radioLabel}
                             value="mystery-island"
-                            control={<Radio color="primary" />}
-                            label="Mystery Island"
+                            control={<Radio color="primary" size="small" />}
+                            label={<Typography variant="body2">Mystery Island Spawn</Typography>}
                         />
                         <FormControlLabel
                             className={classes.radioLabel}
                             value="campsite"
-                            control={<Radio color="primary" />}
-                            label="Campsite Visit"
+                            control={<Radio color="primary" size="small" />}
+                            label={<Typography variant="body2">Campsite Spawn</Typography>}
                         />
                     </RadioGroup>
                 </FormControl>
-                <DialogContentText></DialogContentText>
                 <VilagerCombobox
                     id="villager-to-track"
                     value={selectedVillager}

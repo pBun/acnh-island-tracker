@@ -2,9 +2,6 @@ import React from "react";
 import { Link } from "gatsby";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormLabel from "@material-ui/core/FormLabel";
@@ -23,7 +20,6 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import useVillagers from "../hooks/useVillagers";
 import SessionContext from "../context/SessionContext";
@@ -50,6 +46,13 @@ const useStyles = makeStyles(theme => ({
         color: theme.palette.text.secondary,
         fontWeight: 500,
     },
+    formTitle: {
+        paddingLeft: theme.spacing(5),
+        paddingRight: theme.spacing(5),
+        color: theme.palette.text.secondary,
+        fontWeight: 500,
+        marginBottom: theme.spacing(3),
+    },
     removeButton: {
         color: theme.palette.primary.main,
     },
@@ -58,7 +61,7 @@ const useStyles = makeStyles(theme => ({
     },
     combobox: {
         width: "100%",
-        marginTop: theme.spacing(3),
+        marginBottom: theme.spacing(0.5),
     },
     controlsContainer: {
         padding: theme.spacing(0, 5, 2),
@@ -67,23 +70,15 @@ const useStyles = makeStyles(theme => ({
         margin: theme.spacing(1, 0, 1),
         padding: theme.spacing(0.667, 3.5),
     },
-    radioControl: {
-        width: "100%",
-    },
     radioGroupLabel: {
-        marginBottom: theme.spacing(1),
-        fontSize: "0.9rem",
         position: "absolute",
         overflow: "hidden",
         textIndent: "-1000px",
     },
-    radioGroup: {
+    radioWrapper: {
         flexDirection: "row",
-    },
-    radioLabel: {
-        "& .MuiFormControlLabel-label": {
-            ...theme.typography.body2,
-        },
+        justifyContent: "flex-end",
+        width: "100%",
     },
     secondaryAction: {
         right: theme.spacing(4),
@@ -92,8 +87,7 @@ const useStyles = makeStyles(theme => ({
         paddingTop: theme.spacing(4),
         paddingBottom: theme.spacing(0),
     },
-    nestedControls: {
-        padding: theme.spacing(0.5, 0, 0),
+    buttonWrapper: {
         display: "flex",
         justifyContent: "flex-end",
         alignItems: "center",
@@ -165,7 +159,6 @@ export default function ResidentsPage() {
         currentResidents,
         pastResidents,
         addResident,
-        addPastResident,
         removeResident,
         nukeResident,
     } = React.useContext(SessionContext);
@@ -189,7 +182,7 @@ export default function ResidentsPage() {
                         });
                 }}
             >
-                <Typography variant="body2" component="h2" className={classes.listSubheader}>
+                <Typography variant="body2" component="h2" className={classes.formTitle}>
                     Add resident
                 </Typography>
                 <div className={classes.controlsContainer}>
@@ -202,33 +195,33 @@ export default function ResidentsPage() {
                         className={classes.combobox}
                         error={error}
                     />
-                    <div className={classes.nestedControls}>
-                        <FormControl component="fieldset" className={classes.radioControl}>
-                            <FormLabel component="legend" className={classes.radioGroupLabel}>
-                                Type of resident
-                            </FormLabel>
-                            <RadioGroup
-                                className={classes.radioGroup}
-                                aria-label="type of resident"
-                                name="tracking-location"
-                                value={typeOfResident}
-                                onChange={e => setTypeOfResident(e.target.value)}
-                                defaultValue="current"
-                            >
-                                <FormControlLabel
-                                    className={classes.radioLabel}
-                                    value="current"
-                                    control={<Radio color="primary" />}
-                                    label="Current resident"
-                                />
-                                <FormControlLabel
-                                    className={classes.radioLabel}
-                                    value="past"
-                                    control={<Radio color="primary" />}
-                                    label="Past resident"
-                                />
-                            </RadioGroup>
-                        </FormControl>
+                    <FormControl component="fieldset" className={classes.radioWrapper}>
+                        <FormLabel component="legend" className={classes.radioGroupLabel}>
+                            Type of resident
+                        </FormLabel>
+                        <RadioGroup
+                            className={classes.radioWrapper}
+                            aria-label="type of resident"
+                            name="tracking-location"
+                            value={typeOfResident}
+                            onChange={e => setTypeOfResident(e.target.value)}
+                            defaultValue="current"
+                        >
+                            <FormControlLabel
+                                className={classes.radioLabel}
+                                value="current"
+                                control={<Radio color="primary" size="small" />}
+                                label={<Typography variant="body2">Current resident</Typography>}
+                            />
+                            <FormControlLabel
+                                className={classes.radioLabel}
+                                value="past"
+                                control={<Radio color="primary" size="small" />}
+                                label={<Typography variant="body2">Past resident</Typography>}
+                            />
+                        </RadioGroup>
+                    </FormControl>
+                    <div className={classes.buttonWrapper}>
                         <Button
                             className={classes.submitButton}
                             type="submit"

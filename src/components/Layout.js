@@ -96,7 +96,7 @@ export default function BottomAppBar({ children }) {
                     <Button color="inherit" component={Link} to="/">
                         Dodo Tracker
                     </Button>
-                    <ButtonTooltip arrow title="Track Villager" placement="top">
+                    <ButtonTooltip arrow title="Track Villager Spawn" placement="top">
                         <Fab
                             color="secondary"
                             aria-label="add"
@@ -138,7 +138,7 @@ export default function BottomAppBar({ children }) {
                             <HomeIcon />
                         </IconButton>
                     </ButtonTooltip>
-                    <ButtonTooltip arrow title="My Data" placement="top">
+                    <ButtonTooltip arrow title="My Tracked Spawn Data" placement="top">
                         <IconButton
                             component={Link}
                             to="/data/"
