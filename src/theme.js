@@ -72,6 +72,18 @@ const theme = createMuiTheme({
                 padding: defaultTheme.spacing(2, 4, 2),
             },
         },
+        MuiTooltip: {
+            arrow: {
+                color: DODO_BLUE,
+            },
+            tooltip: {
+                backgroundColor: DODO_BLUE,
+                color: DODO_WHITE_TEXT,
+                boxShadow: 0,
+                fontSize: defaultTheme.typography.fontSize,
+                padding: defaultTheme.spacing(1, 2.5),
+            },
+        },
     },
 });
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "gatsby";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
@@ -21,18 +21,6 @@ import AppContext from "../context/AppContext";
 import LoadingContext from "../context/LoadingContext";
 
 import TrackerModal from "../components/TrackerModal";
-
-const ButtonTooltip = withStyles(theme => ({
-    arrow: {
-        color: theme.palette.secondary.main,
-    },
-    tooltip: {
-        backgroundColor: theme.palette.secondary.main,
-        color: theme.palette.secondary.contrastText,
-        boxShadow: 0,
-        fontSize: theme.typography.fontSize,
-    },
-}))(Tooltip);
 
 const useStyles = makeStyles(theme => ({
     buttonProgress: {
@@ -96,7 +84,7 @@ export default function BottomAppBar({ children }) {
                     <Button color="inherit" component={Link} to="/">
                         Dodo Tracker
                     </Button>
-                    <ButtonTooltip arrow title="Track Villager Encounter" placement="top">
+                    <Tooltip arrow title="Track Villager Encounter" placement="top">
                         <Fab
                             color="secondary"
                             aria-label="add"
@@ -106,7 +94,7 @@ export default function BottomAppBar({ children }) {
                         >
                             <PersonAddIcon />
                         </Fab>
-                    </ButtonTooltip>
+                    </Tooltip>
                     <TrackerModal
                         open={trackerModalOpen}
                         handleClockSettings={() => {
@@ -128,7 +116,7 @@ export default function BottomAppBar({ children }) {
                         }}
                     />
                     <div className={classes.grow} />
-                    <ButtonTooltip arrow title="My Residents" placement="top">
+                    <Tooltip arrow title="My Residents" placement="top">
                         <IconButton
                             component={Link}
                             to="/residents/"
@@ -137,8 +125,8 @@ export default function BottomAppBar({ children }) {
                         >
                             <HomeIcon />
                         </IconButton>
-                    </ButtonTooltip>
-                    <ButtonTooltip arrow title="My Data" placement="top">
+                    </Tooltip>
+                    <Tooltip arrow title="My Data" placement="top">
                         <IconButton
                             component={Link}
                             to="/data/"
@@ -147,8 +135,8 @@ export default function BottomAppBar({ children }) {
                         >
                             <EqualizerIcon />
                         </IconButton>
-                    </ButtonTooltip>
-                    <ButtonTooltip arrow title="Browse Villagers" placement="top">
+                    </Tooltip>
+                    <Tooltip arrow title="Browse Villagers" placement="top">
                         <IconButton
                             component={Link}
                             to="/villagers/"
@@ -157,7 +145,7 @@ export default function BottomAppBar({ children }) {
                         >
                             <SearchIcon />
                         </IconButton>
-                    </ButtonTooltip>
+                    </Tooltip>
                 </Toolbar>
             </AppBar>
             <Snackbar

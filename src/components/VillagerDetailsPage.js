@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useStaticQuery, graphql } from "gatsby";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider";
@@ -46,19 +46,6 @@ const useStyles = makeStyles(theme => ({
         right: theme.spacing(3),
     },
 }));
-
-const ButtonTooltip = withStyles(theme => ({
-    arrow: {
-        color: theme.palette.primary.main,
-    },
-    tooltip: {
-        backgroundColor: theme.palette.primary.main,
-        color: theme.palette.primary.contrastText,
-        boxShadow: 0,
-        fontSize: theme.typography.fontSize,
-        padding: theme.spacing(1, 2.5),
-    },
-}))(Tooltip);
 
 export default function VillagerDetailsPage(props) {
     const classes = useStyles();
@@ -130,7 +117,7 @@ export default function VillagerDetailsPage(props) {
                 </Grid>
                 <div className={classes.extra}>
                     {hasVisitedCampsite ? (
-                        <ButtonTooltip arrow title={`${villager.name} has visited your campsite`} placement="bottom">
+                        <Tooltip arrow title={`${villager.name} has visited your campsite`} placement="bottom">
                             <IconButton
                                 variant="contained"
                                 component={Link}
@@ -139,10 +126,10 @@ export default function VillagerDetailsPage(props) {
                             >
                                 <CampsiteIcon />
                             </IconButton>
-                        </ButtonTooltip>
+                        </Tooltip>
                     ) : ''}
                     {isCurrentResident ? (
-                        <ButtonTooltip arrow title={`${villager.name} is currently a resident on your island`} placement="bottom">
+                        <Tooltip arrow title={`${villager.name} is currently a resident on your island`} placement="bottom">
                             <IconButton
                                 variant="contained"
                                 component={Link}
@@ -151,9 +138,9 @@ export default function VillagerDetailsPage(props) {
                             >
                                 <HomeIcon />
                             </IconButton>
-                        </ButtonTooltip>
+                        </Tooltip>
                     ) : isPastResident ? (
-                        <ButtonTooltip arrow title={`${villager.name} was previously a resident on your island`} placement="bottom">
+                        <Tooltip arrow title={`${villager.name} was previously a resident on your island`} placement="bottom">
                             <IconButton
                                 variant="contained"
                                 component={Link}
@@ -162,7 +149,7 @@ export default function VillagerDetailsPage(props) {
                             >
                                 <ExitToAppIcon />
                             </IconButton>
-                        </ButtonTooltip>
+                        </Tooltip>
                     ) : ''}
                 </div>
 
@@ -212,11 +199,7 @@ export default function VillagerDetailsPage(props) {
                         <Typography variant="h5">
                             Recent Activity
                         </Typography>
-                        <TrackedVillagersList
-                            sightings={filteredSightings}
-                            currentResidents={currentResidents}
-                            pastResidents={pastResidents}
-                        />
+                        <TrackedVillagersList sightings={filteredSightings} />
                     </>
                 ) : ''}
             </div>

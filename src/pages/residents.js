@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "gatsby";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -146,15 +146,6 @@ const EmptySlotListItem = props => {
     );
 };
 
-const ButtonTooltip = withStyles(theme => ({
-    tooltip: {
-        backgroundColor: theme.palette.primary.main,
-        color: theme.palette.primary.contrastText,
-        boxShadow: 0,
-        fontSize: theme.typography.fontSize,
-    },
-}))(Tooltip);
-
 export default function ResidentsPage(props) {
     const classes = useStyles();
     const {
@@ -253,7 +244,7 @@ export default function ResidentsPage(props) {
                                 villager={villager}
                                 timestamp={resident.moveInTimestamp}
                                 secondaryAction={
-                                    <ButtonTooltip title="Move out" placement="top">
+                                    <Tooltip arrow title="Move out" placement="top">
                                         <IconButton
                                             className={classes.removeButton}
                                             variant="contained"
@@ -267,7 +258,7 @@ export default function ResidentsPage(props) {
                                         >
                                             <ExitToAppIcon />
                                         </IconButton>
-                                    </ButtonTooltip>
+                                    </Tooltip>
                                 }
                             />
                         );
@@ -293,7 +284,7 @@ export default function ResidentsPage(props) {
                                         villager={villager}
                                         timstamp={resident.moveOutTimestamp}
                                         secondaryAction={
-                                            <ButtonTooltip title="Delete memories" placement="top">
+                                            <Tooltip arrow title="Delete memories" placement="top">
                                                 <IconButton
                                                     className={classes.deleteButton}
                                                     variant="contained"
@@ -307,7 +298,7 @@ export default function ResidentsPage(props) {
                                                 >
                                                     <DeleteIcon />
                                                 </IconButton>
-                                            </ButtonTooltip>
+                                            </Tooltip>
                                         }
                                     />
                                 );
