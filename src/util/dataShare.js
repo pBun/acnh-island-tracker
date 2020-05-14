@@ -1,5 +1,5 @@
 import queryString from "query-string";
-import { format } from "date-fns";
+import { formatISO9075 } from "date-fns";
 
 export const DATA_SHARE_URL =
     "https://docs.google.com/spreadsheets/d/1p542EQ85gdgLJfjZcI3SSmTdsnZKNi6KKjjjSdGkl7Q/edit?usp=sharing";
@@ -20,7 +20,7 @@ export function shareSighting({
 }) {
     return new Promise((resolve, reject) => {
         const qs = queryString.stringify({
-            timestamp: encodeURIComponent(format(timestamp, "MM/dd/yyyy hh:mm:ss")),
+            timestamp: encodeURIComponent(formatISO9075(timestamp)),
             villager: encodeURIComponent(villager),
             session_id: encodeURIComponent(id),
             spawn_type: encodeURIComponent(location || "mystery-island"),
