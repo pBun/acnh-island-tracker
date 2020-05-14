@@ -1,5 +1,5 @@
 import queryString from "query-string";
-import { formatISO9075 } from "date-fns";
+import { formatISO, formatISO9075 } from "date-fns";
 
 export const DATA_SHARE_URL =
     "https://docs.google.com/spreadsheets/d/1p542EQ85gdgLJfjZcI3SSmTdsnZKNi6KKjjjSdGkl7Q/edit?usp=sharing";
@@ -26,6 +26,7 @@ export function shareSighting({
             spawn_type: encodeURIComponent(location || "mystery-island"),
             current_residents: encodeURIComponent(flattenResidentList(currentResidents)),
             past_residents: encodeURIComponent(flattenResidentList(pastResidents)),
+            timestamp_utc: encodeURIComponent(formatISO(timestamp)),
         });
         var request = new XMLHttpRequest();
         request.open("GET", `${DATA_UPLOAD_URL}?${qs}`, true);
