@@ -10,7 +10,7 @@ import TrackedVillagersList from "../../../components/TrackedVillagersList";
 //
 // }));
 
-export default function TrackedMysteryIslandVillagersPage() {
+function TrackedMysteryIslandVillagersPage(props) {
     // const classes = useStyles();
     const { sightings, currentResidents, pastResidents } = React.useContext(SessionContext);
 
@@ -21,7 +21,7 @@ export default function TrackedMysteryIslandVillagersPage() {
         filteredSightings.length ? `(${filteredSightings.length})` : ""
     }`;
     return (
-        <Page title={pageTitle}>
+        <Page pathname={props.location.pathname} title={pageTitle}>
             <TrackedVillagersList
                 sightings={filteredSightings}
                 currentResidents={currentResidents}
@@ -30,3 +30,5 @@ export default function TrackedMysteryIslandVillagersPage() {
         </Page>
     );
 }
+
+export default TrackedMysteryIslandVillagersPage;

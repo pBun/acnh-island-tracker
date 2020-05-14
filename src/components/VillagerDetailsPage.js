@@ -74,7 +74,7 @@ export default function VillagerDetailsPage(props) {
     );
     if (!villager) return '404';
     return (
-        <Page title={villager.name}>
+        <Page pathname={props.location.pathname} title={villager.name}>
             <div className={classes.container}>
                 <img src={villager.icon} alt={`Portrait of ${villager.name}`} />
                 <Typography className={classes.title} variant="h3">

@@ -10,7 +10,7 @@ import TrackedVillagersList from "../../../components/TrackedVillagersList";
 //
 // }));
 
-export default function TrackedCampsiteVillagersPage() {
+export default function TrackedCampsiteVillagersPage(props) {
     // const classes = useStyles();
     const { sightings, currentResidents, pastResidents, } = React.useContext(SessionContext);
 
@@ -19,7 +19,7 @@ export default function TrackedCampsiteVillagersPage() {
         filteredSightings.length ? `(${filteredSightings.length})` : ""
     }`;
     return (
-        <Page title={pageTitle}>
+        <Page pathname={props.location.pathname} title={pageTitle}>
             <TrackedVillagersList
                 sightings={filteredSightings}
                 currentResidents={currentResidents}

@@ -7,10 +7,10 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(3, 5, 5),
     },
 }));
-const NotFoundPage = () => {
+function NotFoundPage(props) {
     const classes = useStyles();
     return (
-        <Page title="404: Not Found">
+        <Page pathname={props.location.pathname} title="404: Not Found">
             <Typography variant="body1" className={classes.text}>
                 ...Well there you have it. According to recent feedback, the general sentiment is that
                 this page was not found. Well I think there's only one way to respond to this

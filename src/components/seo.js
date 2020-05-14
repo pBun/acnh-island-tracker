@@ -10,7 +10,8 @@ import PropTypes from "prop-types";
 import { Helmet } from "react-helmet";
 import { useStaticQuery, graphql } from "gatsby";
 
-function SEO({ description, lang, meta, title }) {
+function SEO(props) {
+    const { description, lang, meta, title, pathname } = props;
     const { site } = useStaticQuery(
         graphql`
             query {
@@ -19,62 +20,69 @@ function SEO({ description, lang, meta, title }) {
                         title
                         description
                         author
+                        siteUrl
                     }
                 }
             }
         `
     );
+    const metaTitle = `${title} | ${site.siteMetadata.title}`;
     const metaDescription = description || site.siteMetadata.description;
-
+    const metaUrl = `${site.siteMetadata.siteUrl}${pathname}`;
     return (
         <Helmet
             htmlAttributes={{
                 lang,
             }}
-            title={title}
-            titleTemplate={`%s | ${site.siteMetadata.title}`}
+            title={metaTitle}
             meta={[
                 {
-                    name: `description`,
+                    name: "description",
                     content: metaDescription,
                 },
                 {
-                    property: `og:title`,
-                    content: title,
+                    property: "og:title",
+                    content: metaTitle,
                 },
                 {
-                    property: `og:description`,
+                    property: "og:description",
                     content: metaDescription,
                 },
                 {
-                    property: `og:type`,
-                    content: `website`,
+                    property: "og:type",
+                    content: "website",
                 },
                 {
-                    name: `twitter:card`,
-                    content: `summary`,
+                    property: "og:url",
+                    content: `${metaUrl}`,
                 },
                 {
-                    name: `twitter:creator`,
+                    name: "twitter:card",
+                    content: "summary",
+                },
+                {
+                    name: "twitter:creator",
                     content: site.siteMetadata.author,
                 },
                 {
-                    name: `twitter:title`,
-                    content: title,
+                    name: "twitter:title",
+                    content: metaTitle,
                 },
                 {
-                    name: `twitter:description`,
+                    name: "twitter:description",
                     content: metaDescription,
                 },
             ].concat(meta)}
-        />
+        >
+            <link rel="canonical" href={metaUrl} />
+        </Helmet>
     );
 }
 
 SEO.defaultProps = {
-    lang: `en`,
+    lang: "en",
     meta: [],
-    description: ``,
+    description: '',
 };
 
 SEO.propTypes = {
@@ -82,6 +90,7 @@ SEO.propTypes = {
     lang: PropTypes.string,
     meta: PropTypes.arrayOf(PropTypes.object),
     title: PropTypes.string.isRequired,
+    pathname: PropTypes.string.isRequired,
 };
 
 export default SEO;

@@ -113,7 +113,7 @@ function TablePaginationActions(props) {
     );
 }
 
-export default function VillagersPage() {
+export default function VillagersPage(props) {
     const classes = useStyles();
     const { currentResidents, pastResidents, sightings } = React.useContext(SessionContext);
     const { allVillagers } = useVillagers();
@@ -134,7 +134,7 @@ export default function VillagersPage() {
     const endIndex = startIndex + (villagersPerPage >= 0 ? villagersPerPage : searchResults.length);
     const villagersToRender = searchResults.slice(startIndex, endIndex);
     return (
-        <Page title={`Browse Villagers (${searchResults.length})`}>
+        <Page pathname={props.location.pathname} title={`Browse Villagers (${searchResults.length})`}>
             <div className={classes.controlsWrapper}>
                 <TextField
                     className={classes.formControl}

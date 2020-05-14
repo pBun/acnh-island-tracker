@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function IndexPage() {
+export default function IndexPage(props) {
     const classes = useStyles();
     const { site } = useStaticQuery(
         graphql`
@@ -56,7 +56,7 @@ export default function IndexPage() {
         `
     );
     return (
-        <Page title={site.siteMetadata.title}>
+        <Page pathname={props.location.pathname} title={site.siteMetadata.title}>
             <Typography variant="body2" component="p" className={classes.intro}>
                 Dodo Tracker is a tool for tracking and analyzing Animal Crossing: New Horizons villager spawn rates. We are able to calculate campsite visitor frequency for each villager by analyzing past visits as well as your island's current and past residents. As for mystery islands we only need to look at current island residents. For details on this this check out
                 {" "}

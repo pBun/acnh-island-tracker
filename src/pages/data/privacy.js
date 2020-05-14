@@ -27,12 +27,12 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const DataSettingsPage = () => {
+function PrivacyPage(props) {
     const classes = useStyles();
     const { allowDataShare, setAllowDataShare, resetAppData } = React.useContext(AppContext);
     const { resetSessionData } = React.useContext(SessionContext);
     return (
-        <Page title="Data Settings" variant="text">
+        <Page pathname={props.location.pathname} title="Data Settings" variant="text">
             <List className={classes.root}>
                 <ListItem>
                     <ListItemText
@@ -121,4 +121,4 @@ const DataSettingsPage = () => {
     );
 };
 
-export default DataSettingsPage;
+export default PrivacyPage;

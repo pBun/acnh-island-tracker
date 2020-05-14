@@ -38,11 +38,11 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const SessionPage = ({ title, children, variant }) => {
+const Page = ({ pathname, title, children, variant }) => {
     const classes = useStyles();
     return (
         <Layout>
-            <SEO title={title} />
+            <SEO title={title} pathname={pathname} />
             <Paper elevation={0} className={classes.container}>
                 <ChatStyleHeadline component="h1">{title}</ChatStyleHeadline>
                 {children}
@@ -107,4 +107,4 @@ const SessionPage = ({ title, children, variant }) => {
     );
 };
 
-export default SessionPage;
+export default Page;

@@ -1,6 +1,6 @@
 module.exports = {
     siteMetadata: {
-        siteUrl: "https://dodotracker.com/",
+        siteUrl: "https://dodotracker.com",
         title: "Dodo Tracker",
         description:
             "Dodo Tracker is a tool to track and analyze villager spawn rates at the campsite and on mystery islands for the game Animal Crossing: New Horizons",

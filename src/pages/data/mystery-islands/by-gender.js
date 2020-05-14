@@ -3,12 +3,12 @@ import React from "react";
 import PercentBreakdown from "../../../components/PercentBreakdown";
 import Page from "../../../components/Page";
 
-const StatsPage = () => {
+function ByGenderPage(props) {
     return (
-        <Page title="Grouped by Gender">
+        <Page pathname={props.location.pathname} title="Grouped by Gender">
             <PercentBreakdown villagerPropName="gender" />
         </Page>
     );
 };
 
-export default StatsPage;
+export default ByGenderPage;

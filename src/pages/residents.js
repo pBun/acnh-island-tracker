@@ -153,7 +153,7 @@ const ButtonTooltip = withStyles(theme => ({
     },
 }))(Tooltip);
 
-export default function ResidentsPage() {
+export default function ResidentsPage(props) {
     const classes = useStyles();
     const {
         currentResidents,
@@ -169,7 +169,7 @@ export default function ResidentsPage() {
 
     const numEmptyPlots = NUM_CUR_RESIDENTS - currentResidents.length;
     return (
-        <Page title="My Residents">
+        <Page pathname={props.location.pathname} title="My Residents">
             <form
                 className={classes.form}
                 onSubmit={e => {
