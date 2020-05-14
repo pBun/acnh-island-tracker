@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
         fontSize: "0.75rem",
     },
     combobox: {
-        marginTop: theme.spacing(3),
+        marginTop: theme.spacing(2),
     },
     radioGroupLabel: {
         position: "absolute",
