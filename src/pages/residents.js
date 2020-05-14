@@ -46,6 +46,7 @@ const useStyles = makeStyles(theme => ({
         paddingRight: theme.spacing(5),
         color: theme.palette.text.secondary,
         fontWeight: 500,
+        backgroundColor: theme.palette.background.paper,
     },
     formTitle: {
         paddingLeft: theme.spacing(5),
