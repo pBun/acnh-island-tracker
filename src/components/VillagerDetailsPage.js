@@ -90,10 +90,10 @@ export default function VillagerDetailsPage(props) {
             <SEO
                 title={villager.name}
                 pathname={props.location.pathname}
-                meta={{
+                meta={[{
                     name: "og:image",
                     content: `${site.siteMetadata.siteUrl}${villager.icon}`,
-                }}
+                }]}
             />
             <div className={classes.container}>
                 <img src={villager.icon} alt={`Portrait of ${villager.name}`} />
