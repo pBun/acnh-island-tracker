@@ -28,6 +28,7 @@ export function shareSighting({
             past_residents: encodeURIComponent(flattenResidentList(pastResidents)),
             timestamp_utc: encodeURIComponent(formatISO(sighting.timestamp)),
             marked_for_deletion: deletion ? encodeURIComponent(true) : '',
+            count_value: deletion ? encodeURIComponent(-1) : encodeURIComponent(1),
         });
         var request = new XMLHttpRequest();
         request.open("GET", `${DATA_UPLOAD_URL}?${qs}`, true);
