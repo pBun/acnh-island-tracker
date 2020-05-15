@@ -1,2 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[10],{tFe5:function(e,a,t){"use strict";t.r(a);var n=t("q1tI"),l=t.n(n),r=t("1lFR"),c=t("uVCN"),i=t("EYWl");a.default=function(e){var a="Mystery Island Encounters (by Villager)";return l.a.createElement(c.a,{title:a},l.a.createElement(i.a,{title:a,pathname:e.location.pathname}),l.a.createElement(r.a,{villagerPropName:"name"}))}}}]);
-//# sourceMappingURL=component---src-pages-data-mystery-islands-by-villager-js-41f577aff88a1b59830a.js.map
