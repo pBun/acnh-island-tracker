@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 
 import SessionContext, { healSessionShape } from "../../context/SessionContext";
 import Page from "../../components/Page";
+import SEO from "../../components/SEO";
 
 const useStyles = makeStyles(theme => ({
     list: {
@@ -35,8 +36,13 @@ function NotFoundPage(props) {
     const [error, setError] = React.useState('');
     const yerKey = JSON.stringify(session);
     const yerKeyEl = React.useRef(null);
+    React.useEffect(() => {
+        setYerNewKey(''); // hack to trigger re-render
+    }, []);
+    const pageTitle = "Migration";
     return (
-        <Page title="Migration">
+        <Page title={pageTitle}>
+            <SEO title={pageTitle} pathname={props.location.pathname} />
             <Typography className={classes.heading} variant="h4">
                 PLEASE ONLY USE THIS PAGE IF YOU KNOW WHAT YOU ARE DOING!!!
             </Typography>
