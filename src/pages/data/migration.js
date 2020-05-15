@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
 function NotFoundPage(props) {
     const classes = useStyles();
     const { session, overrideSessionData } = React.useContext(SessionContext);
-    const [yerNewKey, setYerNewKey] = React.useState();
+    const [yerNewKey, setYerNewKey] = React.useState('');
     const [error, setError] = React.useState('');
     const yerKey = JSON.stringify(session);
     const yerKeyEl = React.useRef(null);
