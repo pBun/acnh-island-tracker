@@ -46,7 +46,7 @@ function NotFoundPage(props) {
                     ref={yerKeyEl}
                     readOnly={true}
                     rows="10"
-                    value={yerKey.trim()}
+                    value={yerKey ? yerKey.trim() : yerKey}
                 />
                 <Button
                     onClick={() => {
