@@ -151,9 +151,9 @@ export default function ResidentsPage(props) {
     const {
         currentResidents,
         pastResidents,
-        addResident,
-        removeResident,
-        nukeResident,
+        moveInResident,
+        moveOutResident,
+        deleteResident,
     } = React.useContext(SessionContext);
     const { allVillagers } = useVillagers();
     const [selectedVillager, setSelectedVillager] = React.useState(null);
@@ -169,11 +169,21 @@ export default function ResidentsPage(props) {
                 className={classes.form}
                 onSubmit={e => {
                     e.preventDefault();
-                    if (!selectedVillager) return;
-                    addResident(selectedVillager, typeOfResident)
+                    if (!selectedVillager) return setError("Please select a villager.");
+                    const isCurrentResident = !!currentResidents.find(
+                        r => r.villager.id === selectedVillager.id && !r.moveOutTimestamp
+                    );
+                    if (typeOfResident === "past" && isCurrentResident) {
+                        return setError("That villager currently lives on your island. Use the 'move out' button to add them to the list of past residents.");
+                    }
+                    let moveResident = typeOfResident === "current"
+                        ? moveInResident(selectedVillager)
+                        : moveOutResident(selectedVillager);
+                    moveResident
                         .catch(err => setError(err))
                         .then(() => {
                             setSelectedVillager(null);
+                            setError('');
                         });
                 }}
             >
@@ -197,7 +207,7 @@ export default function ResidentsPage(props) {
                         <RadioGroup
                             className={classes.radioWrapper}
                             aria-label="type of resident"
-                            name="tracking-location"
+                            name="sighting-type"
                             value={typeOfResident}
                             onChange={e => setTypeOfResident(e.target.value)}
                             defaultValue="current"
@@ -236,10 +246,10 @@ export default function ResidentsPage(props) {
                 </ListSubheader>
                 <div>
                     {currentResidents.map(resident => {
-                        const villager = allVillagers.find(v => v.id === resident.id);
+                        const villager = allVillagers.find(v => v.id === resident.villager.id);
                         return (
                             <ResidentListItem
-                                key={`${villager.id}_currentResident`}
+                                key={`${resident.id}_currentResident`}
                                 className={classes.listItem}
                                 villager={villager}
                                 timestamp={resident.moveInTimestamp}
@@ -251,7 +261,9 @@ export default function ResidentsPage(props) {
                                             onClick={() => {
                                                 const confirmMessage = `Are you sure you want to remove ${villager.name} from your island?`;
                                                 if (window && window.confirm(confirmMessage)) {
-                                                    removeResident(villager);
+                                                    moveOutResident(villager)
+                                                        .catch(err => setError(err))
+                                                        .then(() => setError(''));
                                                 }
                                             }}
                                             aria-label="remove villager from island"
@@ -276,10 +288,10 @@ export default function ResidentsPage(props) {
                                 {`Past Residents (${pastResidents.length})`}
                             </ListSubheader>
                             {pastResidents.map(resident => {
-                                const villager = allVillagers.find(v => v.id === resident.id);
+                                const villager = allVillagers.find(v => v.id === resident.villager.id);
                                 return (
                                     <ResidentListItem
-                                        key={`${villager.id}_pastResident`}
+                                        key={`${resident.id}_pastResident`}
                                         className={classes.listItem}
                                         villager={villager}
                                         timstamp={resident.moveOutTimestamp}
@@ -291,7 +303,9 @@ export default function ResidentsPage(props) {
                                                     onClick={() => {
                                                         const confirmMessage = `Are you sure you want to remove all history of ${villager.name} from your island? This cannot be undone.`;
                                                         if (window && window.confirm(confirmMessage)) {
-                                                            nukeResident(villager);
+                                                            deleteResident(villager)
+                                                                .catch(err => setError(err))
+                                                                .then(() => setError(''));
                                                         }
                                                     }}
                                                     aria-label="delete all history of resident"

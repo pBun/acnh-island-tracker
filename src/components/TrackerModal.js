@@ -62,8 +62,8 @@ export default function FormModal({
                         Encounter Location
                     </FormLabel>
                     <RadioGroup
-                        aria-label="tracking location"
-                        name="tracking-location"
+                        aria-label="encounter type"
+                        name="encounter-type"
                         value={trackingPreference}
                         onChange={e => setTrackingPreference(e.target.value)}
                         defaultValue="mystery-island"

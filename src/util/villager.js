@@ -1,6 +1,16 @@
+import PropTypes from "prop-types";
+
 import villagerData from "../data/villagers";
 import { groupBy } from "../util/list";
 
+export const villagerShape = PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    species: PropTypes.string,
+    personality: PropTypes.string,
+    gender: PropTypes.string,
+    icon: PropTypes.string,
+});
 export const VILLAGERS = villagerData;
 
 export const VILLAGERS_BY_SPECIES = groupBy(VILLAGERS, 'species');
@@ -15,47 +25,45 @@ export function getDistinctEncounters(currentResidents=[], pastResidents=[], sig
     const distinctEncounters = [];
     const map = new Map();
     for (const potential of encounters) {
-        const pName = potential.name || potential.villager;
-        if(pName && !map.has(pName)){
-            map.set(pName, true);
-            distinctEncounters.push(VILLAGERS.find(v => v.name === pName));
+        const potentialId = (potential.villager && potential.villager.id) || potential.id;
+        if(potentialId && !map.has(potentialId)){
+            map.set(potentialId, true);
+            distinctEncounters.push(VILLAGERS.find(v => v.id === potentialId));
         }
     }
     return distinctEncounters;
 }
 
 export function getMissingResidentPersonalities(currentResidents) {
-    const currentResidentVillagers = currentResidents.map(r => VILLAGERS.find(v => v.name === r.name));
-    const currentResidentVillagersByPersonality = groupBy(currentResidentVillagers, 'personality');
-    const currentResidentPersonalities = Object.keys(currentResidentVillagersByPersonality);
-    return AVAILABLE_PERSONALITIES.filter(p => currentResidentPersonalities.indexOf(p) < 0);
+    const residentVillagers = currentResidents.map(r => VILLAGERS.find(v => v.id === r.villager.id));
+    const residentVillagersByPersonality = groupBy(residentVillagers, 'personality');
+    const residentVillagerPersonalities = Object.keys(residentVillagersByPersonality);
+    return AVAILABLE_PERSONALITIES.filter(p => residentVillagerPersonalities.indexOf(p) < 0);
 }
 
-export function getMysteryIslandChance(villagerName, currentResidents=[]) {
-    // 0% if already a resident
-    if (currentResidents.find(r => r.name === villagerName)) return 0;
+export function getMysteryIslandChance(villager, currentResidents=[]) {
+    if (!villager || !villager.id) return 0;
 
-    // 0% if villager doesn't exist in our master list
-    const villager = VILLAGERS.find(v => v.name === villagerName);
-    if (!villager) return 0;
+    // 0% if already a resident
+    if (currentResidents.find(r => r.villager.id === villager.id)) return 0;
 
     const numSpeciesVillagers = VILLAGERS_BY_SPECIES[villager.species].length;
-    const residentVillagers = currentResidents.map(r => VILLAGERS.find(v => v.name === r.name))
+    const residentVillagers = currentResidents.map(r => VILLAGERS.find(v => v.id === r.villager.id))
     const residentVillagersBySpecies = groupBy(residentVillagers, 'species')[villager.species];
     const numSpeciesResidents = residentVillagersBySpecies ? residentVillagersBySpecies.length : 0;
     return (1 / NUM_SPECIES) * (1 / (numSpeciesVillagers - numSpeciesResidents));
 }
 
-export function getCampsiteChance(villagerName, currentResidents=[], pastResidents=[], sightings=[]) {
+export function getCampsiteChance(villager, currentResidents=[], pastResidents=[], sightings=[]) {
+    if (!villager || !villager.id) return 0;
+
     // 0% if already a resident
-    if (currentResidents.find(r => r.name === villagerName)) return 0;
+    if (currentResidents.find(r => r.villager.id === villager.id)) return 0;
 
     // 0% if first pass and already encountered
-    const encounters = getDistinctEncounters(currentResidents, pastResidents, sightings.filter(s => s.location === 'campsite'));
+    const encounters = getDistinctEncounters(currentResidents, pastResidents, sightings.filter(s => s.type === 'campsite'));
     const isFirstCycle = encounters.length <= VILLAGERS.length;
-    if (isFirstCycle && encounters.find(e => e.name === villagerName)) return 0;
-
-    const villager = VILLAGERS.find(v => v.name === villagerName);
+    if (isFirstCycle && encounters.find(e => e.id === villager.id)) return 0;
 
     // FIRST ROLL * SECOND ROLL = chance to see a specific villager at a campsite
 
@@ -87,8 +95,8 @@ export function getCampsiteChance(villagerName, currentResidents=[], pastResiden
 
 export const VILLAGERS_WITH_CHANCE = VILLAGERS.map(v => ({
     ...v,
-    baseIslandChance: getMysteryIslandChance(v.name),
-    baseCampsiteChance: getCampsiteChance(v.name),
+    baseIslandChance: getMysteryIslandChance(v),
+    baseCampsiteChance: getCampsiteChance(v),
 }));
 
 export const VILLAGERS_MINIMAL = VILLAGERS.map(v => ({

@@ -6,52 +6,45 @@ import { shareSighting } from "../util/dataShare";
 import AppContext from "../context/AppContext";
 import LoadingContext from "../context/LoadingContext";
 
-const LOCAL_STORAGE_KEY = "islandTrackerSession";
+import villagerUtil from "../util/villager";
 
-const getInitialSession = () => ({
-    id: Math.random().toString(36).substr(2, 12),
-    timestamp: Date.now(),
-    sightings: [],
-    residents: [],
+const VILLAGERS_MINIMAL = villagerUtil.VILLAGERS_MINIMAL;
+const SESSION_VERSION = 1;
+const LOCAL_STORAGE_KEY = "islandTrackerSession";
+const SIGHTING_TYPES = ['mystery-island', 'campsite'];
+
+// SHAPES
+export const villagerShape = villagerUtil.villagerShape;
+export const sightingShape = PropTypes.shape({
+    id: PropTypes.string,
+    timestamp: PropTypes.number,
+    villager: PropTypes.shape(villagerShape),
+    type: PropTypes.oneOf(SIGHTING_TYPES),
+    dataShared: PropTypes.bool,
 });
-function reducer(state, action) {
-    switch (action.type) {
-        case "trackVillager":
-            return {
-                ...state,
-                sightings: [
-                    ...state.sightings,
-                    {
-                        timestamp: action.payload.timestamp,
-                        villager: action.payload.villager,
-                        location: action.payload.location,
-                    },
-                ],
-            };
-        case "updateResident":
-            const existingResident = state.residents.find(r => r.id === action.payload.id);
-            return {
-                ...state,
-                residents: [
-                    // remove existing resident if they previously lived here
-                    ...state.residents.filter(r => r.id !== action.payload.id),
-                    // add a clean version
-                    {
-                        ...existingResident,
-                        ...action.payload,
-                    },
-                ],
-            };
-        case "deleteResident":
-            return {
-                ...state,
-                residents: [...state.residents.filter(r => r.id !== action.payload)],
-            };
-        case "reset":
-            return getInitialSession();
-        default:
-            throw new Error();
-    }
+export const residentShape = PropTypes.shape({
+    id: PropTypes.string,
+    villager: PropTypes.shape(villagerShape),
+    moveInTimestamp: PropTypes.number,
+    moveOutTimestamp: PropTypes.number,
+});
+export const sessionShape = PropTypes.shape({
+    id: PropTypes.string,
+    version: PropTypes.number,
+    timestamp: PropTypes.number,
+    sightings: PropTypes.arrayOf(sightingShape),
+    residents: PropTypes.arrayOf(residentShape),
+});
+
+// INTIAL STATE/SESSION
+function getInitialSession() {
+    return {
+        id: generateRandomId(),
+        version: SESSION_VERSION,
+        timestamp: Date.now(),
+        sightings: [],
+        residents: [],
+    };
 }
 const initialState = {
     ...getInitialSession(),
@@ -63,122 +56,254 @@ const initialState = {
     removeResident: resident => {},
     nukeResident: resident => {},
     trackVillager: opts => {},
+    deleteSighting: opts => {},
     resetSessionData: () => {},
 };
+
+// HELPERS
+function generateRandomId() {
+    return `${Math.random().toString(36).substr(2, 9)}${Math.random().toString(36).substr(2, 9)}`;
+}
+function healSessionShape(session) {
+    if (session.version >= SESSION_VERSION) return session;
+    return {
+        id: session.id || generateRandomId(),
+        version: 1,
+        timestamp: session.timestamp,
+        sightings: session.sightings.map(s => ({
+            id: s.id || generateRandomId(),
+            timestamp: s.timestamp,
+            villager: VILLAGERS_MINIMAL.find(v => v.name === s.villager),
+            type: s.location || "mystery-island",
+            dataShared: !!s.dataShared,
+        })),
+        residents: session.residents.map(r => ({
+            id: generateRandomId(),
+            villager: VILLAGERS_MINIMAL.find(v => v.name === r.name),
+            moveInTimestamp: r.moveInTimestamp,
+            moveOutTimestamp: r.moveOutTimestamp,
+        })),
+    };
+}
+
+// REDUCER
+const ACTIONS = {
+    ADD_SIGHTING: "ADD_SIGHTING",
+    DELETE_SIGHTING: "DELETE_SIGHTING",
+    MOVE_IN_RESIDENT: "MOVE_IN_RESIDENT",
+    MOVE_OUT_RESIDENT: "MOVE_OUT_RESIDENT",
+    DELETE_RESIDENT: "DELETE_RESIDENT_HISTORY",
+    RESET_SESSION: "RESET_SESSION",
+};
+function reducer(session, action) {
+    switch (action.type) {
+        case ACTIONS.ADD_SIGHTING:
+            return {
+                ...session,
+                sightings: [
+                    ...session.sightings,
+                    {
+                        id: generateRandomId(),
+                        timestamp: action.payload.timestamp,
+                        villager: action.payload.villager,
+                        type: action.payload.type,
+                        dataShared: action.payload.dataShared,
+                    },
+                ],
+            };
+        case ACTIONS.DELETE_SIGHTING:
+            return {
+                ...session,
+                sightings: [...session.sightings.filter(s => s.id !== action.payload.id)],
+            };
+        case ACTIONS.MOVE_IN_RESIDENT:
+            return {
+                ...session,
+                residents: [
+                    ...session.residents.filter(r => r.villager.id !== action.payload.villager.id),
+                    {
+                        id: generateRandomId(),
+                        villager: action.payload.villager,
+                        // existing resident
+                        ...session.residents
+                            .find(r => r.villager.id === action.payload.villager.id),
+                        moveInTimestamp: Date.now(),
+                        moveOutTimestamp: null,
+                    },
+                ],
+            };
+        case ACTIONS.MOVE_OUT_RESIDENT:
+            return {
+                ...session,
+                residents: [
+                    ...session.residents.filter(r => r.villager.id !== action.payload.villager.id),
+                    {
+                        id: generateRandomId(),
+                        villager: action.payload.villager,
+                        moveInTimestamp: null,
+                        // existing resident
+                        ...session.residents
+                            .find(r => r.villager.id === action.payload.villager.id),
+                        moveOutTimestamp: Date.now(),
+                    },
+                ],
+            };
+        case ACTIONS.DELETE_RESIDENT:
+            return {
+                ...session,
+                residents: [...session.residents.filter(r => r.villager.id !== action.payload.villager.id)],
+            };
+        case ACTIONS.RESET_SESSION:
+            return getInitialSession();
+        default:
+            throw new Error();
+    }
+}
+
 const SessionContext = React.createContext(initialState);
 export const SessionProvider = ({ children }) => {
     const { allowDataShare } = React.useContext(AppContext);
     const { setLoading } = React.useContext(LoadingContext);
+
+    // local storage stuff and session state initial value
     const localStateString = window && window.localStorage.getItem(LOCAL_STORAGE_KEY);
-    const localState = localStateString && JSON.parse(localStateString);
+    const localState = localStateString && healSessionShape(JSON.parse(localStateString));
     const initialSession = getInitialSession();
-    const [state, dispatch] = React.useReducer(reducer, {
+    const [session, dispatch] = React.useReducer(reducer, {
         ...initialSession,
         ...localState,
     });
+
+    const currentResidents = React.useMemo(
+        () => session.residents.filter(r => !r.moveOutTimestamp),
+        [session.residents],
+    );
+    const pastResidents = React.useMemo(
+        () => session.residents.filter(r => r.moveOutTimestamp),
+        [session.residents],
+    );
+    const sendSighting = React.useCallback(({ sighting, deletion }) => {
+        return new Promise((resolve, reject) => {
+            setLoading(true);
+            return shareSighting({
+                sessionId: session.id,
+                sighting,
+                currentResidents,
+                pastResidents,
+                deletion,
+            })
+                .catch((err) => {
+                    console.log(err);
+                    setLoading(false);
+                    return reject(typeof err === 'string' && err);
+                })
+                .then(() => {
+                    setLoading(false);
+                    return resolve();
+                });
+        });
+    }, [setLoading, session.id, currentResidents, pastResidents]);
+
+    // update local storage whenever there is a change to session
     React.useEffect(() => {
-        window && window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(state));
-    }, [state]);
-    const currentResidents = state.residents.filter(r => !r.moveOutTimestamp);
-    const pastResidents = state.residents.filter(r => r.moveOutTimestamp);
+        window && window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(session));
+    }, [session]);
+
     return (
         <SessionContext.Provider
             value={{
-                sightings: state.sightings,
+                sightings: session.sightings,
                 currentResidents,
                 pastResidents,
                 resetSessionData: () => {
-                    dispatch({ type: "reset" });
+                    dispatch({ type: ACTIONS.RESET_SESSION });
                 },
-                addResident: (resident, type="current") => {
+                moveInResident: (villager) => {
                     return new Promise((resolve, reject) => {
-                        if (type === "current" && currentResidents.length >= 10) {
+                        const existingResident = session.residents.find(r => r.villager.id === villager.id);
+                        if (existingResident && !existingResident.moveOutTimestamp) {
+                            return reject(`${villager.name} already lives on your island.`);
+                        }
+                        if (currentResidents.length >= 10) {
                             return reject("You already have the max number of residents.");
                         }
-                        const existingResident = state.residents.find(r => r.id === resident.id);
-                        if (type === "current" && existingResident && !existingResident.moveOutTimestamp) {
-                            return reject("That villager already lives on your island.");
-                        }
-                        if (type === "past" && existingResident && !existingResident.moveOutTimestamp) {
-                            return reject("That villager currently lives on your island. Use the 'move out' button to add them to the list of past residents.");
-                        }
-                        if (type === "past" && existingResident && existingResident.moveOutTimestamp) {
-                            return reject("That villager already exists in your list of past residents.");
-                        }
                         dispatch({
-                            type: "updateResident",
-                            payload: {
-                                id: resident.id,
-                                name: resident.name,
-                                moveInTimestamp: type === "current" ? Date.now() : null,
-                                moveOutTimestamp: type === "past" ? Date.now() : null,
-                            },
+                            type: ACTIONS.MOVE_IN_RESIDENT,
+                            payload: { villager },
                         });
                         return resolve();
                     });
                 },
-                removeResident: resident => {
+                moveOutResident: (villager) => {
                     return new Promise((resolve, reject) => {
-                        const residentToRemove = state.residents.find(r => r.id === resident.id);
+                        const existingResident = session.residents.find(r => r.villager.id === villager.id);
+                        if (existingResident && existingResident.moveOutTimestamp) {
+                            return reject(`${villager.name} already exists in your list of past residents.`);
+                        }
+                        dispatch({
+                            type: ACTIONS.MOVE_OUT_RESIDENT,
+                            payload: { villager },
+                        });
+                        return resolve();
+                    });
+                },
+                deleteResident: (villager) => {
+                    return new Promise((resolve, reject) => {
+                        const residentToRemove = session.residents.find(r => r.villager.id === villager.id);
                         if (!residentToRemove) {
-                            return reject("That villager does not currently live on your island.");
+                            return reject(`${villager.name} has never lived on your island.`);
                         }
                         dispatch({
-                            type: "updateResident",
-                            payload: {
-                                id: resident.id,
-                                moveOutTimestamp: Date.now(),
-                            },
+                            type: ACTIONS.DELETE_RESIDENT,
+                            payload: { villager },
                         });
                         return resolve();
                     });
                 },
-                nukeResident: resident => {
+                addSighting: ({ villager, type }) => {
                     return new Promise((resolve, reject) => {
-                        const residentToRemove = state.residents.find(r => r.id === resident.id);
-                        if (!residentToRemove) {
-                            return reject("That villager has never lived on your island.");
-                        }
-                        dispatch({
-                            type: "deleteResident",
-                            payload: resident.id,
-                        });
-                        return resolve();
-                    });
-                },
-                trackVillager: ({ villager, location }) => {
-                    return new Promise((resolve, reject) => {
-                        const timestamp = Date.now();
-                        const updateState = () => {
+                        const addSightingToSession = (sighting) => {
                             dispatch({
-                                type: "trackVillager",
-                                payload: {
-                                    timestamp,
-                                    villager,
-                                    location,
-                                },
+                                type: ACTIONS.ADD_SIGHTING,
+                                payload: sighting,
                             });
                         };
+                        const sighting = {
+                            timestamp: Date.now(),
+                            dataShared: allowDataShare,
+                            villager,
+                            type,
+                        };
                         if (!allowDataShare) {
-                            updateState();
+                            addSightingToSession(sighting);
                             return resolve();
                         }
-                        setLoading(true);
-                        shareSighting({
-                            id: state.id,
-                            timestamp,
-                            villager,
-                            location,
-                            currentResidents,
-                            pastResidents,
-                        })
-                            .catch(() => {
-                                setLoading(false);
-                                return reject();
+                        return sendSighting({ sighting })
+                            .catch((err) => {
+                                return reject("There was an error communicating with the sheet.");
                             })
                             .then(() => {
-                                updateState();
-                                setLoading(false);
+                                addSightingToSession(sighting);
+                                return resolve();
+                            });
+                    });
+                },
+                deleteSighting: ({ sighting }) => {
+                    return new Promise((resolve, reject) => {
+                        const removeSightingFromSession = (sighting) => {
+                            dispatch({
+                                type: ACTIONS.DELETE_SIGHTING,
+                                payload: sighting,
+                            });
+                        };
+                        if (!sighting.dataShared) {
+                            removeSightingFromSession(sighting);
+                            return resolve();
+                        }
+                        sendSighting({ sighting, deletion: true })
+                            .catch(reject)
+                            .then(() => {
+                                removeSightingFromSession(sighting);
                                 return resolve();
                             });
                     });

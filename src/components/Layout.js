@@ -70,7 +70,7 @@ export default function BottomAppBar({ children }) {
         setTrackerModalState,
     } = React.useContext(AppContext);
     const { loading } = React.useContext(LoadingContext);
-    const { trackVillager } = React.useContext(SessionContext);
+    const { addSighting } = React.useContext(SessionContext);
     const [snackMessage, setSnackMessage] = React.useState("");
     return (
         <>
@@ -100,10 +100,10 @@ export default function BottomAppBar({ children }) {
                         handleClockSettings={() => {
                             setClockModalState(true);
                         }}
-                        handleConfirm={(villager, location) => {
+                        handleConfirm={(villager, type) => {
                             if (!villager) return;
                             setTrackerModalState(false);
-                            trackVillager({ villager: villager.name, location })
+                            addSighting({ villager, type })
                                 .catch(err => {
                                     setSnackMessage(err);
                                 })

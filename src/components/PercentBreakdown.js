@@ -17,7 +17,7 @@ import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import { format } from "date-fns";
 
-import SessionContext from "../context/SessionContext";
+import SessionContext, { villagerShape } from "../context/SessionContext";
 
 import { VILLAGERS } from "../util/villager";
 
@@ -182,7 +182,7 @@ function Row(props) {
                                 <TableBody>
                                     {row.history.map(historyRow => (
                                         <TableRow key={historyRow.timestamp}>
-                                            <TableCell>{historyRow.villager}</TableCell>
+                                            <TableCell>{historyRow.villager.name}</TableCell>
                                             <TableCell>
                                                 {format(historyRow.timestamp, "hh:mm a")}
                                             </TableCell>
@@ -208,7 +208,7 @@ Row.propTypes = {
         percent: PropTypes.number.isRequired,
         history: PropTypes.arrayOf(
             PropTypes.shape({
-                villager: PropTypes.string.isRequired,
+                villager: villagerShape,
                 timestamp: PropTypes.number.isRequired,
             })
         ).isRequired,
@@ -234,7 +234,7 @@ function PercentBreakdownTable({ villagerPropName }) {
         data[prop] = [];
     });
     sightings.forEach(sighting => {
-        const villager = VILLAGERS.find(v => v.name === sighting.villager);
+        const villager = VILLAGERS.find(v => v.id === sighting.villager.id);
         const prop = villager && villager[villagerPropName];
         if (!prop) return;
         data[prop].push(sighting);

@@ -10,8 +10,8 @@ export default function useVillagers() {
             icon: villagerIcons[villager.id],
         };
     });
-    const getVillager = villagerName => {
-        return allVillagers.find(villager => villager.name === villagerName);
+    const getVillager = id => {
+        return allVillagers.find(villager => villager.id === id);
     };
     return {
         getVillager,

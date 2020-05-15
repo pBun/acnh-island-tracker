@@ -62,7 +62,6 @@ export default function DataNav({ hideIndex }) {
                 </ListItemIcon>
                 <ListItemText
                     primary="Mystery Islands"
-                    secondary="All Encounters"
                 />
             </ListItem>
             <ListItem button component={Link} to={"/data/campsite/tracked/"}>
@@ -70,18 +69,16 @@ export default function DataNav({ hideIndex }) {
                     <CampsiteIcon />
                 </ListItemIcon>
                 <ListItemText
-                    primary="Campsite Visitors"
-                    secondary="All Encounters"
+                    primary="Campsite Visits"
                 />
             </ListItem>
 
-            <ListSubheader className={classes.listSubheader}>Aggregate Data</ListSubheader>
+            <ListSubheader className={classes.listSubheader}>Aggregate Data (Mystery Islands)</ListSubheader>
             <ListItem button component={Link} to="/data/mystery-islands/by-villager/">
                 <ListItemIcon>
                     <PersonIcon />
                 </ListItemIcon>
                 <ListItemText
-                    secondary="Mystery Island Encounters"
                     primary="Grouped by Villager"
                 />
             </ListItem>
@@ -90,7 +87,6 @@ export default function DataNav({ hideIndex }) {
                     <PetsIcon />
                 </ListItemIcon>
                 <ListItemText
-                    secondary="Mystery Island Encounters"
                     primary="Grouped by Species"
                 />
             </ListItem>
@@ -99,7 +95,6 @@ export default function DataNav({ hideIndex }) {
                     <MoodIcon />
                 </ListItemIcon>
                 <ListItemText
-                    secondary="Mystery Island Encounters"
                     primary="Grouped by Personality"
                 />
             </ListItem>

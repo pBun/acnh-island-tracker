@@ -65,12 +65,10 @@ export default function VillagerDetailsPage(props) {
     const villagerId = props.pageContext && props.pageContext.villager
         && props.pageContext.villager.id;
     const villager = allVillagers.find(v => v.id === villagerId);
-    const isCurrentResident = !!currentResidents.find(r => r.id === villager.id);
-    const isPastResident = !!pastResidents.find(r => r.id === villager.id);
-    const hasVisitedCampsite = !!sightings.find(r => r.villager === villager.name && !r.location === 'campsite');
-    const filteredSightings = sightings.filter(
-        s => s.villager === villager.name && (!s.location || s.location === "mystery-island")
-    );
+    const isCurrentResident = !!currentResidents.find(r => r.villager.id === villager.id);
+    const isPastResident = !!pastResidents.find(r => r.villager.id === villager.id);
+    const hasVisitedCampsite = !!sightings.find(s => s.villager.id === villager.id && s.type === 'campsite');
+    const filteredSightings = sightings.filter(s => s.villager.id === villager.id);
     if (!villager) return '404';
     return (
         <Page title={villager.name}>
@@ -163,7 +161,7 @@ export default function VillagerDetailsPage(props) {
                         Your Encounter Rate:
                     </Grid>
                     <Grid item xs={6} className={classes.value}>
-                        {percentToString(getCampsiteChance(villager.name, currentResidents, pastResidents, sightings))}
+                        {percentToString(getCampsiteChance(villager, currentResidents, pastResidents, sightings))}
                     </Grid>
                     <Grid item xs={6} className={classes.label}>
                         Base Encounter Rate:
@@ -184,7 +182,7 @@ export default function VillagerDetailsPage(props) {
                         Your Encounter Rate:
                     </Grid>
                     <Grid item xs={6} className={classes.value}>
-                        {percentToString(getMysteryIslandChance(villager.name, currentResidents))}
+                        {percentToString(getMysteryIslandChance(villager, currentResidents))}
                     </Grid>
                     <Grid item xs={6} className={classes.label}>
                         Base Encounter Rate:

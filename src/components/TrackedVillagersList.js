@@ -24,8 +24,6 @@ export default function TrackedVillagersList(props) {
     const classes = useStyles();
     const {
         sightings,
-        currentResidents,
-        pastResidents,
         ...otherProps
     } = props;
 
@@ -33,7 +31,7 @@ export default function TrackedVillagersList(props) {
 
     const sortedSightings = sightings.sort((a, b) => b.timestamp - a.timestamp);
     const formattedSightings = sortedSightings.map((sighting, index) => {
-        const villager = getVillager(sighting.villager);
+        const villager = getVillager(sighting.villager.id);
         return {
             ...sighting,
             date: format(sighting.timestamp, "MMM d, yyyy"),
@@ -47,15 +45,11 @@ export default function TrackedVillagersList(props) {
                 Object.keys(sightingsGroupedByDate).map(date => (
                     <React.Fragment key={date}>
                         <ListSubheader className={classes.listSubheader}>{date}</ListSubheader>
-                        {sightingsGroupedByDate[date].map(data => (
+                        {sightingsGroupedByDate[date].map(sighting => (
                             <VillagerListItem
-                                key={data.timestamp}
-                                villager={data.villager}
-                                timestamp={data.timestamp}
-                                type={data.location}
-                                currentResidents={currentResidents}
-                                pastResidents={pastResidents}
-                                sightings={sightings}
+                                key={sighting.timestamp}
+                                villager={sighting.villager}
+                                sighting={sighting}
                             />
                         ))}
                     </React.Fragment>

@@ -5,8 +5,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ListItemText from "@material-ui/core/ListItemText";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import Avatar from "@material-ui/core/Avatar";
 import Tooltip from "@material-ui/core/Tooltip";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
+
+import SessionContext from "../context/SessionContext";
 
 import NmtIcon from "../components/icons/Nmt";
 import CampsiteIcon from "../components/icons/Campsite";
@@ -29,26 +34,32 @@ const useStyles = makeStyles(theme => ({
         width: "0.8em",
         marginTop: "-0.1em",
     },
+    secondaryAction: {
+        right: theme.spacing(4),
+    },
+    deleteButton: {
+        color: theme.palette.error.main,
+    },
 }));
 
 export default function VillagerListItem(props) {
     const {
         villager,
-        timestamp,
-        type,
-        currentResidents,
-        pastResidents,
-        sightings,
+        sighting,
+        children,
         ...otherProps
     } = props;
     const classes = useStyles();
+    const { currentResidents, pastResidents, sightings, deleteSighting } = React.useContext(SessionContext);
     const baseMysteryIslandString = percentToString(villager.baseIslandChance);
-    const myMysteryIslandString = percentToString(getMysteryIslandChance(villager.name, currentResidents));
+    const myMysteryIslandString = percentToString(getMysteryIslandChance(villager, currentResidents));
     const baseCampsiteString = percentToString(villager.baseIslandChance);
-    const myCampsiteString = percentToString(getCampsiteChance(villager.name, currentResidents, pastResidents, sightings));
+    const myCampsiteString = percentToString(getCampsiteChance(villager, currentResidents, pastResidents, sightings));
+    const isMysteryIslandEncounter = sighting && sighting.type === 'mystery-island';
+    const isCampsiteEncounter = sighting && sighting.type === 'campsite';
     const secondary = [];
-    if (timestamp) secondary.push(format(timestamp, "h:mm a"));
-    if (!type || type !== 'campsite') {
+    if (sighting) secondary.push(format(sighting.timestamp, "h:mm a"));
+    if (!sighting || isMysteryIslandEncounter) {
         secondary.push((
             <Tooltip arrow title={`Your encounter rate: ${myMysteryIslandString} | Base rate: ${baseMysteryIslandString}`} placement="top">
                 <span>
@@ -59,7 +70,7 @@ export default function VillagerListItem(props) {
             </Tooltip>
         ));
     }
-    if (!type || type === 'campsite') {
+    if (!sighting || isCampsiteEncounter) {
         secondary.push((
             <Tooltip arrow title={`Your encounter rate: ${myCampsiteString} | Base rate: ${baseCampsiteString}`} placement="top">
                 <span>
@@ -90,6 +101,25 @@ export default function VillagerListItem(props) {
                 ))}
                 secondaryTypographyProps={{className: classes.listItemSecondary}}
             />
+            {sighting ? (
+                <ListItemSecondaryAction className={classes.secondaryAction}>
+                    <Tooltip arrow title={`Delete encounter${sighting.dataShared ? " and flag for deletion on shared spreadsheet" : ""}`} placement="top">
+                        <IconButton
+                            className={classes.deleteButton}
+                            variant="contained"
+                            onClick={() => {
+                                const confirmMessage = "Are you sure you want to permenantly delete this encounter? This cannot be undone.";
+                                if (window && window.confirm(confirmMessage)) {
+                                    deleteSighting({ sighting });
+                                }
+                            }}
+                            aria-label="delete encounter"
+                        >
+                            <DeleteIcon />
+                        </IconButton>
+                    </Tooltip>
+                </ListItemSecondaryAction>
+            ) : ""}
         </ListItem>
     );
 };
