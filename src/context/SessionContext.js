@@ -10,7 +10,7 @@ import villagerUtil from "../util/villager";
 
 const VILLAGERS_MINIMAL = villagerUtil.VILLAGERS_MINIMAL;
 const SESSION_VERSION = 1;
-const LOCAL_STORAGE_KEY = "islandTrackerSession";
+export const LOCAL_STORAGE_KEY = "islandTrackerSession";
 const SIGHTING_TYPES = ['mystery-island', 'campsite'];
 
 // SHAPES
@@ -64,7 +64,7 @@ const initialState = {
 function generateRandomId() {
     return `${Math.random().toString(36).substr(2, 9)}${Math.random().toString(36).substr(2, 9)}`;
 }
-function healSessionShape(session) {
+export function healSessionShape(session) {
     if (session.version >= SESSION_VERSION) return session;
     return {
         id: session.id || generateRandomId(),
@@ -94,6 +94,7 @@ const ACTIONS = {
     MOVE_OUT_RESIDENT: "MOVE_OUT_RESIDENT",
     DELETE_RESIDENT: "DELETE_RESIDENT_HISTORY",
     RESET_SESSION: "RESET_SESSION",
+    OVERRIDE_SESSION: "OVERRIDE_SESSION",
 };
 function reducer(session, action) {
     switch (action.type) {
@@ -153,6 +154,8 @@ function reducer(session, action) {
                 ...session,
                 residents: [...session.residents.filter(r => r.villager.id !== action.payload.villager.id)],
             };
+        case ACTIONS.OVERRIDE_SESSION:
+            return action.payload;
         case ACTIONS.RESET_SESSION:
             return getInitialSession();
         default:
@@ -212,11 +215,15 @@ export const SessionProvider = ({ children }) => {
     return (
         <SessionContext.Provider
             value={{
+                session,
                 sightings: session.sightings,
                 currentResidents,
                 pastResidents,
                 resetSessionData: () => {
                     dispatch({ type: ACTIONS.RESET_SESSION });
+                },
+                overrideSessionData: (session) => {
+                    dispatch({ type: ACTIONS.OVERRIDE_SESSION, payload: session });
                 },
                 moveInResident: (villager) => {
                     return new Promise((resolve, reject) => {
