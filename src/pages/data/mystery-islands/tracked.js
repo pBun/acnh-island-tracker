@@ -130,7 +130,7 @@ function TrackedMysteryIslandVillagersPage(props) {
             item => `${item.villager.species} ${item.villager.personality}`,
             "villager.gender",
         ],
-    });
+    }).sort((a, b) => b.timestamp - a.timestamp);
     const startIndex = Math.max(page * villagersPerPage, 0);
     const endIndex = startIndex + (villagersPerPage >= 0 ? villagersPerPage : searchResults.length);
     const sightingsToRender = searchResults.slice(startIndex, endIndex);
