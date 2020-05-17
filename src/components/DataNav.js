@@ -26,7 +26,6 @@ const useStyles = makeStyles(theme => ({
     listItemIcon: {
         fontSize: theme.spacing(4),
         marginRight: theme.spacing(1),
-        backgroundColor: theme.palette.background.paper,
     },
     list: {
         paddingTop: theme.spacing(1),
@@ -39,6 +38,7 @@ const useStyles = makeStyles(theme => ({
     listSubheader: {
         paddingLeft: theme.spacing(5),
         paddingRight: theme.spacing(5),
+        backgroundColor: theme.palette.background.paper,
     },
 }));
 
