@@ -168,14 +168,8 @@ export const SessionProvider = ({ children }) => {
     const { allowDataShare } = React.useContext(AppContext);
     const { setLoading } = React.useContext(LoadingContext);
 
-    // local storage stuff and session state initial value
-    const localStateString = window && window.localStorage.getItem(LOCAL_STORAGE_KEY);
-    const localState = localStateString && healSessionShape(JSON.parse(localStateString));
     const initialSession = getInitialSession();
-    const [session, dispatch] = React.useReducer(reducer, {
-        ...initialSession,
-        ...localState,
-    });
+    const [session, dispatch] = React.useReducer(reducer, initialSession);
 
     const currentResidents = React.useMemo(
         () => session.residents.filter(r => !r.moveOutTimestamp),
@@ -206,6 +200,19 @@ export const SessionProvider = ({ children }) => {
                 });
         });
     }, [setLoading, session.id, currentResidents, pastResidents]);
+
+    React.useEffect(() => {
+        // local storage stuff and session state initial value needs to happen client side
+        const localStateString = window && window.localStorage.getItem(LOCAL_STORAGE_KEY);
+        if (!localStateString) return;
+        const localState = localStateString && healSessionShape(JSON.parse(localStateString));
+        dispatch({
+            type: ACTIONS.OVERRIDE_SESSION,
+            payload: {
+                ...localState,
+            },
+        });
+    }, []);
 
     // update local storage whenever there is a change to session
     React.useEffect(() => {
