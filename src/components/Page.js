@@ -10,6 +10,7 @@ const useStyles = makeStyles(theme => ({
         position: "relative",
         margin: theme.spacing(6, 0, 0),
         padding: theme.spacing(3, 0, 0),
+        borderRadius: 20,
     },
     title: {
         display: "inline-block",

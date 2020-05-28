@@ -56,7 +56,7 @@ export default function TrackedVillagersList(props) {
                 ))
             ) : (
                 <ListSubheader className={classes.listSubheader}>
-                    No villagers tracked
+                    No encounters to display
                 </ListSubheader>
             )}
         </List>

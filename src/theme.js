@@ -39,9 +39,6 @@ const theme = createMuiTheme({
             activatedOpacity: 0.12,
         },
     },
-    shape: {
-        borderRadius: 20,
-    },
     overrides: {
         MuiAvatar: {
             colorDefault: {
@@ -82,6 +79,7 @@ const theme = createMuiTheme({
                 boxShadow: 0,
                 fontSize: defaultTheme.typography.fontSize,
                 padding: defaultTheme.spacing(1, 2.5),
+                borderRadius: 20,
             },
         },
     },

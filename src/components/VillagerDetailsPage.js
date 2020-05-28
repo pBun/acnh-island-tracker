@@ -23,8 +23,10 @@ import CampsiteIcon from "../components/icons/Campsite";
 const useStyles = makeStyles(theme => ({
     container: {
         position: 'relative',
-        padding: theme.spacing(0, 5, 5),
         textAlign: 'center',
+    },
+    divider: {
+        margin: theme.spacing(0, 5),
     },
     title: {
         paddingBottom: theme.spacing(2),
@@ -49,7 +51,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function VillagerDetailsPage(props) {
     const classes = useStyles();
-    console.log(props.pageContext.villager);
     const { site, allFile } = useStaticQuery(
         graphql`
             query {
@@ -95,7 +96,7 @@ export default function VillagerDetailsPage(props) {
                 <Typography className={classes.title} variant="h3">
                     {villager.name}
                 </Typography>
-                <Divider />
+                <Divider className={classes.divider} />
                 <Grid container justify="center" alignItems="center" spacing={2} className={classes.table}>
                     <Grid item xs={12}>
                         <a
@@ -201,15 +202,10 @@ export default function VillagerDetailsPage(props) {
                         {percentToString(villager.baseIslandChance)}
                     </Grid>
                 </Grid>
-
-                {filteredSightings.length ? (
-                    <>
-                        <Typography variant="h5">
-                            Recent Activity
-                        </Typography>
-                        <TrackedVillagersList sightings={filteredSightings} />
-                    </>
-                ) : ''}
+                <Typography variant="h5">
+                    Recent Encounters
+                </Typography>
+                <TrackedVillagersList sightings={filteredSightings} />
             </div>
         </Page>
     );
