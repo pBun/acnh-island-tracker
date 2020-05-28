@@ -4,11 +4,18 @@ export default function useVillagerIcons() {
     const villagerIconsQuery = useStaticQuery(
         graphql`
             query {
-                allFile(filter: { relativeDirectory: { eq: "villager-icons" } }) {
-                    edges {
-                        node {
-                            publicURL
-                            name
+                allImageSharp {
+                    nodes {
+                        id
+                        original {
+                            width
+                            height
+                            src
+                        }
+                        fixed(base64Width: 40) {
+                            base64
+                            srcWebp
+                            originalName
                         }
                     }
                 }
@@ -16,8 +23,8 @@ export default function useVillagerIcons() {
         `
     );
     const villagerIcons = {};
-    villagerIconsQuery.allFile.edges.forEach(edge => {
-        villagerIcons[edge.node.name] = edge.node.publicURL;
+    villagerIconsQuery.allImageSharp.nodes.forEach(node => {
+        villagerIcons[node.fixed.originalName.replace(".png", "")] = node.fixed.base64;
     });
     return villagerIcons;
 }

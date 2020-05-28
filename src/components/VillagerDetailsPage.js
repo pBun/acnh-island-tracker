@@ -49,7 +49,8 @@ const useStyles = makeStyles(theme => ({
 
 export default function VillagerDetailsPage(props) {
     const classes = useStyles();
-    const { site } = useStaticQuery(
+    console.log(props.pageContext.villager);
+    const { site, allFile } = useStaticQuery(
         graphql`
             query {
                 site {
@@ -57,14 +58,23 @@ export default function VillagerDetailsPage(props) {
                         siteUrl
                     }
                 }
+                allFile {
+                    nodes {
+                        name
+                        publicURL
+                    }
+                }
             }
         `
     );
+    const allVillagerImgs = allFile && allFile.nodes;
     const { currentResidents, pastResidents, sightings } = React.useContext(SessionContext);
     const { allVillagers } = useVillagers();
     const villagerId = props.pageContext && props.pageContext.villager
         && props.pageContext.villager.id;
     const villager = allVillagers.find(v => v.id === villagerId);
+    const fullImage = (allVillagerImgs && allFile.nodes.find(item => item.name === villager.id).publicURL)
+        || villager.icon;
     const isCurrentResident = !!currentResidents.find(r => r.villager.id === villager.id);
     const isPastResident = !!pastResidents.find(r => r.villager.id === villager.id);
     const hasVisitedCampsite = !!sightings.find(s => s.villager.id === villager.id && s.type === 'campsite');
@@ -77,11 +87,11 @@ export default function VillagerDetailsPage(props) {
                 pathname={props.location.pathname}
                 meta={[{
                     name: "og:image",
-                    content: `${site.siteMetadata.siteUrl}${villager.icon}`,
+                    content: `${site.siteMetadata.siteUrl}${fullImage}`,
                 }]}
             />
             <div className={classes.container}>
-                <img src={villager.icon} alt={`Portrait of ${villager.name}`} />
+                <img src={fullImage} alt={`Portrait of ${villager.name}`} />
                 <Typography className={classes.title} variant="h3">
                     {villager.name}
                 </Typography>
