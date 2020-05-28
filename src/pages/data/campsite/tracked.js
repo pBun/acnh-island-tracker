@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { debounce } from "throttle-debounce";
 import matchSorter from "match-sorter";
 import TextField from "@material-ui/core/TextField";
 import TablePagination from "@material-ui/core/TablePagination";
@@ -114,23 +115,33 @@ function TablePaginationActions(props) {
 }
 
 function TrackedCampsiteVillagersPage(props) {
+    const DEFAULT_PER_PAGE = [10, 25, 50, { label: "All", value: -1 }];
     const classes = useStyles();
     const { sightings } = React.useContext(SessionContext);
-
     const filteredSightings = sightings.filter(s => s.type === "campsite");
     const [page, setPage] = React.useState(0);
-    const [villagersPerPage, setVillagersPerPage] = React.useState(10);
+    const [villagersPerPage, setVillagersPerPage] = React.useState(DEFAULT_PER_PAGE[0]);
     const [searchTerms, setSearchTerms] = React.useState("");
-    const searchResults = matchSorter(filteredSightings, searchTerms, {
-        keys: [
-            "villager.name",
-            "villager.species",
-            "villager.personality",
-            item => `${item.villager.personality} ${item.villager.species}`,
-            item => `${item.villager.species} ${item.villager.personality}`,
-            "villager.gender",
-        ],
-    }).sort((a, b) => b.timestamp - a.timestamp);
+    const searchResults = React.useCallback(
+        matchSorter(filteredSightings, searchTerms, {
+            keys: [
+                "villager.name",
+                "villager.species",
+                "villager.personality",
+                item => `${item.villager.personality} ${item.villager.species}`,
+                item => `${item.villager.species} ${item.villager.personality}`,
+                "villager.gender",
+            ],
+        }).sort((a, b) => b.timestamp - a.timestamp),
+        [filteredSightings, searchTerms],
+    );
+    const delayedSearch = React.useCallback(
+        debounce(250, (terms) => {
+            setPage(0);
+            setSearchTerms(terms);
+        }),
+        [setPage, setSearchTerms],
+    );
     const startIndex = Math.max(page * villagersPerPage, 0);
     const endIndex = startIndex + (villagersPerPage >= 0 ? villagersPerPage : searchResults.length);
     const sightingsToRender = searchResults.slice(startIndex, endIndex);
@@ -152,10 +163,7 @@ function TrackedCampsiteVillagersPage(props) {
                     variant="outlined"
                     value={searchTerms}
                     inputProps={{ className: classes.searchInput }}
-                    onChange={e => {
-                        setSearchTerms(e.target.value);
-                        setPage(0);
-                    }}
+                    onChange={(e) => delayedSearch(e.target.value)}
                 />
                 <SearchIcon className={classes.searchIcon} />
             </div>
@@ -165,7 +173,7 @@ function TrackedCampsiteVillagersPage(props) {
             <TablePagination
                 className={classes.pagination}
                 component="div"
-                rowsPerPageOptions={[10, 25, 50, { label: "All", value: -1 }]}
+                rowsPerPageOptions={DEFAULT_PER_PAGE}
                 count={searchResults.length}
                 rowsPerPage={villagersPerPage}
                 page={page}

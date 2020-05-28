@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { debounce } from "throttle-debounce";
 import matchSorter from "match-sorter";
 import List from "@material-ui/core/List";
 import TextField from "@material-ui/core/TextField";
@@ -114,21 +115,32 @@ function TablePaginationActions(props) {
 }
 
 export default function VillagersPage(props) {
+    const DEFAULT_PER_PAGE = [10, 25, 50, { label: "All", value: -1 }];
     const classes = useStyles();
     const { allVillagers } = useVillagers();
     const [page, setPage] = React.useState(0);
-    const [villagersPerPage, setVillagersPerPage] = React.useState(10);
+    const [villagersPerPage, setVillagersPerPage] = React.useState(DEFAULT_PER_PAGE[0]);
     const [searchTerms, setSearchTerms] = React.useState("");
-    const searchResults = matchSorter(allVillagers, searchTerms, {
-        keys: [
-            "name",
-            "species",
-            "personality",
-            item => `${item.personality} ${item.species}`,
-            item => `${item.species} ${item.personality}`,
-            "gender",
-        ],
-    });
+    const searchResults = React.useCallback(
+        matchSorter(allVillagers, searchTerms, {
+            keys: [
+                "name",
+                "species",
+                "personality",
+                item => `${item.personality} ${item.species}`,
+                item => `${item.species} ${item.personality}`,
+                "gender",
+            ],
+        }),
+        [allVillagers, searchTerms],
+    );
+    const delayedSearch = React.useCallback(
+        debounce(250, (terms) => {
+            setPage(0);
+            setSearchTerms(terms);
+        }),
+        [setPage, setSearchTerms],
+    );
     const startIndex = Math.max(page * villagersPerPage, 0);
     const endIndex = startIndex + (villagersPerPage >= 0 ? villagersPerPage : searchResults.length);
     const villagersToRender = searchResults.slice(startIndex, endIndex);
@@ -145,12 +157,8 @@ export default function VillagersPage(props) {
                     label="Name, species, personality"
                     type="search"
                     variant="outlined"
-                    value={searchTerms}
                     inputProps={{ className: classes.searchInput }}
-                    onChange={e => {
-                        setSearchTerms(e.target.value);
-                        setPage(0);
-                    }}
+                    onChange={(e) => delayedSearch(e.target.value)}
                 />
                 <SearchIcon className={classes.searchIcon} />
             </div>
@@ -165,7 +173,7 @@ export default function VillagersPage(props) {
             <TablePagination
                 className={classes.pagination}
                 component="div"
-                rowsPerPageOptions={[10, 25, 50, { label: "All", value: -1 }]}
+                rowsPerPageOptions={DEFAULT_PER_PAGE}
                 count={searchResults.length}
                 rowsPerPage={villagersPerPage}
                 page={page}
