@@ -56,6 +56,7 @@ const theme = createMuiTheme({
             container: {
                 "& .MuiDialog-paper": {
                     overflow: "initial",
+                    borderRadius: 15,
                 },
             },
         },
@@ -79,7 +80,7 @@ const theme = createMuiTheme({
                 boxShadow: 0,
                 fontSize: defaultTheme.typography.fontSize,
                 padding: defaultTheme.spacing(1, 2.5),
-                borderRadius: 20,
+                borderRadius: 15,
             },
         },
     },
