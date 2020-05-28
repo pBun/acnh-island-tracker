@@ -51,6 +51,23 @@ const theme = createMuiTheme({
                 paddingLeft: defaultTheme.spacing(5),
                 paddingRight: defaultTheme.spacing(5),
             },
+            secondaryAction: {
+                paddingRight: defaultTheme.spacing(12),
+            },
+        },
+        MuiListItemSecondaryAction: {
+            root: {
+                right: defaultTheme.spacing(5),
+            },
+        },
+        MuiListSubheader: {
+            root: {
+                fontWeight: 500,
+            },
+            gutters: {
+                paddingLeft: defaultTheme.spacing(5),
+                paddingRight: defaultTheme.spacing(5),
+            },
         },
         MuiDialog: {
             container: {

@@ -30,22 +30,11 @@ import SEO from "../components/SEO";
 const NUM_CUR_RESIDENTS = 10;
 
 const useStyles = makeStyles(theme => ({
-    intro: {
-        margin: theme.spacing(2, 5, 2),
-    },
-    listTitle: {
-        margin: theme.spacing(3, 5, 0),
-    },
     list: {
         marginBottom: theme.spacing(2),
         padding: theme.spacing(1, 0, 4),
     },
-    listItem: {},
     listSubheader: {
-        paddingLeft: theme.spacing(5),
-        paddingRight: theme.spacing(5),
-        color: theme.palette.text.secondary,
-        fontWeight: 500,
         backgroundColor: theme.palette.background.paper,
     },
     formTitle: {
@@ -250,7 +239,6 @@ export default function ResidentsPage(props) {
                         return (
                             <ResidentListItem
                                 key={`${resident.id}_currentResident`}
-                                className={classes.listItem}
                                 villager={villager}
                                 timestamp={resident.moveInTimestamp}
                                 secondaryAction={
@@ -278,7 +266,7 @@ export default function ResidentsPage(props) {
                 </div>
                 <div>
                     {Array.from(new Array(numEmptyPlots).keys()).map(i => (
-                        <EmptySlotListItem key={`empty_${i}`} className={classes.listItem} />
+                        <EmptySlotListItem key={`empty_${i}`} />
                     ))}
                 </div>
                 <div>
@@ -292,7 +280,6 @@ export default function ResidentsPage(props) {
                                 return (
                                     <ResidentListItem
                                         key={`${resident.id}_pastResident`}
-                                        className={classes.listItem}
                                         villager={villager}
                                         timstamp={resident.moveOutTimestamp}
                                         secondaryAction={

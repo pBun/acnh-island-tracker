@@ -8,7 +8,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
-import LockIcon from "@material-ui/icons/Lock";
+import SettingsIcon from "@material-ui/icons/Settings";
 import PersonIcon from "@material-ui/icons/Person";
 import MoodIcon from "@material-ui/icons/Mood";
 import PetsIcon from "@material-ui/icons/Pets";
@@ -36,8 +36,6 @@ const useStyles = makeStyles(theme => ({
         alignItems: "center",
     },
     listSubheader: {
-        paddingLeft: theme.spacing(5),
-        paddingRight: theme.spacing(5),
         backgroundColor: theme.palette.background.paper,
     },
 }));
@@ -123,12 +121,12 @@ export default function DataNav({ hideIndex }) {
                     secondary="See everyone's tracked villager data in Google Sheets"
                 />
             </ListItem>
-            <ListItem button component={Link} to={"/data/privacy/"}>
+            <ListItem button component={Link} to={"/data/settings/"}>
                 <ListItemIcon>
-                    <LockIcon />
+                    <SettingsIcon />
                 </ListItemIcon>
                 <ListItemText
-                    primary="Privacy Settings"
+                    primary="Settings"
                 />
             </ListItem>
         </List>
