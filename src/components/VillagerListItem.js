@@ -72,13 +72,21 @@ export default function VillagerListItem(props) {
             </Tooltip>
         ));
     }
-    if (!sighting || isCampsiteEncounter) {
+    if (!sighting) {
         secondary.push((
             <Tooltip arrow title={`Your encounter rate: ${myCampsiteString} | Base rate: ${baseCampsiteString}`} placement="top">
                 <span>
                     <CampsiteIcon className={classes.inlineIcon} />
                     {" "}
                     {myCampsiteString}
+                </span>
+            </Tooltip>
+        ));
+    } else if (isCampsiteEncounter) {
+        secondary.push((
+            <Tooltip arrow title={`Base encounter rate: ${baseCampsiteString}`} placement="top">
+                <span>
+                    <CampsiteIcon className={classes.inlineIcon} />
                 </span>
             </Tooltip>
         ));
