@@ -161,7 +161,6 @@ function TrackedCampsiteVillagersPage(props) {
                     label="Name, species, personality"
                     type="search"
                     variant="outlined"
-                    value={searchTerms}
                     inputProps={{ className: classes.searchInput }}
                     onChange={(e) => delayedSearch(e.target.value)}
                 />
