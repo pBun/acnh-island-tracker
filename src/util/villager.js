@@ -12,7 +12,7 @@ export const villagerShape = PropTypes.shape({
     icon: PropTypes.string,
 });
 export const VILLAGERS = villagerData;
-
+export const NUM_VILLAGERS = VILLAGERS.length;
 export const VILLAGERS_BY_SPECIES = groupBy(VILLAGERS, 'species');
 export const AVAILABLE_SPECIES = Object.keys(VILLAGERS_BY_SPECIES);
 export const NUM_SPECIES = AVAILABLE_SPECIES.length;
@@ -62,7 +62,7 @@ export function getCampsiteChance(villager, currentResidents=[], pastResidents=[
 
     // 0% if first pass and already encountered
     const encounters = getDistinctEncounters(currentResidents, pastResidents, sightings.filter(s => s.type === 'campsite'));
-    const isFirstCycle = encounters.length <= VILLAGERS.length;
+    const isFirstCycle = encounters.length <= NUM_VILLAGERS;
     if (isFirstCycle && encounters.find(e => e.id === villager.id)) return 0;
 
     // FIRST ROLL * SECOND ROLL = chance to see a specific villager at a campsite

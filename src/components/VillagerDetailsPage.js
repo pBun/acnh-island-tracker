@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useStaticQuery, graphql } from "gatsby";
+import { Link, graphql } from "gatsby";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
@@ -51,28 +51,11 @@ const useStyles = makeStyles(theme => ({
 
 export default function VillagerDetailsPage(props) {
     const classes = useStyles();
-    const { site, allFile } = useStaticQuery(
-        graphql`
-            query {
-                site {
-                    siteMetadata {
-                        siteUrl
-                    }
-                }
-                allFile {
-                    nodes {
-                        name
-                        publicURL
-                    }
-                }
-            }
-        `
-    );
+    const { site, allFile } = props.data;
     const allVillagerImgs = allFile && allFile.nodes;
     const { currentResidents, pastResidents, session } = React.useContext(SessionContext);
     const { allVillagers } = useVillagers();
-    const villagerId = props.pageContext && props.pageContext.villager
-        && props.pageContext.villager.id;
+    const villagerId = props.pageContext && props.pageContext.villagerId;
     const villager = allVillagers.find(v => v.id === villagerId);
     const fullImage = (allVillagerImgs && allFile.nodes.find(item => item.name === villager.id).publicURL)
         || villager.icon;
@@ -210,3 +193,19 @@ export default function VillagerDetailsPage(props) {
         </Page>
     );
 }
+
+export const query = graphql`
+    query VillagerDetailsPageQuery($villagerId: String) {
+        site {
+            siteMetadata {
+                siteUrl
+            }
+        }
+        allFile(filter: {name: {eq: $villagerId}}) {
+            nodes {
+                name
+                publicURL
+            }
+        }
+    }
+`;

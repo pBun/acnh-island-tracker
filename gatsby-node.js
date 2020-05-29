@@ -15,7 +15,7 @@ exports.createPages = async ({ actions }) => {
             matchPath: `/villagers/${villager.id}/`,
             component: path.resolve('src/components/VillagerDetailsPage.js'),
             context: {
-                villager,
+                villagerId: villager.id,
             },
         });
     });

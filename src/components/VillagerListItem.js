@@ -10,6 +10,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
+import HomeIcon from "@material-ui/icons/Home";
 
 import AppContext from "../context/AppContext";
 import SessionContext from "../context/SessionContext";
@@ -18,8 +19,10 @@ import NmtIcon from "../components/icons/Nmt";
 import CampsiteIcon from "../components/icons/Campsite";
 
 import {
+    NUM_VILLAGERS,
     getMysteryIslandChance,
     getCampsiteChance,
+    getDistinctEncounters,
 } from "../util/villager";
 import { percentToString } from "../util/text";
 
@@ -54,42 +57,115 @@ export default function VillagerListItem(props) {
     const { currentResidents, pastResidents, session, deleteSighting } = React.useContext(SessionContext);
     const { setSnackMessage } = React.useContext(AppContext);
     const baseMysteryIslandString = percentToString(villager.baseIslandChance);
-    const myMysteryIslandString = percentToString(getMysteryIslandChance(villager, currentResidents));
-    const baseCampsiteString = percentToString(villager.baseIslandChance);
-    const myCampsiteString = percentToString(getCampsiteChance(villager, currentResidents, pastResidents, session.sightings));
+    const myMysteryIslandChance = getMysteryIslandChance(villager, currentResidents);
+    const myMysteryIslandString = percentToString(myMysteryIslandChance);
+    const baseCampsiteString = percentToString(villager.baseCampsiteChance);
+    const myCampsiteChance = getCampsiteChance(villager, currentResidents, pastResidents, session.sightings);
+    const myCampsiteString = percentToString(myCampsiteChance);
     const isMysteryIslandEncounter = sighting && sighting.type === 'mystery-island';
     const isCampsiteEncounter = sighting && sighting.type === 'campsite';
+    const isCurrentResident = !!currentResidents.find(r => r.villager.id === villager.id);
+    const isPastResident = !!pastResidents.find(r => r.villager.id === villager.id);
+    const hasVisitedCampsite = !!session.sightings.find(s => s.villager.id === villager.id && s.type === 'campsite');
+    const distinctEncounters = getDistinctEncounters(currentResidents, pastResidents, session.sightings.filter(s => s.type === 'campsite'));
+    const isFirstCyle = distinctEncounters.length < NUM_VILLAGERS;
     const secondary = [];
     if (sighting) secondary.push(format(sighting.timestamp, "h:mm a"));
-    if (!sighting || isMysteryIslandEncounter) {
+    if (isCurrentResident) {
         secondary.push((
-            <Tooltip arrow title={`Your encounter rate: ${myMysteryIslandString} | Base rate: ${baseMysteryIslandString}`} placement="top">
+            <Tooltip
+                arrow
+                title={(
+                    <>
+                        <p>{villager.name} is a current resident which means your encounter rate is 0%</p>
+                        <p>Base campsite rate: {baseCampsiteString}</p>
+                        <p>Base mystery island rate: {baseMysteryIslandString}</p>
+                    </>
+                )}
+                placement="top"
+            >
                 <span>
-                    <NmtIcon className={classes.inlineIcon} />
-                    {" "}
-                    {myMysteryIslandString}
+                    <HomeIcon className={classes.inlineIcon} />
                 </span>
             </Tooltip>
         ));
-    }
-    if (!sighting) {
-        secondary.push((
-            <Tooltip arrow title={`Your encounter rate: ${myCampsiteString} | Base rate: ${baseCampsiteString}`} placement="top">
-                <span>
-                    <CampsiteIcon className={classes.inlineIcon} />
-                    {" "}
-                    {myCampsiteString}
-                </span>
-            </Tooltip>
-        ));
-    } else if (isCampsiteEncounter) {
-        secondary.push((
-            <Tooltip arrow title={`Base encounter rate: ${baseCampsiteString}`} placement="top">
-                <span>
-                    <CampsiteIcon className={classes.inlineIcon} />
-                </span>
-            </Tooltip>
-        ));
+    } else {
+        if (!sighting || isMysteryIslandEncounter) {
+            secondary.push((
+                <Tooltip
+                    arrow
+                    title={(
+                        <>
+                            <p>Your encounter rate: {myMysteryIslandString}</p>
+                            <p>Base rate: {baseMysteryIslandString}</p>
+                        </>
+                    )}
+                    placement="top"
+                >
+                    <span>
+                        <NmtIcon className={classes.inlineIcon} />
+                        {" "}
+                        {myMysteryIslandChance ? myMysteryIslandString : ""}
+                    </span>
+                </Tooltip>
+            ));
+        }
+        if (sighting && !isCampsiteEncounter) {
+            // skip
+        } else if (isFirstCyle && isPastResident) {
+            secondary.push((
+                <Tooltip
+                    arrow
+                    title={(
+                        <>
+                            <p>{villager.name} was a resident on your island which means your encounter rate is 0%</p>
+                            <p>Base campsite rate: {baseCampsiteString}</p>
+                        </>
+                    )}
+                    placement="top"
+                >
+                    <span>
+                        <HomeIcon className={classes.inlineIcon} />
+                    </span>
+                </Tooltip>
+            ));
+        } else if (isFirstCyle && hasVisitedCampsite) {
+            secondary.push((
+                <Tooltip
+                    arrow
+                    title={(
+                        <>
+                            <p>{villager.name} has visited your campsite which means your encounter rate is 0%</p>
+                            <p>Base campsite rate: {baseCampsiteString}</p>
+                        </>
+                    )}
+                    placement="top"
+                >
+                    <span>
+                        <CampsiteIcon className={classes.inlineIcon} />
+                    </span>
+                </Tooltip>
+            ));
+        } else {
+            secondary.push((
+                <Tooltip
+                    arrow
+                    title={(
+                        <>
+                            <p>Your encounter rate: {myCampsiteString}</p>
+                            <p>Base rate: {baseCampsiteString}</p>
+                        </>
+                    )}
+                    placement="top"
+                >
+                    <span>
+                        <CampsiteIcon className={classes.inlineIcon} />
+                        {" "}
+                        {myCampsiteChance ? myCampsiteString : ""}
+                    </span>
+                </Tooltip>
+            ));
+        }
     }
     return (
         <ListItem
