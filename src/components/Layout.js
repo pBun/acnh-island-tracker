@@ -16,11 +16,12 @@ import HomeIcon from "@material-ui/icons/Home";
 import Tooltip from "@material-ui/core/Tooltip";
 import SearchIcon from "@material-ui/icons/Search";
 
-import SessionContext from "../context/SessionContext";
-import AppContext from "../context/AppContext";
+import AppContext, { MODALS } from "../context/AppContext";
 import LoadingContext from "../context/LoadingContext";
 
-import TrackerModal from "../components/TrackerModal";
+import ImportEncountersModal from "../components/ImportEncountersModal";
+import ImportResidentsModal from "../components/ImportResidentsModal";
+import TrackEncounterModal from "../components/TrackEncounterModal";
 
 const useStyles = makeStyles(theme => ({
     buttonProgress: {
@@ -58,20 +59,18 @@ const useStyles = makeStyles(theme => ({
         top: 0,
         left: 0,
         right: 0,
-        zIndex: 1,
+        zIndex: 1301, // above dialog
     },
 }));
 
 export default function BottomAppBar({ children }) {
     const classes = useStyles();
     const {
-        trackerModalOpen,
-        setClockModalState,
-        setTrackerModalState,
+        setModalOpen,
+        snackMessage,
+        setSnackMessage,
     } = React.useContext(AppContext);
     const { loading } = React.useContext(LoadingContext);
-    const { addSighting } = React.useContext(SessionContext);
-    const [snackMessage, setSnackMessage] = React.useState("");
     return (
         <>
             <CssBaseline />
@@ -89,32 +88,12 @@ export default function BottomAppBar({ children }) {
                             color="secondary"
                             aria-label="add"
                             className={classes.fabButton}
-                            onClick={() => setTrackerModalState(true)}
+                            onClick={() => setModalOpen(MODALS.TRACK_ENCOUNTER)}
                             disabled={loading}
                         >
                             <PersonAddIcon />
                         </Fab>
                     </Tooltip>
-                    <TrackerModal
-                        open={trackerModalOpen}
-                        handleClockSettings={() => {
-                            setClockModalState(true);
-                        }}
-                        handleConfirm={(villager, type) => {
-                            if (!villager) return;
-                            setTrackerModalState(false);
-                            addSighting({ villager, type })
-                                .catch(err => {
-                                    setSnackMessage(err);
-                                })
-                                .then(() => {
-                                    setSnackMessage(`${villager.name} tracked successfully!`);
-                                });
-                        }}
-                        handleCancel={() => {
-                            setTrackerModalState(false);
-                        }}
-                    />
                     <div className={classes.grow} />
                     <Tooltip arrow title="My Residents" placement="top">
                         <IconButton
@@ -148,6 +127,9 @@ export default function BottomAppBar({ children }) {
                     </Tooltip>
                 </Toolbar>
             </AppBar>
+            <TrackEncounterModal />
+            <ImportEncountersModal />
+            <ImportResidentsModal />
             <Snackbar
                 anchorOrigin={{ vertical: "top", horizontal: "center" }}
                 open={!!snackMessage}

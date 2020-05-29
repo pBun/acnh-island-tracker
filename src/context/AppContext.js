@@ -3,17 +3,27 @@ import PropTypes from "prop-types";
 
 const LOCAL_STORAGE_KEY = "islandTrackerApp";
 
+export const MODALS = {
+    TRACKER: "TRACKER",
+    TRACK_ENCOUNTER: "TRACK_ENCOUNTER",
+    IMPORT_RESIDENTS: "IMPORT_RESIDENTS",
+    IMPORT_ENCOUNTERS: "IMPORT_ENCOUNTERS",
+    EXPORT_SESSION: "EXPORT_SESSION",
+    IMPORT_SESSION: "IMPORT_SESSION",
+};
+
 const getInitialState = () => ({
-    trackerModalOpen: false,
+    modalOpen: null,
     allowDataShare: true,
     trackingPreference: "mystery-island",
+    snackMessage: null,
 });
 function reducer(state, action) {
     switch (action.type) {
-        case "setTrackerModalState":
+        case "setModalOpen":
             return {
                 ...state,
-                trackerModalOpen: action.payload,
+                modalOpen: action.payload,
             };
         case "setTrackingPreference":
             return {
@@ -25,6 +35,11 @@ function reducer(state, action) {
                 ...state,
                 allowDataShare: action.payload,
             };
+        case "setSnackMessage":
+            return {
+                ...state,
+                snackMessage: action.payload,
+            };
         case "reset":
             return getInitialState();
         default:
@@ -33,7 +48,8 @@ function reducer(state, action) {
 }
 const initialContext = {
     state: getInitialState(),
-    setTrackerModalState: () => {},
+    setModalOpen: (modal) => {},
+    setSnackMessage: (msg) => {},
     setAllowDataShare: approval => {},
     setTrackingPreference: preference => {},
 };
@@ -54,16 +70,16 @@ export const AppProvider = ({ children }) => {
         <AppContext.Provider
             value={{
                 ...state,
-                setClockModalState: modalState => {
+                setModalOpen: modal => {
                     dispatch({
-                        type: "setClockModalState",
-                        payload: modalState,
+                        type: "setModalOpen",
+                        payload: modal,
                     });
                 },
-                setTrackerModalState: modalState => {
+                setSnackMessage: msg => {
                     dispatch({
-                        type: "setTrackerModalState",
-                        payload: modalState,
+                        type: "setSnackMessage",
+                        payload: msg,
                     });
                 },
                 setAllowDataShare: approval => {

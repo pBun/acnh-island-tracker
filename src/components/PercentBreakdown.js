@@ -17,8 +17,9 @@ import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import { format } from "date-fns";
 
-import SessionContext, { villagerShape } from "../context/SessionContext";
+import SessionContext from "../context/SessionContext";
 
+import { villagerShape } from "../util/session";
 import { VILLAGERS } from "../util/villager";
 
 const ROWS_PER_PAGE = [10, 20, 50, 100];

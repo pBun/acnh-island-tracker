@@ -6,35 +6,9 @@ import { shareSighting } from "../util/dataShare";
 import AppContext from "../context/AppContext";
 import LoadingContext from "../context/LoadingContext";
 
-import villagerUtil from "../util/villager";
+import { SESSION_VERSION, generateRandomId, healSessionShape } from "../util/session";
 
-const VILLAGERS_MINIMAL = villagerUtil.VILLAGERS_MINIMAL;
-const SESSION_VERSION = 1;
 export const LOCAL_STORAGE_KEY = "islandTrackerSession";
-const SIGHTING_TYPES = ['mystery-island', 'campsite'];
-
-// SHAPES
-export const villagerShape = villagerUtil.villagerShape;
-export const sightingShape = PropTypes.shape({
-    id: PropTypes.string,
-    timestamp: PropTypes.number,
-    villager: PropTypes.shape(villagerShape),
-    type: PropTypes.oneOf(SIGHTING_TYPES),
-    dataShared: PropTypes.bool,
-});
-export const residentShape = PropTypes.shape({
-    id: PropTypes.string,
-    villager: PropTypes.shape(villagerShape),
-    moveInTimestamp: PropTypes.number,
-    moveOutTimestamp: PropTypes.number,
-});
-export const sessionShape = PropTypes.shape({
-    id: PropTypes.string,
-    version: PropTypes.number,
-    timestamp: PropTypes.number,
-    sightings: PropTypes.arrayOf(sightingShape),
-    residents: PropTypes.arrayOf(residentShape),
-});
 
 // INTIAL STATE/SESSION
 function getInitialSession() {
@@ -59,32 +33,6 @@ const initialState = {
     deleteSighting: opts => {},
     resetSessionData: () => {},
 };
-
-// HELPERS
-function generateRandomId() {
-    return `${Math.random().toString(36).substr(2, 9)}${Math.random().toString(36).substr(2, 9)}`;
-}
-export function healSessionShape(session) {
-    if (session.version >= SESSION_VERSION) return session;
-    return {
-        id: session.id || generateRandomId(),
-        version: 1,
-        timestamp: session.timestamp,
-        sightings: session.sightings.map(s => ({
-            id: s.id || generateRandomId(),
-            timestamp: s.timestamp,
-            villager: VILLAGERS_MINIMAL.find(v => v.name === s.villager),
-            type: s.location || "mystery-island",
-            dataShared: !!s.dataShared,
-        })),
-        residents: session.residents.map(r => ({
-            id: generateRandomId(),
-            villager: VILLAGERS_MINIMAL.find(v => v.name === r.name),
-            moveInTimestamp: r.moveInTimestamp,
-            moveOutTimestamp: r.moveOutTimestamp,
-        })),
-    };
-}
 
 // REDUCER
 const ACTIONS = {
@@ -321,6 +269,9 @@ export const SessionProvider = ({ children }) => {
                                 return resolve();
                             });
                     });
+                },
+                getSessionCode: () => {
+                    return JSON.stringify(session);
                 },
             }}
         >

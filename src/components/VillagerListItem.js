@@ -11,6 +11,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 
+import AppContext from "../context/AppContext";
 import SessionContext from "../context/SessionContext";
 
 import NmtIcon from "../components/icons/Nmt";
@@ -51,6 +52,7 @@ export default function VillagerListItem(props) {
     } = props;
     const classes = useStyles();
     const { currentResidents, pastResidents, sightings, deleteSighting } = React.useContext(SessionContext);
+    const { setSnackMessage } = React.useContext(AppContext);
     const baseMysteryIslandString = percentToString(villager.baseIslandChance);
     const myMysteryIslandString = percentToString(getMysteryIslandChance(villager, currentResidents));
     const baseCampsiteString = percentToString(villager.baseIslandChance);
@@ -110,7 +112,10 @@ export default function VillagerListItem(props) {
                             onClick={() => {
                                 const confirmMessage = "Are you sure you want to permenantly delete this encounter? This cannot be undone.";
                                 if (window && window.confirm(confirmMessage)) {
-                                    deleteSighting({ sighting });
+                                    deleteSighting({ sighting })
+                                        .then(() => {
+                                            setSnackMessage(`Encounter successfully deleted from browser${sighting.dataShared ? " and flagged for deletion on shared spreadsheet!" : "!"}`)
+                                        });
                                 }
                             }}
                             aria-label="delete encounter"

@@ -23,6 +23,7 @@ import PersonAddIcon from "@material-ui/icons/PersonAdd";
 
 import useVillagers from "../hooks/useVillagers";
 import SessionContext from "../context/SessionContext";
+import AppContext from "../context/AppContext";
 import VilagerCombobox from "../components/VillagerCombobox";
 import Page from "../components/Page";
 import SEO from "../components/SEO";
@@ -144,6 +145,7 @@ export default function ResidentsPage(props) {
         moveOutResident,
         deleteResident,
     } = React.useContext(SessionContext);
+    const { setSnackMessage } = React.useContext(AppContext);
     const { allVillagers } = useVillagers();
     const [selectedVillager, setSelectedVillager] = React.useState(null);
     const [typeOfResident, setTypeOfResident] = React.useState("current");
@@ -169,10 +171,14 @@ export default function ResidentsPage(props) {
                         ? moveInResident(selectedVillager)
                         : moveOutResident(selectedVillager);
                     moveResident
-                        .catch(err => setError(err))
                         .then(() => {
                             setSelectedVillager(null);
                             setError('');
+                            setSnackMessage(`${selectedVillager.name} successfully added to ${typeOfResident} residents!`);
+                        })
+                        .catch(err => {
+                            setError(err);
+                            setSnackMessage(err);
                         });
                 }}
             >
@@ -250,8 +256,14 @@ export default function ResidentsPage(props) {
                                                 const confirmMessage = `Are you sure you want to remove ${villager.name} from your island?`;
                                                 if (window && window.confirm(confirmMessage)) {
                                                     moveOutResident(villager)
-                                                        .catch(err => setError(err))
-                                                        .then(() => setError(''));
+                                                        .then(() => {
+                                                            setError('');
+                                                            setSnackMessage(`${villager.name} successfully moved to past residents!`);
+                                                        })
+                                                        .catch(err => {
+                                                            setError(err);
+                                                            setSnackMessage(err);
+                                                        });
                                                 }
                                             }}
                                             aria-label="remove villager from island"
@@ -291,8 +303,14 @@ export default function ResidentsPage(props) {
                                                         const confirmMessage = `Are you sure you want to remove all history of ${villager.name} from your island? This cannot be undone.`;
                                                         if (window && window.confirm(confirmMessage)) {
                                                             deleteResident(villager)
-                                                                .catch(err => setError(err))
-                                                                .then(() => setError(''));
+                                                            .then(() => {
+                                                                setError('');
+                                                                setSnackMessage(`${villager.name} resident history successfully deleted from your browser!`);
+                                                            })
+                                                            .catch(err => {
+                                                                setError(err);
+                                                                setSnackMessage(err);
+                                                            });
                                                         }
                                                     }}
                                                     aria-label="delete all history of resident"

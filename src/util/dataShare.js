@@ -49,7 +49,31 @@ export function shareSighting({
     });
 }
 
+export function getSightings() {
+    return new Promise((resolve, reject) => {
+        const getURL = 'https://spreadsheets.google.com/feeds/list/1p542EQ85gdgLJfjZcI3SSmTdsnZKNi6KKjjjSdGkl7Q/od6/public/values?alt=json';
+        var request = new XMLHttpRequest();
+        request.open("GET", getURL, true);
+        request.setRequestHeader(
+            "Content-Type",
+            "application/x-www-form-urlencoded; charset=UTF-8"
+        );
+        request.onload = function () {
+            if (this.status < 200 || this.status > 400) {
+                return reject(`Error ${this.status}: unable to get spreadsheet`);
+            }
+            const data = JSON.parse(this.response);
+            resolve(data);
+        };
+        request.onerror = function () {
+            reject('Unable to get spreadsheet. Please check your connection and try again.');
+        };
+        request.send();
+    });
+}
+
 export default {
     DATA_SHARE_URL,
     shareSighting,
+    getSightings,
 };

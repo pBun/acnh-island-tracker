@@ -11,7 +11,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 
 import { DATA_SHARE_URL } from "../../util/dataShare";
 
-import AppContext from "../../context/AppContext";
+import AppContext, { MODALS } from "../../context/AppContext";
 import SessionContext from "../../context/SessionContext";
 
 import Page from "../../components/Page";
@@ -40,7 +40,12 @@ const useStyles = makeStyles(theme => ({
 
 function PrivacyPage(props) {
     const classes = useStyles();
-    const { allowDataShare, setAllowDataShare, resetAppData } = React.useContext(AppContext);
+    const {
+        allowDataShare,
+        setAllowDataShare,
+        resetAppData,
+        setModalOpen,
+    } = React.useContext(AppContext);
     const { resetSessionData } = React.useContext(SessionContext);
     const pageTitle = "Data Settings";
     return (
@@ -50,6 +55,26 @@ function PrivacyPage(props) {
                 <ListSubheader className={classes.listSubheader}>
                     General
                 </ListSubheader>
+                <ListItem
+                    button
+                    onClick={() => {
+                        setModalOpen(MODALS.IMPORT_ENCOUNTERS);
+                    }}
+                >
+                    <ListItemText
+                        primary="Import Encounters from Spreadsheet"
+                    />
+                </ListItem>
+                <ListItem
+                    button
+                    onClick={() => {
+                        setModalOpen(MODALS.IMPORT_RESIDENTS);
+                    }}
+                >
+                    <ListItemText
+                        primary="Import Residents from Spreadsheet"
+                    />
+                </ListItem>
                 <ListItem>
                     <ListItemText
                         id="switch-list-label-delete-all"
@@ -58,6 +83,7 @@ function PrivacyPage(props) {
                             <>
                                 Start a new session by deleting ALL encounters, residents, and app data stored in your browser. Note that
                                 this does not delete data stored in
+                                {" "}
                                 <a
                                     href={DATA_SHARE_URL}
                                     target="_blank"

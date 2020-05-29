@@ -1,10 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
 import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -12,9 +8,11 @@ import FormLabel from "@material-ui/core/FormLabel";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import Radio from "@material-ui/core/Radio";
 
-import AppContext from "../context/AppContext";
+import AppContext, { MODALS } from "../context/AppContext";
+import LoadingContext from "../context/LoadingContext";
+import SessionContext from "../context/SessionContext";
 
-import ChatStyleHeadline from "../components/ChatStyleHeadline";
+import GenericModal from "../components/GenericModal";
 import VilagerCombobox from "../components/VillagerCombobox";
 
 const useStyles = makeStyles(theme => ({
@@ -36,27 +34,52 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function FormModal({
-    children,
-    open,
-    handleClockSettings,
-    handleConfirm,
-    handleCancel,
-}) {
+export default function EncounterModal(props) {
     const classes = useStyles();
+    const { setLoading } = React.useContext(LoadingContext);
+    const { addSighting } = React.useContext(SessionContext);
     const {
         allowDataShare,
         setAllowDataShare,
         trackingPreference,
         setTrackingPreference,
+        modalOpen,
+        setModalOpen,
+        setSnackMessage,
     } = React.useContext(AppContext);
     const [selectedVillager, setSelectedVillager] = React.useState(null);
+    const [error, setError] = React.useState(null);
+    const handleConfirm = React.useCallback(() => {
+        if (!selectedVillager) {
+            setError("Please select a villager");
+            return;
+        }
+        setLoading(true);
+        addSighting({
+            villager: selectedVillager,
+            type: trackingPreference,
+        }).then(() => {
+            setSnackMessage(`${selectedVillager.name} successfully tracked!`);
+            setLoading(false);
+            setSelectedVillager(null);
+        }).catch(err => {
+            setSnackMessage(err);
+            setLoading(false);
+        });
+    }, [selectedVillager, setLoading, addSighting, setSnackMessage, trackingPreference]);
     return (
-        <Dialog open={open} onClose={handleCancel} aria-labelledby="form-dialog-title">
-            <ChatStyleHeadline id="form-dialog-title" component="h2">
-                Track Encounter
-            </ChatStyleHeadline>
-            <DialogContent>
+        <GenericModal
+            title="Track Encounter"
+            handleConfirm={handleConfirm}
+            confirmText="Track"
+            open={modalOpen === MODALS.TRACK_ENCOUNTER}
+            handleCancel={() => {
+                setModalOpen(null);
+                setSelectedVillager(null);
+                setError(null);
+            }}
+        >
+            <>
                 <FormControl component="fieldset">
                     <FormLabel component="legend" className={classes.radioGroupLabel}>
                         Encounter Location
@@ -85,8 +108,12 @@ export default function FormModal({
                 <VilagerCombobox
                     id="villager-to-track"
                     value={selectedVillager}
-                    onChange={(e, newVal) => setSelectedVillager(newVal)}
+                    onChange={(e, newVal) => {
+                        setSelectedVillager(newVal);
+                        setError("");
+                    }}
                     className={classes.combobox}
+                    error={error}
                 />
                 <FormControl
                     margin="normal"
@@ -119,28 +146,7 @@ export default function FormModal({
                         }
                     />
                 </FormControl>
-            </DialogContent>
-            <DialogActions>
-                <Button
-                    onClick={() => {
-                        handleCancel();
-                        setSelectedVillager(null);
-                    }}
-                    color="primary"
-                >
-                    Cancel
-                </Button>
-                <Button
-                    disabled={!selectedVillager}
-                    onClick={() => {
-                        handleConfirm(selectedVillager, trackingPreference);
-                        setSelectedVillager(null);
-                    }}
-                    color="primary"
-                >
-                    Track
-                </Button>
-            </DialogActions>
-        </Dialog>
+            </>
+        </GenericModal>
     );
 }
