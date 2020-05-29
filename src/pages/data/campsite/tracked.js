@@ -117,8 +117,8 @@ function TablePaginationActions(props) {
 function TrackedCampsiteVillagersPage(props) {
     const DEFAULT_PER_PAGE = [10, 25, 50, { label: "All", value: -1 }];
     const classes = useStyles();
-    const { sightings } = React.useContext(SessionContext);
-    const filteredSightings = sightings.filter(s => s.type === "campsite");
+    const { session } = React.useContext(SessionContext);
+    const filteredSightings = session.sightings.filter(s => s.type === "campsite");
     const [page, setPage] = React.useState(0);
     const [villagersPerPage, setVillagersPerPage] = React.useState(DEFAULT_PER_PAGE[0]);
     const [searchTerms, setSearchTerms] = React.useState("");

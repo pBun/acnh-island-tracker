@@ -218,7 +218,7 @@ Row.propTypes = {
 
 function PercentBreakdownTable({ villagerPropName }) {
     const classes = useStyles();
-    const { sightings } = useContext(SessionContext);
+    const { session } = useContext(SessionContext);
     const [order, setOrder] = React.useState("desc");
     const [orderBy, setOrderBy] = React.useState("count");
     const [page, setPage] = React.useState(0);
@@ -234,7 +234,7 @@ function PercentBreakdownTable({ villagerPropName }) {
     availableProps.forEach(prop => {
         data[prop] = [];
     });
-    sightings.forEach(sighting => {
+    session.sightings.forEach(sighting => {
         const villager = VILLAGERS.find(v => v.id === sighting.villager.id);
         const prop = villager && villager[villagerPropName];
         if (!prop) return;
@@ -260,7 +260,7 @@ function PercentBreakdownTable({ villagerPropName }) {
     const rows = Object.keys(data).map(prop => ({
         name: prop,
         count: data[prop].length,
-        percent: Math.round((data[prop].length / Math.max(1, sightings.length)) * 100),
+        percent: Math.round((data[prop].length / Math.max(1, session.sightings.length)) * 100),
         history: data[prop],
     }));
     const emptyRows =

@@ -21,7 +21,7 @@ function getInitialSession() {
     };
 }
 const initialState = {
-    ...getInitialSession(),
+    session: getInitialSession(),
     currentResidents: [],
     pastResidents: [],
     getCurrentResidents: () => {},
@@ -174,7 +174,6 @@ export const SessionProvider = ({ children }) => {
         <SessionContext.Provider
             value={{
                 session,
-                sightings: session.sightings,
                 currentResidents,
                 pastResidents,
                 resetSessionData: () => {

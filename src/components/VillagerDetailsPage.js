@@ -69,7 +69,7 @@ export default function VillagerDetailsPage(props) {
         `
     );
     const allVillagerImgs = allFile && allFile.nodes;
-    const { currentResidents, pastResidents, sightings } = React.useContext(SessionContext);
+    const { currentResidents, pastResidents, session } = React.useContext(SessionContext);
     const { allVillagers } = useVillagers();
     const villagerId = props.pageContext && props.pageContext.villager
         && props.pageContext.villager.id;
@@ -78,8 +78,8 @@ export default function VillagerDetailsPage(props) {
         || villager.icon;
     const isCurrentResident = !!currentResidents.find(r => r.villager.id === villager.id);
     const isPastResident = !!pastResidents.find(r => r.villager.id === villager.id);
-    const hasVisitedCampsite = !!sightings.find(s => s.villager.id === villager.id && s.type === 'campsite');
-    const filteredSightings = sightings.filter(s => s.villager.id === villager.id);
+    const hasVisitedCampsite = !!session.sightings.find(s => s.villager.id === villager.id && s.type === 'campsite');
+    const filteredSightings = session.sightings.filter(s => s.villager.id === villager.id);
     if (!villager) return '404';
     return (
         <Page title={villager.name}>
@@ -172,7 +172,7 @@ export default function VillagerDetailsPage(props) {
                         Your Encounter Rate:
                     </Grid>
                     <Grid item xs={6} className={classes.value}>
-                        {percentToString(getCampsiteChance(villager, currentResidents, pastResidents, sightings))}
+                        {percentToString(getCampsiteChance(villager, currentResidents, pastResidents, session.sightings))}
                     </Grid>
                     <Grid item xs={6} className={classes.label}>
                         Base Encounter Rate:

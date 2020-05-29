@@ -51,12 +51,12 @@ export default function VillagerListItem(props) {
         ...otherProps
     } = props;
     const classes = useStyles();
-    const { currentResidents, pastResidents, sightings, deleteSighting } = React.useContext(SessionContext);
+    const { currentResidents, pastResidents, session, deleteSighting } = React.useContext(SessionContext);
     const { setSnackMessage } = React.useContext(AppContext);
     const baseMysteryIslandString = percentToString(villager.baseIslandChance);
     const myMysteryIslandString = percentToString(getMysteryIslandChance(villager, currentResidents));
     const baseCampsiteString = percentToString(villager.baseIslandChance);
-    const myCampsiteString = percentToString(getCampsiteChance(villager, currentResidents, pastResidents, sightings));
+    const myCampsiteString = percentToString(getCampsiteChance(villager, currentResidents, pastResidents, session.sightings));
     const isMysteryIslandEncounter = sighting && sighting.type === 'mystery-island';
     const isCampsiteEncounter = sighting && sighting.type === 'campsite';
     const secondary = [];
