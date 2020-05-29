@@ -12,8 +12,8 @@ export default function useVillagerIcons() {
                             height
                             src
                         }
-                        fixed(base64Width: 40) {
-                            base64
+                        fixed(width: 40) {
+                            src
                             srcWebp
                             originalName
                         }
@@ -24,7 +24,7 @@ export default function useVillagerIcons() {
     );
     const villagerIcons = {};
     villagerIconsQuery.allImageSharp.nodes.forEach(node => {
-        villagerIcons[node.fixed.originalName.replace(".png", "")] = node.fixed.base64;
+        villagerIcons[node.fixed.originalName.replace(".png", "")] = node.fixed.src;
     });
     return villagerIcons;
 }
