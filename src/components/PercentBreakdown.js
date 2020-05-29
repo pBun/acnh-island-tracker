@@ -234,7 +234,8 @@ function PercentBreakdownTable({ villagerPropName }) {
     availableProps.forEach(prop => {
         data[prop] = [];
     });
-    session.sightings.forEach(sighting => {
+    const filteredSightings = session.sightings.filter(s => s.type === "mystery-island");
+    filteredSightings.forEach(sighting => {
         const villager = VILLAGERS.find(v => v.id === sighting.villager.id);
         const prop = villager && villager[villagerPropName];
         if (!prop) return;
@@ -260,7 +261,7 @@ function PercentBreakdownTable({ villagerPropName }) {
     const rows = Object.keys(data).map(prop => ({
         name: prop,
         count: data[prop].length,
-        percent: Math.round((data[prop].length / Math.max(1, session.sightings.length)) * 100),
+        percent: Math.round((data[prop].length / Math.max(1, filteredSightings.length)) * 100),
         history: data[prop],
     }));
     const emptyRows =
