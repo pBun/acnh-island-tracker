@@ -4,10 +4,12 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import Checkbox from "@material-ui/core/Checkbox";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
+import ImportExportIcon from '@material-ui/icons/ImportExport';
 
 import { DATA_SHARE_URL } from "../../util/dataShare";
 
@@ -36,6 +38,9 @@ const useStyles = makeStyles(theme => ({
         paddingRight: theme.spacing(5),
         backgroundColor: theme.palette.background.paper,
     },
+    linkIcon: {
+        marginRight: theme.spacing(-3),
+    },
 }));
 
 function PrivacyPage(props) {
@@ -55,6 +60,33 @@ function PrivacyPage(props) {
                 <ListSubheader className={classes.listSubheader}>
                     General
                 </ListSubheader>
+                <ListItem
+                    button
+                    onClick={() => {
+                        setModalOpen(MODALS.EXPORT_SESSION);
+                    }}
+                >
+
+                    <ListItemText
+                        primary="Export Local Session"
+                    />
+                    <ListItemIcon className={classes.linkIcon}>
+                        <ImportExportIcon />
+                    </ListItemIcon>
+                </ListItem>
+                <ListItem
+                    button
+                    onClick={() => {
+                        setModalOpen(MODALS.IMPORT_SESSION);
+                    }}
+                >
+                    <ListItemText
+                        primary="Import Local Session"
+                    />
+                    <ListItemIcon className={classes.linkIcon}>
+                        <ImportExportIcon />
+                    </ListItemIcon>
+                </ListItem>
                 <ListItem
                     button
                     onClick={() => {

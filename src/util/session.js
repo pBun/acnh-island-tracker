@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import hash from "object-hash";
 
 import { getSightings } from "../util/dataShare";
 
@@ -11,24 +12,24 @@ export const SIGHTING_TYPES = ['mystery-island', 'campsite'];
 // SHAPES
 export const villagerShape = villagerUtil.villagerShape;
 export const sightingShape = PropTypes.shape({
-    id: PropTypes.string,
-    timestamp: PropTypes.number,
-    villager: PropTypes.shape(villagerShape),
-    type: PropTypes.oneOf(SIGHTING_TYPES),
-    dataShared: PropTypes.bool,
+    id: PropTypes.string.isRequired,
+    timestamp: PropTypes.number.isRequired,
+    villager: PropTypes.shape(villagerShape).isRequired,
+    type: PropTypes.oneOf(SIGHTING_TYPES).isRequired,
+    dataShared: PropTypes.bool.isRequired,
 });
 export const residentShape = PropTypes.shape({
-    id: PropTypes.string,
-    villager: PropTypes.shape(villagerShape),
+    id: PropTypes.string.isRequired,
+    villager: PropTypes.shape(villagerShape).isRequired,
     moveInTimestamp: PropTypes.number,
     moveOutTimestamp: PropTypes.number,
 });
 export const sessionShape = PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.string.isRequired,
+    sightings: PropTypes.arrayOf(sightingShape).isRequired,
+    residents: PropTypes.arrayOf(residentShape).isRequired,
     version: PropTypes.number,
     timestamp: PropTypes.number,
-    sightings: PropTypes.arrayOf(sightingShape),
-    residents: PropTypes.arrayOf(residentShape),
 });
 
 // HELPERS
@@ -108,4 +109,14 @@ export function formatRawSightingResidents(rawSighting) {
         ...currentResidents,
         ...pastResidents,
     ];
+}
+
+export function encodeSession(session) {
+    return btoa(JSON.stringify(session));
+}
+
+export function decodeSessionCode(sessionCode) {
+    const rawSession = JSON.parse(atob(sessionCode));
+    const session = healSessionShape(rawSession);
+    return session;
 }
