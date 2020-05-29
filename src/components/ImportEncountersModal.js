@@ -43,14 +43,17 @@ function ImportSession(props) {
             });
     }, [
         session.id,
-        session.residents,
         session.timestamp,
+        session.residents,
         sessionLookupId,
         overrideSessionData,
         setLoading,
         setModalOpen,
         setSnackMessage,
     ]);
+    React.useEffect(() => {
+        setSessionLookupId(session.id);
+    }, [session.id, setSessionLookupId]);
     return (
         <GenericModal
             title="Import Encounters"

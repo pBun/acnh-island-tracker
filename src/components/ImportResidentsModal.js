@@ -51,6 +51,9 @@ function ImportSession(props) {
         setModalOpen,
         setSnackMessage,
     ]);
+    React.useEffect(() => {
+        setSessionLookupId(session.id);
+    }, [session.id, setSessionLookupId]);
     return (
         <GenericModal
             title="Import Residents"

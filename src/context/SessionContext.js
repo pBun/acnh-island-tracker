@@ -105,7 +105,10 @@ function reducer(session, action) {
         case ACTIONS.OVERRIDE_SESSION:
             return action.payload;
         case ACTIONS.RESET_SESSION:
-            return getInitialSession();
+            return {
+                ...getInitialSession(),
+                id: session.id,
+            };
         default:
             throw new Error();
     }
