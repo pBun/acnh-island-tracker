@@ -45,7 +45,7 @@ function ImportSession(props) {
                 if (
                     window &&
                     window.confirm(
-                        "Are you sure you want to overwrite ALL data stored in your browser? This includes ALL residents and encounters"
+                        "Are you sure you want to overwrite ALL session data stored in your browser? This includes your session id, residents, and encounters."
                     )
                 ) {
                     importHandler();
