@@ -54,7 +54,10 @@ function reducer(session, action) {
                     {
                         id: generateRandomId(),
                         timestamp: action.payload.timestamp,
-                        villager: action.payload.villager,
+                        villager: {
+                            id: action.payload.villager.id,
+                            name: action.payload.villager.name,
+                        },
                         type: action.payload.type,
                         dataShared: action.payload.dataShared,
                     },
@@ -72,7 +75,10 @@ function reducer(session, action) {
                     ...session.residents.filter(r => r.villager.id !== action.payload.villager.id),
                     {
                         id: generateRandomId(),
-                        villager: action.payload.villager,
+                        villager: {
+                            id: action.payload.villager.id,
+                            name: action.payload.villager.name,
+                        },
                         // existing resident
                         ...session.residents
                             .find(r => r.villager.id === action.payload.villager.id),
@@ -88,7 +94,10 @@ function reducer(session, action) {
                     ...session.residents.filter(r => r.villager.id !== action.payload.villager.id),
                     {
                         id: generateRandomId(),
-                        villager: action.payload.villager,
+                        villager: {
+                            id: action.payload.villager.id,
+                            name: action.payload.villager.name,
+                        },
                         moveInTimestamp: null,
                         // existing resident
                         ...session.residents
