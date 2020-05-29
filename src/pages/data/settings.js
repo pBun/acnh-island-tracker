@@ -87,7 +87,7 @@ function PrivacyPage(props) {
                         <ImportExportIcon />
                     </ListItemIcon>
                 </ListItem>
-                <ListItem
+                {/*<ListItem
                     button
                     onClick={() => {
                         setModalOpen(MODALS.IMPORT_ENCOUNTERS);
@@ -106,7 +106,7 @@ function PrivacyPage(props) {
                     <ListItemText
                         primary="Import Residents from Spreadsheet"
                     />
-                </ListItem>
+                </ListItem>*/}
                 <ListItem>
                     <ListItemText
                         id="switch-list-label-delete-all"
