@@ -1,20 +1,13 @@
 import { useStaticQuery, graphql } from "gatsby";
 
 export default function useVillagerIcons() {
-    const villagerIconsQuery = useStaticQuery(
+    const { allImageSharp } = useStaticQuery(
         graphql`
             query {
                 allImageSharp {
                     nodes {
-                        id
-                        original {
-                            width
-                            height
+                        resize(width: 40) {
                             src
-                        }
-                        fixed(width: 40) {
-                            src
-                            srcWebp
                             originalName
                         }
                     }
@@ -23,8 +16,8 @@ export default function useVillagerIcons() {
         `
     );
     const villagerIcons = {};
-    villagerIconsQuery.allImageSharp.nodes.forEach(node => {
-        villagerIcons[node.fixed.originalName.replace(".png", "")] = node.fixed.src;
+    allImageSharp.nodes.forEach(node => {
+        villagerIcons[node.resize.originalName.replace(".png", "")] = node.resize.src;
     });
     return villagerIcons;
 }
