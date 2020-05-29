@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import hash from "object-hash";
 
 import { getSightings } from "../util/dataShare";
 
