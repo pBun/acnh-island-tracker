@@ -18,7 +18,7 @@ function ImportSession(props) {
     const { setLoading } = React.useContext(LoadingContext);
     const { modalOpen, setModalOpen, setSnackMessage } = React.useContext(AppContext);
     const { session, overrideSessionData } = React.useContext(SessionContext);
-    const [sessionLookupId, setSessionLookupId] = React.useState(session.id);
+    const [sessionLookupId, setSessionLookupId] = React.useState(null);
     const [sessionLookupError, setSessionLookupError] = React.useState("");
     const importHandler = React.useCallback(() => {
         setLoading(true);
