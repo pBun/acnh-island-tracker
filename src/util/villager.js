@@ -55,7 +55,7 @@ export function getMysteryIslandChance(villager, currentResidents=[]) {
 }
 
 export function getCampsiteChance(villager, currentResidents=[], pastResidents=[], sightings=[]) {
-    if (!villager || !villager.id) return 0;
+    if (!villager || !villager.id || !villager.personality) return 0;
 
     // 0% if already a resident
     if (currentResidents.find(r => r.villager.id === villager.id)) return 0;
@@ -65,32 +65,30 @@ export function getCampsiteChance(villager, currentResidents=[], pastResidents=[
     const isFirstCycle = encounters.length <= NUM_VILLAGERS;
     if (isFirstCycle && encounters.find(e => e.id === villager.id)) return 0;
 
-    // FIRST ROLL * SECOND ROLL = chance to see a specific villager at a campsite
+    const availablePool = VILLAGERS.reduce((acc, v) => {
+        const hasEncountered = !!encounters.find(e => e.id === v.id);
+        if (!isFirstCycle || !hasEncountered) acc.push(v);
+        return acc;
+    }, []);
 
-    // FIRST ROLL:
-    // if currentResidentPool is missing this villager's personality: 0.6 / numberOfMissingPersonalities
-    // else if currentResidentPool is missing any other personalities: 0.4 / (numberOfPersonalities - numberOfMissingPersonalities)
-    // else if no personalities missing from currentResidentPool: 1 / numberOfPersonalities
-    let firstRoll = 0;
     const missingPersonalities = getMissingResidentPersonalities(currentResidents);
-    if (missingPersonalities.length) {
-        const isMissingPersonality = missingPersonalities.indexOf(villager.personality) >= 0;
-        firstRoll = isMissingPersonality
-            ? 0.585 * (1 / missingPersonalities.length)
-            : 0.415 * (1 / (AVAILABLE_PERSONALITIES.length - missingPersonalities.length));
-    } else {
-        firstRoll = 1 / NUM_PERSONALITIES;
+
+    // 1 / AVAILABLE_POOL if no personalities missing
+    if (!missingPersonalities.length || missingPersonalities.length === NUM_PERSONALITIES) {
+        return (1 / availablePool.length);
     }
 
-    // SECOND ROLL:
-    // if every villger has been encountered: 1 / numberOfPersonalityPool
-    // else: 1 / (numberOfPersonalityPool - numberOfPersonalityPoolEncountered)
-    const encountersByPersonality = groupBy(encounters, 'personality')[villager.personality];
-    const personalityPoolEncountered = isFirstCycle && encountersByPersonality ? encountersByPersonality.length : 0;
-    const personalityPool = VILLAGERS_BY_PERSONALITY[villager.personality].length;
-    const secondRoll = 1 / (personalityPool - personalityPoolEncountered);
-
-    return firstRoll * secondRoll;
+    // 50% weight to missing personalities
+    const missingPool = availablePool.reduce((acc, v) => {
+        if (missingPersonalities.indexOf(v.personality) >= 0) {
+            acc.push(v);
+        }
+        return acc;
+    }, []);
+    const personalityPoolRoll = missingPersonalities.indexOf(villager.personality) >= 0
+        ? 0.5 * (1 / missingPool.length) : 0;
+    const availablePoolRoll = 0.5 * (1 / availablePool.length);
+    return personalityPoolRoll + availablePoolRoll;
 }
 
 export const VILLAGERS_WITH_CHANCE = VILLAGERS.map(v => ({
