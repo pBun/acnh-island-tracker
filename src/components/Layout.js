@@ -22,7 +22,6 @@ import LoadingContext from "../context/LoadingContext";
 import ImportEncountersModal from "../components/ImportEncountersModal";
 import ImportResidentsModal from "../components/ImportResidentsModal";
 import TrackEncounterModal from "../components/TrackEncounterModal";
-import ExportSessionModal from "../components/ExportSessionModal";
 import ImportSessionModal from "../components/ImportSessionModal";
 
 
@@ -133,7 +132,6 @@ export default function BottomAppBar({ children }) {
             <TrackEncounterModal />
             <ImportEncountersModal />
             <ImportResidentsModal />
-            <ExportSessionModal />
             <ImportSessionModal />
             <Snackbar
                 anchorOrigin={{ vertical: "top", horizontal: "center" }}

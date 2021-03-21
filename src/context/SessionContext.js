@@ -189,7 +189,7 @@ export const SessionProvider = ({ children }) => {
                     dispatch({ type: ACTIONS.RESET_SESSION });
                 },
                 overrideSessionData: (session) => {
-                    dispatch({ type: ACTIONS.OVERRIDE_SESSION, payload: session });
+                    dispatch({ type: ACTIONS.OVERRIDE_SESSION, payload: healSessionShape(session) });
                 },
                 moveInResident: (villager) => {
                     return new Promise((resolve, reject) => {

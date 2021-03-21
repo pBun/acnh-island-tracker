@@ -5,6 +5,8 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
+import GetAppIcon from '@material-ui/icons/GetApp';
+import PublishIcon from '@material-ui/icons/Publish';
 import ListSubheader from "@material-ui/core/ListSubheader";
 import Checkbox from "@material-ui/core/Checkbox";
 import IconButton from "@material-ui/core/IconButton";
@@ -26,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     resetContainer: {
         padding: theme.spacing(1, 2, 2),
     },
-    button: {
+    cautionButton: {
         color: theme.palette.error.main,
     },
     list: {
@@ -43,15 +45,17 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-function PrivacyPage(props) {
+function SettingsPage(props) {
     const classes = useStyles();
     const {
         allowDataShare,
         setAllowDataShare,
         resetAppData,
         setModalOpen,
+        setSnackMessage,
     } = React.useContext(AppContext);
-    const { resetSessionData } = React.useContext(SessionContext);
+    const { session, overrideSessionData, resetSessionData } = React.useContext(SessionContext);
+    const [newSession, setNewSession] = React.useState();
     const pageTitle = "Data Settings";
     return (
         <Page title={pageTitle}>
@@ -63,29 +67,80 @@ function PrivacyPage(props) {
                 <ListItem
                     button
                     onClick={() => {
-                        setModalOpen(MODALS.EXPORT_SESSION);
+                        setModalOpen(MODALS.IMPORT_SESSION);
                     }}
                 >
-
                     <ListItemText
-                        primary="Export Local Session"
+                        primary="Legacy copy/paste data import"
                     />
                     <ListItemIcon className={classes.linkIcon}>
                         <ImportExportIcon />
                     </ListItemIcon>
                 </ListItem>
-                <ListItem
-                    button
-                    onClick={() => {
-                        setModalOpen(MODALS.IMPORT_SESSION);
-                    }}
-                >
+                <ListItem>
                     <ListItemText
-                        primary="Import Local Session"
+                        id="download-session"
+                        primary="Download Locally Saved Data"
+                        secondary={
+                            <>
+                                Save my session data as a file in order to back it up or use it across multiple devices.
+                            </>
+                        }
                     />
-                    <ListItemIcon className={classes.linkIcon}>
-                        <ImportExportIcon />
-                    </ListItemIcon>
+                    <ListItemSecondaryAction>
+                        <IconButton
+                            variant="contained"
+                            onClick={() => {
+                                const saveBlog = new Blob([encodeURIComponent(JSON.stringify(session))], { encoding:'UTF-8', type: 'data:image/png;charset=utf-8' });
+                                const saveUrl = URL.createObjectURL(saveBlog);
+                                window.open(saveUrl, "_blank", "");
+                            }}
+                            aria-label="download browser session data"
+                        >
+                            <GetAppIcon />
+                        </IconButton>
+                    </ListItemSecondaryAction>
+                </ListItem>
+
+                <ListItem>
+                    <ListItemText
+                        id="upload-session"
+                        primary="Upload Locally Saved Data"
+                        secondary={
+                            <>
+                                Overwrite my current session with a previous session file. <br />
+                                <input
+                                    type="file"
+                                    onChange={(e) => {
+                                        const reader = new FileReader();
+                                        reader.onload = (e) => {
+                                            const rawData = decodeURIComponent(e.target.result);
+                                            const data = JSON.parse(rawData);
+                                            setNewSession(data);
+                                        };
+                                        reader.readAsText(e.target.files[0]);
+                                    }}
+                                />
+                            </>
+                        }
+                    />
+                    <ListItemSecondaryAction>
+                        <IconButton
+                            variant="contained"
+                            onClick={() => {
+                                try {
+                                    overrideSessionData(newSession);
+                                    setSnackMessage("Session successfully imported!");
+                                } catch(error) {
+                                    const err = `Invalid session code. Please ensure the code has not been altered.`;
+                                    setSnackMessage(err);
+                                }
+                            }}
+                            aria-label="download browser session data"
+                        >
+                            <PublishIcon />
+                        </IconButton>
+                    </ListItemSecondaryAction>
                 </ListItem>
                 {/*<ListItem
                     button
@@ -110,7 +165,7 @@ function PrivacyPage(props) {
                 <ListItem>
                     <ListItemText
                         id="switch-list-label-delete-all"
-                        primary="Restart Local Session"
+                        primary="Delete Locally Saved Data"
                         secondary={
                             <>
                                 Start a new session by deleting ALL encounters, residents, and app data stored in your browser. Note that
@@ -139,7 +194,7 @@ function PrivacyPage(props) {
                     />
                     <ListItemSecondaryAction>
                         <IconButton
-                            className={classes.button}
+                            className={classes.cautionButton}
                             variant="contained"
                             onClick={() => {
                                 if (
@@ -198,4 +253,4 @@ function PrivacyPage(props) {
     );
 };
 
-export default PrivacyPage;
+export default SettingsPage;
