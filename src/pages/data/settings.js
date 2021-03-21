@@ -119,7 +119,7 @@ function SettingsPage(props) {
                                     overrideSessionData(newSession);
                                     setSnackMessage("Session successfully imported!");
                                 } catch(error) {
-                                    const err = `Invalid session code. Please ensure the code has not been altered.`;
+                                    const err = `Invalid session code. Please ensure you've selected a save file using the input to the left and that the file has not been altered.`;
                                     setSnackMessage(err);
                                 }
                             }}
