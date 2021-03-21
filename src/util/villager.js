@@ -49,9 +49,13 @@ export function getMysteryIslandChance(villager, currentResidents=[]) {
 
     const numSpeciesVillagers = VILLAGERS_BY_SPECIES[villager.species].length;
     const residentVillagers = currentResidents.map(r => VILLAGERS.find(v => v.id === r.villager.id))
-    const residentVillagersBySpecies = groupBy(residentVillagers, 'species')[villager.species];
-    const numSpeciesResidents = residentVillagersBySpecies ? residentVillagersBySpecies.length : 0;
-    return (1 / NUM_SPECIES) * (1 / (numSpeciesVillagers - numSpeciesResidents));
+    const residentVillagersBySpecies = groupBy(residentVillagers, 'species');
+    const numSpeciesResidents = residentVillagersBySpecies[villager.species] ? residentVillagersBySpecies[villager.species].length : 0;
+    const numSpeciesAvailable = AVAILABLE_SPECIES.reduce((numSpeciesAvailable, species) => {
+        const islandHasAllOfType = residentVillagersBySpecies[species] && residentVillagersBySpecies[species].length / VILLAGERS_BY_SPECIES[species].length === 1;
+        return islandHasAllOfType ? numSpeciesAvailable - 1 : numSpeciesAvailable;
+    }, NUM_SPECIES);
+    return (1 / numSpeciesAvailable) * (1 / (numSpeciesVillagers - numSpeciesResidents));
 }
 
 export function getCampsiteChance(villager, currentResidents=[], pastResidents=[], sightings=[]) {
