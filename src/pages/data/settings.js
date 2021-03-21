@@ -65,19 +65,6 @@ function SettingsPage(props) {
                 <ListSubheader className={classes.listSubheader}>
                     General
                 </ListSubheader>
-                <ListItem
-                    button
-                    onClick={() => {
-                        setModalOpen(MODALS.IMPORT_SESSION);
-                    }}
-                >
-                    <ListItemText
-                        primary="Legacy copy/paste data import"
-                    />
-                    <ListItemIcon className={classes.linkIcon}>
-                        <ImportExportIcon />
-                    </ListItemIcon>
-                </ListItem>
                 <ListItem>
                     <ListItemText
                         id="download-session"
@@ -212,6 +199,19 @@ function SettingsPage(props) {
                             <DeleteIcon />
                         </IconButton>
                     </ListItemSecondaryAction>
+                </ListItem>
+                <ListItem
+                    button
+                    onClick={() => {
+                        setModalOpen(MODALS.IMPORT_SESSION);
+                    }}
+                >
+                    <ListItemText
+                        primary="Legacy copy/paste data import"
+                    />
+                    <ListItemIcon className={classes.linkIcon}>
+                        <ImportExportIcon />
+                    </ListItemIcon>
                 </ListItem>
                 <ListSubheader className={classes.listSubheader}>
                     Privacy
