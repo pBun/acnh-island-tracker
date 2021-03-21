@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { debounce } from "throttle-debounce";
-import matchSorter from "match-sorter";
+import { matchSorter } from "match-sorter";
 import TextField from "@material-ui/core/TextField";
 import TablePagination from "@material-ui/core/TablePagination";
 import IconButton from "@material-ui/core/IconButton";
@@ -123,8 +123,8 @@ function TrackedMysteryIslandVillagersPage(props) {
     const [page, setPage] = React.useState(0);
     const [villagersPerPage, setVillagersPerPage] = React.useState(DEFAULT_PER_PAGE[0]);
     const [searchTerms, setSearchTerms] = React.useState("");
-    const searchResults = React.useCallback(
-        matchSorter(filteredSightings, searchTerms, {
+    const searchResults = React.useMemo(
+        () => matchSorter(filteredSightings, searchTerms, {
             keys: [
                 "villager.name",
                 "villager.species",
@@ -136,8 +136,8 @@ function TrackedMysteryIslandVillagersPage(props) {
         }).sort((a, b) => b.timestamp - a.timestamp),
         [filteredSightings, searchTerms],
     );
-    const delayedSearch = React.useCallback(
-        debounce(250, (terms) => {
+    const delayedSearch = React.useMemo(
+        () => debounce(250, (terms) => {
             setPage(0);
             setSearchTerms(terms);
         }),

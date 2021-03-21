@@ -2,14 +2,12 @@ import PropTypes from "prop-types";
 
 import { getSightings } from "../util/dataShare";
 
-import villagerUtil from "../util/villager";
+import { VILLAGERS_MINIMAL, villagerShape  } from "../util/villager";
 
-export const VILLAGERS_MINIMAL = villagerUtil.VILLAGERS_MINIMAL;
 export const SESSION_VERSION = 1;
 export const SIGHTING_TYPES = ['mystery-island', 'campsite'];
 
 // SHAPES
-export const villagerShape = villagerUtil.villagerShape;
 export const sightingShape = PropTypes.shape({
     id: PropTypes.string.isRequired,
     timestamp: PropTypes.number.isRequired,

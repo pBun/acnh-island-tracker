@@ -105,15 +105,3 @@ export const VILLAGERS_MINIMAL = VILLAGERS.map(v => ({
     id: v.id,
     name: v.name,
 }));
-
-export default {
-    VILLAGERS,
-    VILLAGERS_MINIMAL,
-    VILLAGERS_WITH_CHANCE,
-    VILLAGERS_BY_SPECIES,
-    VILLAGERS_BY_PERSONALITY,
-    NUM_SPECIES,
-    NUM_PERSONALITIES,
-    getMysteryIslandChance,
-    getCampsiteChance,
-};

@@ -71,9 +71,3 @@ export function getSightings() {
         request.send();
     });
 }
-
-export default {
-    DATA_SHARE_URL,
-    shareSighting,
-    getSightings,
-};

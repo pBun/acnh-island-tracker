@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { debounce } from "throttle-debounce";
-import matchSorter from "match-sorter";
+import { matchSorter } from "match-sorter";
 import List from "@material-ui/core/List";
 import TextField from "@material-ui/core/TextField";
 import TablePagination from "@material-ui/core/TablePagination";
@@ -121,8 +121,8 @@ export default function VillagersPage(props) {
     const [page, setPage] = React.useState(0);
     const [villagersPerPage, setVillagersPerPage] = React.useState(DEFAULT_PER_PAGE[0]);
     const [searchTerms, setSearchTerms] = React.useState("");
-    const searchResults = React.useCallback(
-        matchSorter(allVillagers, searchTerms, {
+    const searchResults = React.useMemo(
+        () => matchSorter(allVillagers, searchTerms, {
             keys: [
                 "name",
                 "species",
@@ -134,8 +134,8 @@ export default function VillagersPage(props) {
         }),
         [allVillagers, searchTerms],
     );
-    const delayedSearch = React.useCallback(
-        debounce(250, (terms) => {
+    const delayedSearch = React.useMemo(
+        () => debounce(250, (terms) => {
             setPage(0);
             setSearchTerms(terms);
         }),
