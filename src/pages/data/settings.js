@@ -14,6 +14,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import ImportExportIcon from '@material-ui/icons/ImportExport';
 
 import { DATA_SHARE_URL } from "../../util/dataShare";
+import { encodeSession, decodeSessionCode } from "../../util/session";
 
 import AppContext, { MODALS } from "../../context/AppContext";
 import SessionContext from "../../context/SessionContext";
@@ -91,7 +92,7 @@ function SettingsPage(props) {
                         <IconButton
                             variant="contained"
                             onClick={() => {
-                                const saveBlog = new Blob([encodeURIComponent(JSON.stringify(session))], { encoding:'UTF-8', type: 'data:image/png;charset=utf-8' });
+                                const saveBlog = new Blob([encodeSession(session)], { encoding:'UTF-8', type: 'data:image/png;charset=utf-8' });
                                 const saveUrl = URL.createObjectURL(saveBlog);
                                 window.open(saveUrl, "_blank", "");
                             }}
@@ -114,8 +115,7 @@ function SettingsPage(props) {
                                     onChange={(e) => {
                                         const reader = new FileReader();
                                         reader.onload = (e) => {
-                                            const rawData = decodeURIComponent(e.target.result);
-                                            const data = JSON.parse(rawData);
+                                            const data = decodeSessionCode(e.target.result);
                                             setNewSession(data);
                                         };
                                         reader.readAsText(e.target.files[0]);
