@@ -56,16 +56,7 @@ const Page = ({ title, children, variant }) => {
                 >
                     me
                 </a>{" "}
-                if you'd like to chat. Also, a special thanks to filthykasual for{" "}
-                <a
-                    href="https://imgur.com/a/3NnyBTM"
-                    className={classes.noteLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    the villager icons
-                </a>
-                , drjay for his{" "}
+                if you have any questions or would like to chat. Also, a special thanks to drjay & zoe for the{" "}
                 <a
                     href="https://docs.google.com/document/d/1c8rsKWWtwsOo_JOxwO-lVRx2MUhc-bcdZg1mhXgtRPg/edit"
                     className={classes.noteLink}
@@ -74,7 +65,7 @@ const Page = ({ title, children, variant }) => {
                 >
                     doc on campsites
                 </a>
-                , ctar17 for her{" "}
+                , ctar17 for the{" "}
                 <a
                     href="https://docs.google.com/document/d/16yHQzdYx4VznhnKSGZdtaKi_Yo8NpDwCYK8dmpR481s/edit"
                     className={classes.noteLink}
@@ -83,23 +74,14 @@ const Page = ({ title, children, variant }) => {
                 >
                     doc on mystery islands
                 </a>
-                , Kai for his{" "}
+                , and filthykasual for the{" "}
                 <a
-                    href="https://docs.google.com/spreadsheets/d/1KO4eXwAFIXpFEXyPQ2Oe-v-QbbDWO4MD-g7EU0GK-8Y/edit#gid=248995972"
+                    href="https://imgur.com/a/3NnyBTM"
                     className={classes.noteLink}
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    calculator sheet
-                </a>,
-                and{" "}
-                <a
-                    href="https://twitter.com/MauF0x"
-                    className={classes.noteLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Mau
+                    villager icons
                 </a>.
             </Typography>
         </Layout>
