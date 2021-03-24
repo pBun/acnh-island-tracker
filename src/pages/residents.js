@@ -161,11 +161,18 @@ export default function ResidentsPage(props) {
                 onSubmit={e => {
                     e.preventDefault();
                     if (!selectedVillager) return setError("Please select a villager.");
-                    const isCurrentResident = !!currentResidents.find(
-                        r => r.villager.id === selectedVillager.id && !r.moveOutTimestamp
-                    );
-                    if (typeOfResident === "past" && isCurrentResident) {
-                        return setError("That villager currently lives on your island. Use the 'move out' button to add them to the list of past residents.");
+                    const isCurrentResident = !!currentResidents.find(r => r.villager.id === selectedVillager.id);
+                    if (isCurrentResident) {
+                        return typeOfResident === "past"
+                            ? setError(`${selectedVillager.name} currently lives on your island. Use the 'move out' button to add them to the list of past residents.`)
+                            : setError(`${selectedVillager.name} already lives on your island.`);
+                    }
+                    const isPastResident = !!pastResidents.find(r => r.villager.id === selectedVillager.id);
+                    if (typeOfResident === 'past' && isPastResident) {
+                        return setError(`${selectedVillager.name} already exists in your list of past residents.`);
+                    }
+                    if (typeOfResident === "current" && currentResidents.length >= 10) {
+                        return setError("You already have the max number of residents.");
                     }
                     let moveResident = typeOfResident === "current"
                         ? moveInResident(selectedVillager)

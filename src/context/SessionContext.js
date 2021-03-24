@@ -192,27 +192,10 @@ export const SessionProvider = ({ children }) => {
                     dispatch({ type: ACTIONS.OVERRIDE_SESSION, payload: healSessionShape(session) });
                 },
                 moveInResident: (villager) => {
-                    return new Promise((resolve, reject) => {
-                        const existingResident = session.residents.find(r => r.villager.id === villager.id);
-                        if (existingResident && !existingResident.moveOutTimestamp) {
-                            return reject(`${villager.name} already lives on your island.`);
-                        }
-                        if (currentResidents.length >= 10) {
-                            return reject("You already have the max number of residents.");
-                        }
-                        dispatch({
-                            type: ACTIONS.MOVE_IN_RESIDENT,
-                            payload: { villager },
-                        });
-                        return resolve();
-                    });
+                    dispatch({ type: ACTIONS.MOVE_IN_RESIDENT, payload: { villager } });
                 },
                 moveOutResident: (villager) => {
                     return new Promise((resolve, reject) => {
-                        const existingResident = session.residents.find(r => r.villager.id === villager.id);
-                        if (existingResident && existingResident.moveOutTimestamp) {
-                            return reject(`${villager.name} already exists in your list of past residents.`);
-                        }
                         dispatch({
                             type: ACTIONS.MOVE_OUT_RESIDENT,
                             payload: { villager },
