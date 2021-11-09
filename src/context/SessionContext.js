@@ -230,10 +230,10 @@ export const SessionProvider = ({ children }) => {
                             villager,
                             type,
                         };
-                        if (!allowDataShare) {
+                        // if (!allowDataShare) { // TODO: FIX GOOGLE SHEETS API AND ENABLE TRACKING AGAIN
                             addSightingToSession(sighting);
                             return resolve();
-                        }
+                        // }
                         return sendSighting({ sighting })
                             .catch((err) => {
                                 return reject("There was an error communicating with the sheet.");

@@ -122,10 +122,13 @@ export default function EncounterModal(props) {
                     }}
                 >
                     <FormControlLabel
+                        disabled={true}
                         control={
                             <Checkbox
-                                checked={allowDataShare}
-                                onChange={e => setAllowDataShare(e.target.checked)}
+                                checked={false}
+                                 // TODO: FIX GOOGLE SHEETS API AND ENABLE TRACKING AGAIN
+                                // checked={allowDataShare}
+                                // onChange={e => setAllowDataShare(e.target.checked)}
                                 name="allowDataShare"
                                 size="small"
                                 color="primary"
@@ -140,8 +143,8 @@ export default function EncounterModal(props) {
                                     rel="noopener noreferrer"
                                 >
                                     our spreadsheet
-                                </a>
-                                .
+                                </a>{" "}
+                                (currently disabled because of Google Docs API changes).
                             </span>
                         }
                     />
