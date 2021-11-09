@@ -306,8 +306,8 @@ function PercentBreakdownTable({ villagerPropName }) {
                 count={rows.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
+                onChangePage={handleChangePage}
+                onChangeRowsPerPage={handleChangeRowsPerPage}
                 labelRowsPerPage=""
             />
         </TableContainer>

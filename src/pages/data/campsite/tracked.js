@@ -62,22 +62,22 @@ const useStyles = makeStyles(theme => ({
 function TablePaginationActions(props) {
     const classes = useStyles();
     const theme = useTheme();
-    const { count, page, rowsPerPage, onPageChange } = props;
+    const { count, page, rowsPerPage, onChangePage } = props;
 
     const handleFirstPageButtonClick = event => {
-        onPageChange(event, 0);
+        onChangePage(event, 0);
     };
 
     const handleBackButtonClick = event => {
-        onPageChange(event, page - 1);
+        onChangePage(event, page - 1);
     };
 
     const handleNextButtonClick = event => {
-        onPageChange(event, page + 1);
+        onChangePage(event, page + 1);
     };
 
     const handleLastPageButtonClick = event => {
-        onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
+        onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
     };
 
     return (
@@ -180,10 +180,10 @@ function TrackedCampsiteVillagersPage(props) {
                     inputProps: { "aria-label": "villagers per page" },
                     native: true,
                 }}
-                onPageChange={(event, newPage) => {
+                onChangePage={(event, newPage) => {
                     setPage(newPage);
                 }}
-                onRowsPerPageChange={event => {
+                onChangeRowsPerPage={event => {
                     setVillagersPerPage(parseInt(event.target.value, 10));
                     setPage(0);
                 }}
