@@ -1,2 +1,0 @@
-(self.webpackChunkacnh_island_tracker=self.webpackChunkacnh_island_tracker||[]).push([[634],{1362:function(e,t,a){"use strict";a.r(t);var n=a(7294),r=a(369),l=a(6157),c=a(2248);t.default=function(e){var t="Mystery Island Encounters (by Personality)";return n.createElement(l.Z,{title:t},n.createElement(c.Z,{title:t,pathname:e.location.pathname}),n.createElement(r.Z,{villagerPropName:"personality"}))}}}]);
-//# sourceMappingURL=component---src-pages-data-mystery-islands-by-personality-js-3c41ea73c6cfe5d35144.js.map
