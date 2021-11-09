@@ -78,7 +78,7 @@ export default function VillagerDetailsPage(props) {
                     {villager.name}
                 </Typography>
                 <Divider className={classes.divider} />
-                <Grid container justify="center" alignItems="center" spacing={2} className={classes.table}>
+                <Grid container justifyContent="center" alignItems="center" spacing={2} className={classes.table}>
                     <Grid item xs={12}>
                         <a
                             href={`https://nookipedia.com/wiki/${villager.name}`}
@@ -143,7 +143,7 @@ export default function VillagerDetailsPage(props) {
                     ) : ''}
                 </div>
 
-                <Grid container justify="center" alignItems="center" spacing={2} className={classes.table}>
+                <Grid container justifyContent="center" alignItems="center" spacing={2} className={classes.table}>
                     <Grid item xs={12}>
                         <Typography variant="h5">
                             Campsite
@@ -164,7 +164,7 @@ export default function VillagerDetailsPage(props) {
                 </Grid>
 
 
-                <Grid container justify="center" alignItems="center" spacing={2} className={classes.table}>
+                <Grid container justifyContent="center" alignItems="center" spacing={2} className={classes.table}>
                     <Grid item xs={12}>
                         <Typography variant="h5">
                             Mystery Islands
