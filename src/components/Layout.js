@@ -65,7 +65,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function BottomAppBar({ children }) {
+export default function Layout({ children }) {
     const classes = useStyles();
     const {
         setModalOpen,
