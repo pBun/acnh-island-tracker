@@ -54,7 +54,7 @@ const initialContext = {
 };
 const AppContext = React.createContext(initialContext);
 export const AppProvider = ({ children }) => {
-    const localStateString = window && window.localStorage.getItem(LOCAL_STORAGE_KEY);
+    const localStateString = typeof window === 'object' && window.localStorage.getItem(LOCAL_STORAGE_KEY);
     const localState = localStateString && JSON.parse(localStateString);
     const [state, dispatch] = React.useReducer(reducer, localState || getInitialState());
     React.useEffect(() => {
@@ -63,7 +63,7 @@ export const AppProvider = ({ children }) => {
         const stateToStore = getInitialState();
         stateToStore.allowDataShare = state.allowDataShare;
         stateToStore.trackingPreference = state.trackingPreference;
-        window && window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(stateToStore));
+        typeof window === 'object' && window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(stateToStore));
     }, [state]);
     return (
         <AppContext.Provider

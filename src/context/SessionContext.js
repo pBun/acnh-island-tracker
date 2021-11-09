@@ -176,7 +176,7 @@ export const SessionProvider = ({ children }) => {
 
     // update local storage whenever there is a change to session
     React.useEffect(() => {
-        window && window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(session));
+        typeof window === 'object' && window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(session));
     }, [session]);
 
     return (

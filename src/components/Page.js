@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const Page = ({ title, children, variant }) => {
+const Page = ({ title, children }) => {
     const classes = useStyles();
     return (
         <Layout>
