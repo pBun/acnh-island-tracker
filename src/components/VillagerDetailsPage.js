@@ -52,13 +52,11 @@ const useStyles = makeStyles(theme => ({
 export default function VillagerDetailsPage(props) {
     const classes = useStyles();
     const { site, allFile } = props.data;
-    const allVillagerImgs = allFile && allFile.nodes;
     const { currentResidents, pastResidents, session } = React.useContext(SessionContext);
     const { allVillagers } = useVillagers();
     const villagerId = props.pageContext && props.pageContext.villagerId;
     const villager = allVillagers.find(v => v.id === villagerId);
-    const fullImage = (allVillagerImgs && allFile.nodes.find(item => item.name === villager.id).publicURL)
-        || villager.icon;
+    const fullImage = allFile?.nodes?.find(item => item.name === villager.id)?.publicURL ?? villager.icon;
     const isCurrentResident = !!currentResidents.find(r => r.villager.id === villager.id);
     const isPastResident = !!pastResidents.find(r => r.villager.id === villager.id);
     const hasVisitedCampsite = !!session.sightings.find(s => s.villager.id === villager.id && s.type === 'campsite');
