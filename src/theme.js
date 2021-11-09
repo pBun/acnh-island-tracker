@@ -1,4 +1,4 @@
-import { createTheme } from "@material-ui/core/styles";
+import { createMuiTheme } from "@material-ui/core/styles";
 
 const DODO_YELLOW = "#ffdf4e";
 const DODO_BLUE = "#1591d1";
@@ -10,8 +10,8 @@ const DODO_LIGHT_BLUE = "#aadcf6";
 const DODO_PAPER = "#fcfdf7";
 
 // A custom theme for this app
-const defaultTheme = createTheme();
-const theme = createTheme({
+const defaultTheme = createMuiTheme();
+const theme = createMuiTheme({
     palette: {
         primary: {
             main: DODO_BLUE,
