@@ -252,10 +252,10 @@ export const SessionProvider = ({ children }) => {
                                 payload: sighting,
                             });
                         };
-                        if (!sighting.dataShared) {
+                        // if (!sighting.dataShared) { // TODO: FIX GOOGLE SHEETS API AND ENABLE TRACKING AGAIN
                             removeSightingFromSession(sighting);
                             return resolve();
-                        }
+                        // }
                         sendSighting({ sighting, deletion: true })
                             .catch(reject)
                             .then(() => {
