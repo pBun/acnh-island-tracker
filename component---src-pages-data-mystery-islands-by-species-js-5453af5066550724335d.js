@@ -1,2 +1,0 @@
-(self.webpackChunkacnh_island_tracker=self.webpackChunkacnh_island_tracker||[]).push([[942],{224:function(e,t,a){"use strict";a.r(t);var n=a(7294),r=a(7789),c=a(6157),l=a(2248);t.default=function(e){var t="Mystery Island Encounters (by Species)";return n.createElement(c.Z,{title:t},n.createElement(l.Z,{title:t,pathname:e.location.pathname}),n.createElement(r.Z,{villagerPropName:"species"}))}}}]);
-//# sourceMappingURL=component---src-pages-data-mystery-islands-by-species-js-5453af5066550724335d.js.map

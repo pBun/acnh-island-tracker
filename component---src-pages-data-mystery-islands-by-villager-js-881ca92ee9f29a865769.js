@@ -1,2 +1,0 @@
-(self.webpackChunkacnh_island_tracker=self.webpackChunkacnh_island_tracker||[]).push([[392],{609:function(e,a,t){"use strict";t.r(a);var n=t(7294),r=t(7789),l=t(6157),c=t(2248);a.default=function(e){var a="Mystery Island Encounters (by Villager)";return n.createElement(l.Z,{title:a},n.createElement(c.Z,{title:a,pathname:e.location.pathname}),n.createElement(r.Z,{villagerPropName:"name"}))}}}]);
-//# sourceMappingURL=component---src-pages-data-mystery-islands-by-villager-js-881ca92ee9f29a865769.js.map
